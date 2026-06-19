@@ -10,7 +10,7 @@
   --navy:#003481;--navy-d:#1E2733;--navy-m:#004993;
   --cyan:#01feff;--cyan-glow:rgba(1,254,255,.3);
   --bg:#EBF0F8;--card:#fff;--border:#CDD5E4;
-  --mid:#8A96AB;--dark:#3D4A60;--text:#1E2733;
+  --mid:#8A96AB;--dark:#3D4A60;--text:#1E2733;h
   --green:#2D9E6B;--red:#E05252;--orange:#F47B20;--purple:#6C5CE7;
   --font:'Inter',system-ui,sans-serif;
 }
@@ -1100,7 +1100,7 @@ function renderAlertStrip(){
   allP.forEach(proj=>{
     (proj.initiatives||[]).forEach(init=>{
       if(init.status==='en-curso')enC++;
-      (init.tareas||[]).forEach(h=>{
+      (init.hitos||[]).forEach(h=>{
         if(h.done||!h.date)return;
         const hd=new Date(h.date);hd.setHours(0,0,0,0);
         if(hd<today)venc.push({proj:proj.name,hito:h.text,date:h.date});
@@ -1149,7 +1149,7 @@ function checkAndNotify(){
   const alerts=[];
   (DB?.projects||[]).forEach(proj=>{
     (proj.initiatives||[]).forEach(init=>{
-      (init.tareas||[]).forEach((h,idx)=>{
+      (init.hitos||[]).forEach((h,idx)=>{
         if(h.done||!h.date)return;
         const isResp=h.respId===CU.id||init.responsibles.includes(CU.id)||isAdm();
         if(!isResp)return;
@@ -1344,7 +1344,7 @@ function buildGTable(months,tm,inits){
       const s2=Math.min(init.start,tm-1),e2=Math.min(init.end,tm-1);
       const bL=(s2/tm)*100,bW=((e2-s2+1)/tm)*100;
       const rdots=init.responsibles.map(rid=>{const u=ubid(rid);return u?`<div class="rdot" style="background:${u.color}" title="${u.name}">${ini(u.name)}</div>`:''}).join('');
-      const hd=init.tareas.filter(h=>h.done).length,ht=init.tareas.length;
+      const hd=init.hitos.filter(h=>h.done).length,ht=init.hitos.length;
       html+=`<div class="grow${init.id===SI?' sel':''}" onclick="selInit('${init.id}')">
         <div class="grnm"><div class="inum" style="background:${sv.color}">${init.num}</div>
           <div style="flex:1;min-width:0"><div class="inm">${init.name}</div>
@@ -1389,7 +1389,7 @@ function renderSP(){
       ${isAdm()?`<span onclick="rmResp('${init.id}','${u.id}')" style="cursor:pointer;color:var(--mid);font-size:13px;margin-left:2px">×</span>`:''}
     </div>`;}).join('');
   const addRO=isAdm()?DB.users.filter(u=>!init.responsibles.includes(u.id)).map(u=>`<option value="${u.id}">${u.name}</option>`).join(''):'';
-  const hitH=init.tareas.length?init.tareas.map((h,idx)=>{
+  const hitH=init.hitos.length?init.hitos.map((h,idx)=>{
     const ru=h.respId?ubid(h.respId):null;
     const canTog=canToggleHito(init,h);
     return`<div class="hitem">
@@ -1446,7 +1446,7 @@ function renderSP(){
         </div>
         <span style="font-size:13px;font-weight:800;color:${sv.color};width:34px;text-align:right">${prog}%</span>
       </div>
-      <div style="font-size:10px;color:var(--mid);margin-top:4px">${init.tareas.filter(h=>h.done).length} de ${init.tareas.length} tareas completadas</div>
+      <div style="font-size:10px;color:var(--mid);margin-top:4px">${init.hitos.filter(h=>h.done).length} de ${init.hitos.length} tareas completadas</div>
     </div>
     <div class="spsec">
       <div class="spsect">Responsables</div>
@@ -1456,7 +1456,7 @@ function renderSP(){
     <div class="spsec"><div class="spsect">Objetivo</div><div class="spbox or">${init.objetivo||'Sin definir.'}</div></div>
     <div class="spsec"><div class="spsect">¿Cuándo se considera cumplida?</div><div class="spbox gn">${init.done_when||'Sin definir.'}</div></div>
     <div class="spsec">
-      <div class="spsect">Tareas (${init.tareas.filter(h=>h.done).length}/${init.tareas.length} ✓)
+      <div class="spsect">Tareas (${init.hitos.filter(h=>h.done).length}/${init.hitos.length} ✓)
         ${canFull?`<span style="font-size:10px;color:var(--mid);font-weight:400">Líder/Admin: editar · Colaborador: solo cerrar asignados</span>`:''}
       </div>
       ${hitH}
@@ -1508,7 +1508,7 @@ async function rmResp(id,uid2){
 function openHM(initId,editIdx){
   hitoId=initId;
   const init=CP.initiatives.find(i=>i.id===initId);
-  const h=editIdx!==undefined?init?.tareas[editIdx]:null;
+  const h=editIdx!==undefined?init?.hitos[editIdx]:null;
   document.getElementById('hm-title').textContent=h?'Editar hito / tarea':'Agregar tarea';
   document.getElementById('nht').value=h?h.text:'';
   document.getElementById('nhd').value=h?h.date||'':'';
@@ -1531,17 +1531,17 @@ async function saveHM(){
     date:document.getElementById('nhd').value,
     link:document.getElementById('nhl').value.trim(),
     obs:document.getElementById('nho').value.trim(),
-    done:editIdx!==''?i.tareas[parseInt(editIdx)]?.done||false:false,
-    blocked:editIdx!==''?i.tareas[parseInt(editIdx)]?.blocked||false:false
+    done:editIdx!==''?i.hitos[parseInt(editIdx)]?.done||false:false,
+    blocked:editIdx!==''?i.hitos[parseInt(editIdx)]?.blocked||false:false
   };
-  if(editIdx!=='')i.tareas[parseInt(editIdx)]=hitoData;
-  else i.tareas.push(hitoData);
+  if(editIdx!=='')i.hitos[parseInt(editIdx)]=hitoData;
+  else i.hitos.push(hitoData);
   i.progress=recalcProgress(i);
   await persistDB();closeHM();renderSP();renderGantt();
 }
 async function togH(id,idx){
   const i=CP.initiatives.find(x=>x.id===id);if(!i)return;
-  const h=i.tareas[idx];
+  const h=i.hitos[idx];
   if(!canToggleHito(i,h))return;
   h.done=!h.done;
   i.progress=recalcProgress(i);
@@ -1549,15 +1549,15 @@ async function togH(id,idx){
 }
 async function blkH(id,idx){
   const i=CP.initiatives.find(x=>x.id===id);if(!i)return;
-  i.tareas[idx].blocked=!i.tareas[idx].blocked;
-  if(i.tareas[idx].blocked)i.tareas[idx].done=false;
+  i.hitos[idx].blocked=!i.hitos[idx].blocked;
+  if(i.hitos[idx].blocked)i.hitos[idx].done=false;
   i.progress=recalcProgress(i);
   await persistDB();renderSP();
 }
 async function delH(id,idx){
   const i=CP.initiatives.find(x=>x.id===id);
   if(!i||!confirm('¿Eliminar hito?'))return;
-  i.tareas.splice(idx,1);i.progress=recalcProgress(i);
+  i.hitos.splice(idx,1);i.progress=recalcProgress(i);
   await persistDB();renderSP();renderGantt();
 }
 
