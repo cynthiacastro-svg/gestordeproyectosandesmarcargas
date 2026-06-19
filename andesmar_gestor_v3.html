@@ -344,8 +344,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 <!-- MODAL: NUEVA INICIATIVA -->
 <div class="ov" id="ov-init" style="display:none">
   <div class="modal modal-lg">
-    <div class="mt">Nuevo hito</div>
-    <div class="ms">Completá el detalle del hito.</div>
+    <div class="mt">Nueva iniciativa</div>
+    <div class="ms">Completá el detalle de la iniciativa.</div>
     <div class="two-col">
       <div style="grid-column:1/-1"><label class="fl">Nombre *</label><input class="fi" id="imn" placeholder="ej. Estandarización de etiquetas"></div>
       <div><label class="fl">Sector</label><select class="fs" id="imsec"></select></div>
@@ -364,7 +364,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 <!-- MODAL: NUEVO HITO -->
 <div class="ov" id="ov-hito" style="display:none">
   <div class="modal" style="width:460px">
-    <div class="mt" id="hm-title">Agregar tarea</div>
+    <div class="mt" id="hm-title">Agregar hito / tarea</div>
     <div class="ms" style="margin-bottom:14px">Tarea, responsable, fecha y documento de referencia.</div>
     <label class="fl">Descripción *</label>
     <input class="fi" id="nht" placeholder="ej. Definir proceso con Sistemas">
@@ -400,7 +400,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
           <option value="lider">Líder de sector</option>
           <option value="admin">Administrador</option>
         </select>
-        <div class="role-desc" id="inv-rd">Solo puede dar cierre o avances en sus tareas asignados.</div>
+        <div class="role-desc" id="inv-rd">Solo puede dar cierre o avances en sus hitos asignados.</div>
       </div>
     </div>
     <div class="ferr" id="inv-err"></div>
@@ -439,7 +439,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
       <option value="admin">Administrador</option>
       <option value="superadmin">Superadmin</option>
     </select>
-    <div class="role-desc" id="uu-rd">Solo puede dar cierre o avances en sus tareas asignados.</div>
+    <div class="role-desc" id="uu-rd">Solo puede dar cierre o avances en sus hitos asignados.</div>
     <div class="ferr" id="uuerr"></div>
     <div class="btn-row"><button class="bs" onclick="closeUM()">Cancelar</button><button class="bp" onclick="saveUM()">Crear usuario</button></div>
   </div>
@@ -532,7 +532,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
     </div>
     <div class="spanel hidden" id="spanel">
       <div id="spct" style="height:100%;display:flex;flex-direction:column">
-        <div class="selprompt"><div style="font-size:38px;margin-bottom:12px">👆</div><div style="font-size:12px;line-height:1.6">Seleccioná una hito para ver su detalle, tareas y comentarios.</div></div>
+        <div class="selprompt"><div style="font-size:38px;margin-bottom:12px">👆</div><div style="font-size:12px;line-height:1.6">Seleccioná una iniciativa para ver su detalle, hitos y comentarios.</div></div>
       </div>
     </div>
   </div>
@@ -577,63 +577,63 @@ const SEED={
       {id:'i1',num:1,sector:'sistemas',name:'Uptime Sistema / Tiempo de respuesta',dif:'Media',metrica:'Uptime sistema (%) · Incidentes/semana',start:0,end:2,
        objetivo:'Monitorear disponibilidad del sistema, disponibilizando el indicador para Operaciones, de manera de poder desambiguar la performance y garantizar el tiempo de respuesta ante lecturas.',
        done_when:'Cuando el uptime esté en indicadores de seguimiento por encima del target y el tiempo de respuesta entre lecturas por debajo del target.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i2',num:2,sector:'sistemas',name:'Optimizar recepción: Trazabilidad y Canalización asistida',dif:'Alta',metrica:'Productividad inbound (paq/HH)',start:0,end:5,
        objetivo:'Sistematizar recepción e-commerce con trazabilidad y clasificación asistida. Definir el proceso de ingreso y clasificación con 2do conteo y sistematizarlo, considerando los estados de la guía en cada paso.',
        done_when:'Cuando el proceso de recepción y canalización tenga trazabilidad integral, cada toque deje huella sistémica medible, y la operación sea asistida para el operario.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i3',num:3,sector:'sistemas',name:'Distribución AMBA: Clasificación por ruta asistida (sistémica)',dif:'Alta',metrica:'Productividad distribución',start:2,end:6,
        objetivo:'Sistematizar clasificación por ruta AMBA con escaneos al sistema. Sistematizar los pasos que hoy se realizan con lecturas manuales en la operación de distribución.',
        done_when:'Cuando la clasificación por ruta sea asistida por sistema, con todos los toques registrados, y productividad y accuracy medidos.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i4',num:4,sector:'operaciones',name:'Handshake estandarizado',dif:'Alta',metrica:'% transferencias registradas',start:0,end:3,
        objetivo:'Registrar transferencias de custodia entre áreas eliminando traspaso informal. Diseñar proceso y sistema para estandarizar los traspasos de carga entre Recepción–Interior y Recepción–AMBA.',
        done_when:'Cuando el traspaso interno sea sistémico, con lecturas formales e indicadores de accuracy.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'i5',num:5,sector:'sistemas',name:'Herramienta Tracking',dif:'Media',metrica:'% guías con tracking en tiempo real',start:1,end:4,
        objetivo:'Seguimiento de estado y ubicación de guías/bultos en tiempo real dentro de la nave.',
        done_when:'Cuando se pueda rastrear a nivel guía cada paso del paquete: quién, cuándo y ubicación inferida.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i6',num:6,sector:'sistemas',name:'Trazabilidad de bultos en sistemas',dif:'Alta',metrica:'% bultos individualizados',start:2,end:6,
        objetivo:'Individualizar y rastrear cada bulto físico en todo el flujo. Hoy si se escanea 1 de 2 bultos, el sistema da ambos como recibidos.',
        done_when:'Cuando la trazabilidad de bultos sea equivalente a la de guías a nivel sistema.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i7',num:7,sector:'sistemas',name:'Estandarización etiquetas',dif:'Alta',metrica:'% etiquetas en estándar',start:0,end:2,
        objetivo:'Estandarizar formato y calidad de etiquetas para lectura sistémica. Diseñar 1 etiqueta ANDESMAR CARGAS que permita una operación estándar y minimice errores. Hoy hay +12 etiquetas distintas, 6 tipos de cliente.',
        done_when:'Cuando la etiqueta estándar esté implementada para todos los clientes de e-commerce.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i8',num:8,sector:'operaciones',name:'Rol Problem Solver',dif:'Media',metrica:'Casos resueltos / tiempo medio de resolución',start:0,end:3,
        objetivo:'Gestionar excepciones y descongestionar la línea operativa. Hoy los flujos no felices (faltantes, diferencias declarado/recibido, daños) se resuelven con Excel y trabajo manual.',
        done_when:'Cuando haya un responsable por turno dedicado a resolver casos fuera del proceso estándar sistematizado.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'i9',num:9,sector:'sistemas',name:'Diseño de casos a soportar (flujos no felices)',dif:'Alta',metrica:'% casos tipificados y soportados',start:1,end:5,
        objetivo:'Tipificar y protocolizar casos no felices (faltantes, daños, rechazos). Analizar, decidir, diseñar y sistematizar los casos que hoy no son soportados por el sistema.',
        done_when:'Cuando esté sólido el proceso conjunto Sistemas–Operaciones y se soporten los casos de excepción en sistema.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i10',num:10,sector:'gestion',name:'Piloto dinámica seguimiento Objetivos Q3 2026',dif:'Media',metrica:'KPIs medidos / cadencia de revisión',start:0,end:2,
        objetivo:'Validar metodología de medición KPIs y cadencia de revisión. Arrancar la mesa semanal multidisciplinaria (Ops + Sistemas + Procesos + Gerencia).',
        done_when:'Cuando la dinámica semanal lleve al menos 1 trimestre, con KPIs definidos, acciones generadas y causas de variación entendidas.',
-       status:'pendiente',progress:0,responsibles:['u3'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u3'],hitos:[],comments:[]},
       {id:'i11',num:11,sector:'gestion',name:'Implementación proceso Objetivos 2027',dif:'Media',metrica:'% áreas con objetivos definidos',start:3,end:6,
        objetivo:'Escalar gestión por objetivos/KPIs para el ciclo 2027 a nivel de objetivos estratégicos y por área.',
        done_when:'Cuando los KPIs de la mesa semanal estén alineados como prioridad con los objetivos estratégicos 2027.',
-       status:'pendiente',progress:0,responsibles:['u3'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u3'],hitos:[],comments:[]},
       {id:'i12',num:12,sector:'operaciones',name:'Definición Requerimiento Flujos y Layout',dif:'Media',metrica:'m² por proceso requerido',start:0,end:2,
        objetivo:'Definir flujos operativos y layout del CD para escalamiento. Calcular requerimiento de m² cruzando flujo de pallets × franja horaria × factor de ocupación.',
        done_when:'Cuando se tenga el requerimiento de m² asociado al nivel de actividad actual, validado con Gerencia General.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'i13',num:13,sector:'operaciones',name:'Adecuación Layout actual: demarcaciones y flujos',dif:'Media',metrica:'Reducción recorrido / m² optimizados',start:2,end:5,
        objetivo:'Optimizar layout actual con reordenamiento y demarcaciones. Separar e-commerce de línea blanca. Diseñar flujos lineales: Recepción → almacenamiento → despacho, sin cruces.',
        done_when:'Cuando se diseñe el layout con el requerimiento como input y se adecue la operación a las zonas definidas.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'i14',num:14,sector:'operaciones',name:'Minimización toques distribución AMBA',dif:'Media',metrica:'Lead time / toques por paquete',start:1,end:5,
        objetivo:'Reducir manipulaciones de paquetes en distribución AMBA. Hoy: 5+2 toques/paquete. Fusionar escaneos duplicados (control recepción + clasificación zonas; clasificación por ruta + control carga vehículo).',
        done_when:'Cuando se reduzcan los toques por paquete en distribución AMBA a ≤3, sin perder la tasa de siniestro 0.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'i15',num:15,sector:'operaciones',name:'Medir productividad Bs As por procesos',dif:'Media',metrica:'Paq/HH inbound / clasificación / outbound',start:0,end:3,
        objetivo:'Medir productividad actual por proceso de e-commerce. Tener visibilidad permite controlar y monitorear los procesos actuales. Hoy no existe indicador de productividad por proceso para el flujo e-commerce.',
        done_when:'Cuando se alcance un trimestre de medición de productividad por proceso (inbound, clasificación, separación por ruta), validada y confiable.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
     ]},{
     id:'p2',
     name:'LION 360 × Andesmar — Onboarding Last-Mile',
@@ -648,35 +648,35 @@ const SEED={
       {id:'l1',num:1,sector:'sistemas',name:'NDA firmado',dif:'Baja',metrica:'Firmado / No firmado',start:0,end:0,
        objetivo:'Firma del acuerdo de confidencialidad con LION 360.',
        done_when:'NDA firmado por ambas partes.',
-       status:'completado',progress:100,responsibles:['u1'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1'],hitos:[],comments:[
          {userId:'u1',text:'NDA firmado el 27/03/2026.',type:'avance',date:'27/03/2026 00:00'}
        ]},
       {id:'l2',num:2,sector:'gestion',name:'Propuesta comercial y tarifas acordadas',dif:'Media',metrica:'Propuesta aprobada',start:0,end:1,
        objetivo:'Acordar propuesta comercial y tarifas con LION 360.',
        done_when:'Propuesta firmada y tarifas aceptadas por ambas partes.',
-       status:'completado',progress:100,responsibles:['u1','u3'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1','u3'],hitos:[],comments:[
          {userId:'u1',text:'Propuesta comercial finalizada y acordada el 22/04/2026.',type:'avance',date:'22/04/2026 00:00'}
        ]},
       {id:'l3',num:3,sector:'gestion',name:'Datos bancarios y legajo enviados a LION',dif:'Baja',metrica:'Documentación enviada',start:0,end:0,
        objetivo:'Enviar datos bancarios y legajo completo de Andesmar a LION.',
        done_when:'Confirmación de recepción por parte de LION.',
-       status:'completado',progress:100,responsibles:['u1'],tareas:[],comments:[]},
+       status:'completado',progress:100,responsibles:['u1'],hitos:[],comments:[]},
       {id:'l4',num:4,sector:'sistemas',name:'Cuenta API test creada — sistema China (LELL7655)',dif:'Media',metrica:'Cuenta activa y funcional',start:1,end:2,
        objetivo:'Crear cuenta de prueba en el sistema de LION China (LELL7655) para iniciar integración.',
        done_when:'Cuenta operativa y primer llamado API exitoso.',
-       status:'completado',progress:100,responsibles:['u1'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1'],hitos:[],comments:[
          {userId:'u1',text:'Cuenta API test LELL7655 creada y operativa el 13/05/2026.',type:'avance',date:'13/05/2026 00:00'}
        ]},
       {id:'l5',num:5,sector:'gestion',name:'Kick Off interno realizado',dif:'Baja',metrica:'Reunión realizada',start:2,end:2,
        objetivo:'Kick off interno con todos los equipos involucrados (IT, Ops, Customer, Comercial).',
        done_when:'Reunión realizada con acta y responsables definidos.',
-       status:'completado',progress:100,responsibles:['u1'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1'],hitos:[],comments:[
          {userId:'u1',text:'Kick off interno realizado el 02/06/2026.',type:'avance',date:'02/06/2026 00:00'}
        ]},
       {id:'l6',num:6,sector:'gestion',name:'Contrato Last-Mile firmado (lado Andesmar) — pendiente firma LION',dif:'Alta',metrica:'Contrato firmado ambas partes',start:2,end:3,
        objetivo:'Firma del contrato Last-Mile. Andesmar ya firmó. LION tiene objeciones de finanzas sobre métodos de pago.',
        done_when:'Firma de LION recibida. Sin firma no hay base legal para operar.',
-       status:'pendiente',progress:50,responsibles:['u1'],tareas:[
+       status:'bloqueado',progress:50,responsibles:['u1'],hitos:[
          {text:'Andesmar firmó el contrato (01/06/2026)',respId:'u1',date:'2026-06-01',done:true,blocked:false},
          {text:'Comunicar posición final de cláusulas a LION (jurisdicción + compensación directa)',respId:'u1',date:'2026-06-20',done:false,blocked:false},
          {text:'Gestionar firma de LION — seguimiento a Carol en finanzas',respId:'u1',date:'2026-07-01',done:false,blocked:true},
@@ -686,38 +686,38 @@ const SEED={
       {id:'l7',num:7,sector:'gestion',name:'SLA aprobado internamente (días corridos)',dif:'Media',metrica:'SLA aprobado',start:1,end:2,
        objetivo:'Aprobar internamente el SLA en días corridos (incluye fines de semana y feriados). Alto impacto en Patagonia y NOA.',
        done_when:'SLA aprobado por Agustín, Cynthia y Paula.',
-       status:'completado',progress:100,responsibles:['u1','u3'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1','u3'],hitos:[],comments:[
          {userId:'u0',text:'SLA aprobado. Recordar: P90/P98.5% calculan días calendario. Alto impacto Patagonia y NOA.',type:'decision',date:'30/05/2026 00:00'}
        ]},
       {id:'l8',num:8,sector:'sistemas',name:'Integración API sistema China',dif:'Alta',metrica:'API operativa',start:2,end:2,
        objetivo:'Completar integración con el sistema de LION China.',
        done_when:'Integración funcional y probada exitosamente.',
-       status:'completado',progress:100,responsibles:['u1'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1'],hitos:[],comments:[
          {userId:'u1',text:'Integración API sistema China completada el 11/06/2026.',type:'avance',date:'11/06/2026 00:00'}
        ]},
       {id:'l9',num:9,sector:'sistemas',name:'Endpoint estados históricos probado',dif:'Media',metrica:'Endpoint funcional',start:2,end:3,
        objetivo:'Probar y validar el endpoint de estados históricos.',
        done_when:'Endpoint respondiendo correctamente con datos de prueba.',
-       status:'completado',progress:100,responsibles:['u0'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u0'],hitos:[],comments:[
          {userId:'u0',text:'Endpoint estados históricos probado y validado el 18/06/2026.',type:'avance',date:'18/06/2026 00:00'}
        ]},
       {id:'l10',num:10,sector:'sistemas',name:'Herramienta devolución masiva probada',dif:'Media',metrica:'Herramienta funcional',start:2,end:3,
        objetivo:'Probar herramienta de devolución masiva de paquetes.',
        done_when:'Herramienta operativa con resultados validados.',
-       status:'completado',progress:100,responsibles:['u0'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u0'],hitos:[],comments:[
          {userId:'u0',text:'Herramienta devolución masiva probada el 18/06/2026.',type:'avance',date:'18/06/2026 00:00'}
        ]},
       {id:'l11',num:11,sector:'gestion',name:'Tarifas 5-30 kg cotizadas y enviadas a LION',dif:'Baja',metrica:'Tarifas enviadas y confirmadas',start:2,end:3,
        objetivo:'Cotizar y enviar a LION las tarifas para paquetes de 5 a 30 kg.',
        done_when:'Tarifas enviadas y recibidas por LION.',
-       status:'completado',progress:100,responsibles:['u1'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1'],hitos:[],comments:[
          {userId:'u1',text:'Tarifas 5-30 kg enviadas a LION el 18/06/2026.',type:'avance',date:'18/06/2026 00:00'}
        ]},
       // ── EN PROCESO ──
       {id:'l12',num:12,sector:'sistemas',name:'Integración API sistema Argentina (nueva cuenta)',dif:'Alta',metrica:'API AR operativa',start:3,end:3,
        objetivo:'Activar integración API con entidad AR de LION. Requiere legajo impositivo de la entidad Argentina de LION antes de crear cuenta.',
        done_when:'API Argentina activa, autenticada y respondiendo en ambiente productivo.',
-       status:'en-curso',progress:40,responsibles:['u1'],tareas:[
+       status:'en-curso',progress:40,responsibles:['u1'],hitos:[
          {text:'Gestionar legajo impositivo entidad AR de LION',respId:'u1',date:'2026-06-20',done:false,blocked:false},
          {text:'Activar cuenta con Gramajo/Zumer',respId:'u1',date:'2026-06-22',done:false,blocked:false},
          {text:'Prueba de conectividad sistema AR',respId:'u1',date:'2026-06-22',done:false,blocked:false},
@@ -725,7 +725,7 @@ const SEED={
       {id:'l13',num:13,sector:'operaciones',name:'Config. agrupación de venta + tiempos TMS',dif:'Media',metrica:'TMS configurado',start:3,end:3,
        objetivo:'Configurar agrupación de venta y tiempos en TMS para operación LION.',
        done_when:'TMS configurado con parámetros de LION validados por Operaciones.',
-       status:'en-curso',progress:30,responsibles:['u1','u0'],tareas:[
+       status:'en-curso',progress:30,responsibles:['u1','u0'],hitos:[
          {text:'Configurar agrupación de venta en TMS (19/06)',respId:'u0',date:'2026-06-19',done:false,blocked:false},
          {text:'Configurar tiempos de tránsito por zona',respId:'u0',date:'2026-06-22',done:false,blocked:false},
          {text:'Cargar SLA internos por zona en TMS',respId:'u0',date:'2026-07-01',done:false,blocked:false},
@@ -733,7 +733,7 @@ const SEED={
       {id:'l14',num:14,sector:'gestion',name:'Dashboard KPI LION (SLA por zona, tasa entrega, P90)',dif:'Media',metrica:'Dashboard operativo',start:3,end:3,
        objetivo:'Construir dashboard de KPIs para seguimiento del cliente LION: SLA por zona, tasa de entrega, P90.',
        done_when:'Dashboard presentado y aprobado por Luciana. Cierre 24/06.',
-       status:'en-curso',progress:50,responsibles:['u0'],tareas:[
+       status:'en-curso',progress:50,responsibles:['u0'],hitos:[
          {text:'Definir métricas y estructura del dashboard con Luciana',respId:'u0',date:'2026-06-20',done:true,blocked:false},
          {text:'Construir dashboard KPI en herramienta definida',respId:'u0',date:'2026-06-23',done:false,blocked:false},
          {text:'Validación y aprobación con equipo Customer',respId:'u0',date:'2026-06-24',done:false,blocked:false},
@@ -742,7 +742,7 @@ const SEED={
       {id:'l15',num:15,sector:'operaciones',name:'Zendesk / Tablero operativo Customer',dif:'Alta',metrica:'Tablero operativo activo',start:3,end:4,
        objetivo:'Implementar tablero operativo en Zendesk para el equipo Customer. Bloqueado esperando contactos IT de Tomasi.',
        done_when:'Tablero operativo activo y equipo Customer capacitado.',
-       status:'pendiente',progress:0,responsibles:['u0'],tareas:[
+       status:'bloqueado',progress:0,responsibles:['u0'],hitos:[
          {text:'Obtener contactos IT de Tomasi para Zendesk',respId:'u0',date:'',done:false,blocked:true},
          {text:'Configurar tablero Zendesk operativo',respId:'u0',date:'',done:false,blocked:false},
          {text:'Capacitar equipo Customer en SLA y penalidades',respId:'u0',date:'2026-07-05',done:false,blocked:false},
@@ -753,7 +753,7 @@ const SEED={
       {id:'l16',num:16,sector:'sistemas',name:'⚠ CRÍTICO: Tracking events incompletos — penalidades activas',dif:'Alta',metrica:'Lista completa enviada a LION',start:3,end:3,
        objetivo:'LION ya recibió penalidades de su cliente por eventos de tracking faltantes. Enviar lista completa (Código + Estado + descripción en inglés) con urgencia máxima.',
        done_when:'Lista completa de tracking events enviada y confirmada por LION. 7 nodos obligatorios configurados en sistema.',
-       status:'pendiente',progress:0,responsibles:['u1','u0'],tareas:[
+       status:'bloqueado',progress:0,responsibles:['u1','u0'],hitos:[
          {text:'Compilar lista completa de tracking events (Código + Estado + descripción en inglés)',respId:'u0',date:'2026-06-19',done:false,blocked:false},
          {text:'Coordinar con Fabian Olivares para validación técnica',respId:'u1',date:'2026-06-19',done:false,blocked:false},
          {text:'Enviar lista completa a LION urgente',respId:'u1',date:'2026-06-19',done:false,blocked:false},
@@ -765,7 +765,7 @@ const SEED={
       {id:'l17',num:17,sector:'operaciones',name:'Pruebas QA end-to-end (20 paquetes reales)',dif:'Alta',metrica:'20/20 paquetes validados',start:3,end:4,
        objetivo:'Prueba operativa con 20 paquetes reales. Coordinar entrega con LION antes del 25/06.',
        done_when:'20 paquetes procesados exitosamente de punta a punta (recepción → entrega → tracking completo).',
-       status:'pendiente',progress:0,responsibles:['u1','u2'],tareas:[
+       status:'pendiente',progress:0,responsibles:['u1','u2'],hitos:[
          {text:'Coordinar entrega 20 paquetes de prueba con LION (antes 25/06)',respId:'u1',date:'2026-06-25',done:false,blocked:false},
          {text:'Ejecutar prueba QA end-to-end',respId:'u2',date:'2026-07-06',done:false,blocked:false},
          {text:'Validar tracking de los 20 paquetes completo',respId:'u0',date:'2026-07-06',done:false,blocked:false},
@@ -774,28 +774,28 @@ const SEED={
       {id:'l18',num:18,sector:'sistemas',name:'Geocodificación: integrar motor Google Maps / HERE',dif:'Media',metrica:'Motor geocodificación activo',start:3,end:4,
        objetivo:'Integrar motor de geocodificación para corrección de direcciones en distribución.',
        done_when:'Motor activo, con validación de direcciones operativa antes del go-live.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'l19',num:19,sector:'sistemas',name:'Alerta automática 96hs sin movimiento en TMS',dif:'Media',metrica:'Alerta configurada y activa',start:3,end:4,
        objetivo:'Configurar alerta automática en TMS cuando un paquete no registra movimiento en 96 horas (pre-siniestro).',
        done_when:'Alerta activa y testeada antes del go-live. Siniestro automático a los 5 días sin movimiento.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'l20',num:20,sector:'operaciones',name:'Template Excel validación retiro Bs As (bulto a bulto)',dif:'Baja',metrica:'Template operativo',start:3,end:4,
        objetivo:'Crear template de validación bulto a bulto para retiro en Buenos Aires.',
        done_when:'Template en uso por equipo Operaciones desde Semana 1 post go-live.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'l21',num:21,sector:'operaciones',name:'Definir umbrales de escala de volumen',dif:'Media',metrica:'Umbrales aprobados por Gerencia',start:3,end:4,
        objetivo:'Definir los umbrales operativos de escalamiento: 1K → 3K → 5K → 10K paquetes/día. Requiere aprobación de Gerencia.',
        done_when:'Umbrales definidos y aprobados antes del go-live.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'l22',num:22,sector:'gestion',name:'Designar ejecutivo de cuenta dedicado LION',dif:'Media',metrica:'Ejecutivo designado',start:3,end:4,
        objetivo:'Designar ejecutivo de cuenta dedicado para LION antes del go-live.',
        done_when:'Ejecutivo designado, presentado a LION y con agenda de seguimiento.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'l23',num:23,sector:'gestion',name:'🚀 GO-LIVE — Operación completa LION 360',dif:'Alta',metrica:'1ª semana operativa sin incidentes críticos',start:4,end:4,
-       objetivo:'Inicio de operación productiva completa. Todos los tareas previos deben estar completados.',
+       objetivo:'Inicio de operación productiva completa. Todos los hitos previos deben estar completados.',
        done_when:'Go-live el 07/07/2026. Primera semana operativa sin incidentes críticos.',
-       status:'pendiente',progress:0,responsibles:['u1','u2','u0'],tareas:[
-         {text:'Todos los tareas de integración completados',respId:'u1',date:'2026-07-06',done:false,blocked:false},
+       status:'pendiente',progress:0,responsibles:['u1','u2','u0'],hitos:[
+         {text:'Todos los hitos de integración completados',respId:'u1',date:'2026-07-06',done:false,blocked:false},
          {text:'QA end-to-end aprobado',respId:'u1',date:'2026-07-06',done:false,blocked:false},
          {text:'Contrato firmado por LION',respId:'u1',date:'2026-07-06',done:false,blocked:false},
          {text:'Monitoreo API 24/7 activo (uptime ≥99.9%)',respId:'u1',date:'2026-07-07',done:false,blocked:false},
@@ -817,7 +817,7 @@ const SEED={
       {id:'m1',num:1,sector:'operaciones',name:'Layout operativo nuevo depósito Independencia',dif:'Alta',metrica:'Layout aprobado / Costo operativo definido',start:0,end:1,
        objetivo:'Diseñar el nuevo layout operativo del depósito para mejorar tiempos de procesamiento y minimizar costos operativos.',
        done_when:'Layout definitivo aprobado con metros por operación definidos y costos validados por Gerencia.',
-       status:'en-curso',progress:40,responsibles:['u2'],tareas:[
+       status:'en-curso',progress:40,responsibles:['u2'],hitos:[
          {text:'Presentación definitiva de layout operativo (Matías D)',respId:'u2',date:'2026-06-23',done:false,blocked:false},
          {text:'Presentación de layout a escala con metros por operación (Matías B)',respId:'u2',date:'2026-06-30',done:false,blocked:false},
          {text:'Definir costos operativos actuales vs. en mudanza',respId:'u2',date:'2026-07-07',done:false,blocked:false},
@@ -827,7 +827,7 @@ const SEED={
       {id:'m2',num:2,sector:'operaciones',name:'Layout oficinas nuevo depósito',dif:'Media',metrica:'Layout oficinas aprobado / Inversión definida',start:0,end:2,
        objetivo:'Definir espacio necesario e inversión para oficinas en el nuevo depósito. Evaluar utilización de oficinas actuales.',
        done_when:'Layout de oficinas aprobado con requerimientos de obras validados y metros de sala de racks confirmados.',
-       status:'en-curso',progress:10,responsibles:['u2'],tareas:[
+       status:'en-curso',progress:10,responsibles:['u2'],hitos:[
          {text:'Reunión con Depto. de Obras (Guido Badaloni/Julio) para requerimientos de inicio de obra (Diego y Federico)',respId:'u2',date:'2026-06-18',done:true,blocked:false},
          {text:'Solicitar metros cuadrados sala de rack a Sistemas (Agustín)',respId:'u1',date:'2026-06-17',done:false,blocked:false},
          {text:'Presentar requerimientos de obras para evaluación de layout',respId:'u2',date:'2026-06-30',done:false,blocked:false},
@@ -837,7 +837,7 @@ const SEED={
       {id:'m3',num:3,sector:'operaciones',name:'Traslado cliente OCA (Independencia → Rodríguez Peña)',dif:'Media',metrica:'OCA operando en nuevo depósito',start:0,end:2,
        objetivo:'Proponer y coordinar el traslado de OCA desde el depósito actual (Independencia) al depósito Rodríguez Peña.',
        done_when:'OCA confirmado en nuevo depósito con operación activa.',
-       status:'en-curso',progress:20,responsibles:['u2'],tareas:[
+       status:'en-curso',progress:20,responsibles:['u2'],hitos:[
          {text:'Reunión con cliente OCA para evaluar traslado a Rodríguez Peña (Fabián Sena)',respId:'u2',date:'',done:false,blocked:false},
          {text:'Confirmar condiciones comerciales del traslado',respId:'u2',date:'',done:false,blocked:false},
          {text:'Ejecutar traslado OCA',respId:'u2',date:'',done:false,blocked:false},
@@ -847,7 +847,7 @@ const SEED={
       {id:'m4',num:4,sector:'operaciones',name:'Traslado cliente Musimundo (On City → nuevo depósito)',dif:'Media',metrica:'Musimundo operando en nuevo depósito / Rentabilidad validada',start:0,end:2,
        objetivo:'Trasladar cliente Musimundo On City al nuevo depósito. Analizar universo On City completo: costos, rentabilidad y potenciales servicios futuros.',
        done_when:'Musimundo operando en nuevo depósito con análisis de rentabilidad aprobado.',
-       status:'en-curso',progress:30,responsibles:['u2'],tareas:[
+       status:'en-curso',progress:30,responsibles:['u2'],hitos:[
          {text:'Analizar costos de operación para presentar en reunión (Diego)',respId:'u2',date:'2026-06-23',done:false,blocked:false},
          {text:'Averiguar costos de traslado — último traslado (Diego)',respId:'u2',date:'2026-06-23',done:false,blocked:false},
          {text:'Presentación de ingresos y costos del cliente Musimundo',respId:'u2',date:'2026-06-30',done:false,blocked:false},
@@ -857,7 +857,7 @@ const SEED={
       {id:'m5',num:5,sector:'operaciones',name:'Cliente Purina/Nestlé — permanece en depósito actual',dif:'Baja',metrica:'Decisión documentada y operación confirmada',start:0,end:1,
        objetivo:'Purina/Nestlé permanece en el depósito actual (División Frío). Decisión tomada en última reunión.',
        done_when:'Decisión documentada, cliente notificado y operación confirmada en depósito actual.',
-       status:'completado',progress:100,responsibles:['u2'],tareas:[
+       status:'completado',progress:100,responsibles:['u2'],hitos:[
          {text:'Decisión tomada: Purina/Nestlé permanece en depósito actual con oficinas en División Frío',respId:'u2',date:'2026-06-18',done:true,blocked:false},
        ],comments:[
          {userId:'u0',text:'Decisión tomada en reunión. Cliente NO se mueve por el momento. Oficinas quedan en División Frío.',type:'decision',date:'23/06/2026 00:00'}
@@ -865,7 +865,7 @@ const SEED={
       {id:'m6',num:6,sector:'operaciones',name:'Cliente La Española — reubicación para optimizar operativa',dif:'Media',metrica:'La Española reubicada / Operativa Mendoza optimizada',start:0,end:2,
        objetivo:'Mover a La Española del depósito actual a otro para optimizar la operativa de Mendoza.',
        done_when:'La Española operando en nueva ubicación con impacto positivo en operativa Mendoza.',
-       status:'en-curso',progress:10,responsibles:['u2'],tareas:[
+       status:'en-curso',progress:10,responsibles:['u2'],hitos:[
          {text:'Definir depósito destino para La Española',respId:'u2',date:'',done:false,blocked:false},
          {text:'Presentar propuesta de reubicación',respId:'u2',date:'',done:false,blocked:false},
          {text:'Ejecutar reubicación La Española',respId:'u2',date:'',done:false,blocked:false},
@@ -875,7 +875,7 @@ const SEED={
       {id:'m7',num:7,sector:'gestion',name:'Mendoza Vineyards — sinergia fulfillment E2E bodegas',dif:'Alta',metrica:'Propuesta comercial definida / Acuerdo alcanzado',start:0,end:3,
        objetivo:'Desarrollar sinergia entre Andesmar y Mendoza Vineyards para proveer servicios de embotellamiento y fulfillment E2E a bodegas.',
        done_when:'Propuesta comercial E2E aprobada y acuerdo operativo en marcha.',
-       status:'pendiente',progress:0,responsibles:['u3'],tareas:[
+       status:'pendiente',progress:0,responsibles:['u3'],hitos:[
          {text:'Definir objetivo y alcance del proyecto Vineyards',respId:'u3',date:'',done:false,blocked:false},
          {text:'Analizar modelo de negocio y márgenes fulfillment E2E bodegas',respId:'u3',date:'',done:false,blocked:false},
          {text:'Presentar propuesta comercial a Mendoza Vineyards',respId:'u3',date:'',done:false,blocked:false},
@@ -885,7 +885,7 @@ const SEED={
       {id:'m8',num:8,sector:'gestion',name:'Coca Cola — cotización servicios almacenamiento Independencia',dif:'Media',metrica:'Propuesta enviada / Cliente confirmado',start:0,end:2,
        objetivo:'Prestar servicios de almacenamiento en el nuevo depósito de Independencia a Coca Cola.',
        done_when:'Cotización enviada y respuesta del cliente recibida.',
-       status:'en-curso',progress:40,responsibles:['u3'],tareas:[
+       status:'en-curso',progress:40,responsibles:['u3'],hitos:[
          {text:'Finalizar cotización de servicios de almacenamiento (Mauricio Vera / Fabián Sena)',respId:'u3',date:'2026-06-30',done:false,blocked:false},
          {text:'Enviar propuesta comercial a Coca Cola',respId:'u3',date:'2026-07-07',done:false,blocked:false},
          {text:'Informar respuesta del cliente',respId:'u3',date:'',done:false,blocked:false},
@@ -895,7 +895,7 @@ const SEED={
       {id:'m9',num:9,sector:'operaciones',name:'Análisis de márgenes operativos y presupuesto mudanza',dif:'Media',metrica:'Presupuesto aprobado / Desviaciones <5%',start:0,end:2,
        objetivo:'Analizar márgenes operativos y desviaciones presupuestarias del proceso de mudanza. Incluir indicadores de reuniones semanales.',
        done_when:'Cuadro de costos completo con clientes Andesmar, Musimundo, OCA, Purina y Vineyards aprobado.',
-       status:'en-curso',progress:20,responsibles:['u2'],tareas:[
+       status:'en-curso',progress:20,responsibles:['u2'],hitos:[
          {text:'Completar tabla de costos por cliente (Andesmar, Musimundo, OCA, Purina, Vineyards)',respId:'u2',date:'2026-06-30',done:false,blocked:false},
          {text:'Calcular diferencia presupuestaria vs. costo real',respId:'u2',date:'2026-07-07',done:false,blocked:false},
          {text:'Presentar análisis en reunión semanal de gestión',respId:'u3',date:'2026-07-07',done:false,blocked:false},
@@ -916,12 +916,12 @@ const uid=()=>'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
 const ini=n=>n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
 const ubid=id=>DB?.users?.find(u=>u.id===id);
 const nows=()=>{const d=new Date();return d.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'})+' '+d.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});};
-const stl=s=>({pendiente:'Pendiente','en-curso':'En curso',completado:'Completado'}[s]||s);
+const stl=s=>({pendiente:'Pendiente','en-curso':'En curso',bloqueado:'Bloqueado',completado:'Completado'}[s]||s);
 const rll=r=>({superadmin:'Superadmin',admin:'Admin',lider:'Líder',colaborador:'Colaborador',miembro:'Colaborador'}[r]||r);
 const isSA=()=>CU&&CU.role==='superadmin';
 const isAdm=()=>CU&&(CU.role==='superadmin'||CU.role==='admin');
 const isLider=()=>CU&&(CU.role==='superadmin'||CU.role==='admin'||CU.role==='lider');
-// Líder/Admin: edita todo el hito | Colaborador: solo toggle done en sus tareas
+// Líder/Admin: edita todo el hito | Colaborador: solo toggle done en sus hitos
 const canEditInit=i=>CU&&(isAdm()||(CU.role==='lider'&&CU.area===i.sector)||(['colaborador','miembro'].includes(CU.role)&&i.responsibles.includes(CU.id)));
 const canFullEdit=i=>CU&&(isAdm()||(CU.role==='lider'&&CU.area===i.sector));
 const canToggleHito=(init,h)=>CU&&(canFullEdit(init)||((['colaborador','miembro'].includes(CU.role))&&(h.respId===CU.id||init.responsibles.includes(CU.id))));
@@ -931,28 +931,11 @@ function buildEmail(n,a){
   return c(n)+c(a)+'@andesmar.com.ar';
 }
 
-// Avance = tareas cerrados / total tareas (automático, sin slider)
+// Avance = hitos cerrados / total hitos (automático, sin slider)
 function recalcProgress(init){
   const h=init.hitos||[];
   if(!h.length)return 0;
   return Math.round(h.filter(x=>x.done).length/h.length*100);
-}
-
-// Estado dinámico: sin Bloqueado
-// pendiente = 0 tareas hechas | en-curso = algunas | completado = todas
-function autoStatus(init){
-  const h=init.hitos||[];
-  if(!h.length)return 'pendiente';
-  const done=h.filter(x=>x.done).length;
-  if(done===0)return 'pendiente';
-  if(done===h.length)return 'completado';
-  return 'en-curso';
-}
-function applyAutoStatus(proj){
-  (proj.initiatives||[]).forEach(init=>{
-    init.status=autoStatus(init);
-    init.progress=recalcProgress(init);
-  });
 }
 
 function projMos(p){
@@ -998,7 +981,7 @@ async function syncFromGAS(manual){
   try{
     const r=await fetch(url+'?action=getDB');
     const res=await r.json();
-    if(res?.ok&&res?.db){DB=res.db;if(DB?.projects)DB.projects.forEach(p=>applyAutoStatus(p));saveLocal(DB);showSync('Sincronizado ✓','ok');}
+    if(res?.ok&&res?.db){DB=res.db;saveLocal(DB);showSync('Sincronizado ✓','ok');}
     else{DB=loadLocal()||JSON.parse(JSON.stringify(SEED));showSync('Sin datos en GAS — usando locales','ok');}
   }catch{
     DB=loadLocal()||JSON.parse(JSON.stringify(SEED));
@@ -1007,7 +990,9 @@ async function syncFromGAS(manual){
 }
 async function persistDB(){
   // Always recalculate progress before saving
-  if(DB?.projects){DB.projects.forEach(p=>applyAutoStatus(p));}
+  if(DB?.projects){
+    DB.projects.forEach(p=>(p.initiatives||[]).forEach(i=>{i.progress=recalcProgress(i);}));
+  }
   saveLocal(DB);
   const url=getGasUrl();if(!url)return;
   showSync('Guardando...');
@@ -1099,8 +1084,9 @@ function renderAlertStrip(){
   let venc=[],prox=[],bloq=0,enC=0;
   allP.forEach(proj=>{
     (proj.initiatives||[]).forEach(init=>{
+      if(init.status==='bloqueado')bloq++;
       if(init.status==='en-curso')enC++;
-      (init.tareas||[]).forEach(h=>{
+      (init.hitos||[]).forEach(h=>{
         if(h.done||!h.date)return;
         const hd=new Date(h.date);hd.setHours(0,0,0,0);
         if(hd<today)venc.push({proj:proj.name,hito:h.text,date:h.date});
@@ -1122,11 +1108,11 @@ function renderAlertStrip(){
       <div class="ac-lbl">Próximos 3 días</div>
       ${prox.length?`<div class="ac-list">${mkList(prox,'var(--orange)')}</div>`:''}
     </div>
-    <div class="ac-card acg">
-      <div class="ac-icon">⚡</div>
-      <div class="ac-val" style="color:var(--orange)">${enC}</div>
-      <div class="ac-lbl">En curso</div>
-      <div class="ac-sub">hitos activos</div>
+    <div class="ac-card ${bloq?'aco':'acg'}">
+      <div class="ac-icon">🚫</div>
+      <div class="ac-val" style="color:${bloq?'var(--orange)':'var(--green)'}">${bloq}</div>
+      <div class="ac-lbl">Bloqueadas</div>
+      <div class="ac-sub">${enC} en curso</div>
     </div>
     <div class="ac-card acc" onclick="goScreen('kpis')">
       <div class="ac-icon">📊</div>
@@ -1149,7 +1135,7 @@ function checkAndNotify(){
   const alerts=[];
   (DB?.projects||[]).forEach(proj=>{
     (proj.initiatives||[]).forEach(init=>{
-      (init.tareas||[]).forEach((h,idx)=>{
+      (init.hitos||[]).forEach((h,idx)=>{
         if(h.done||!h.date)return;
         const isResp=h.respId===CU.id||init.responsibles.includes(CU.id)||isAdm();
         if(!isResp)return;
@@ -1195,7 +1181,7 @@ function renderHome(){
   document.getElementById('hero-stats').innerHTML=`
     <div class="hs"><div class="hs-v">${allP.length}</div><div class="hs-l">Proyectos</div></div>
     <div class="hs"><div class="hs-v">${allP.filter(p=>p.status==='activo').length}</div><div class="hs-l">Activos</div></div>
-    <div class="hs"><div class="hs-v">${totalI}</div><div class="hs-l">Tareas</div></div>
+    <div class="hs"><div class="hs-v">${totalI}</div><div class="hs-l">Iniciativas</div></div>
     <div class="hs"><div class="hs-v">${totalI?Math.round(doneI/totalI*100):0}%</div><div class="hs-l">Completado</div></div>`;
   document.getElementById('hero-acts').innerHTML=isSA()
     ?`<button class="bhp" onclick="openPM()">＋ Nuevo proyecto</button><button class="bhs" onclick="goScreen('kpis')">📊 KPIs</button>`
@@ -1216,7 +1202,7 @@ function renderHome(){
       <div class="pc-body">
         <div class="pc-hd"><div class="pc-nm">${p.name}</div><span class="pc-st ${scl}">${stx}</span></div>
         <div class="pc-desc">${p.desc||''}</div>
-        <div class="pc-meta"><span>📍 ${p.site||'—'}</span><span>📅 ${ms[0]}–${ms[ms.length-1]} ${p.startMonth?p.startMonth.split('-')[0]:''}</span><span>📋 ${ii.length} tareas</span></div>
+        <div class="pc-meta"><span>📍 ${p.site||'—'}</span><span>📅 ${ms[0]}–${ms[ms.length-1]} ${p.startMonth?p.startMonth.split('-')[0]:''}</span><span>📋 ${ii.length} iniciativas</span></div>
         <div class="pc-secs">${chips}</div>
         <div class="pc-pb"><div class="pc-pf" style="width:${pct}%;background:${pc}"></div></div>
         <div class="pc-pl">${done}/${ii.length} completadas · ${pct}%</div>
@@ -1279,7 +1265,7 @@ function openProject(pid){
   const sb=document.getElementById('ptstbadge');
   const scl={activo:'pst-activo',planificacion:'pst-planificacion',pausado:'pst-pausado',cerrado:'pst-cerrado'}[CP.status]||'';
   sb.className='ptst '+scl;sb.textContent={activo:'Activo',planificacion:'Planificación',pausado:'Pausado',cerrado:'Cerrado'}[CP.status]||CP.status;
-  document.getElementById('ptacts').innerHTML=isLider()?`<button class="fb" style="background:var(--navy);color:white;border-color:var(--navy)" onclick="openIM()">＋ Hito</button>`:'';
+  document.getElementById('ptacts').innerHTML=isLider()?`<button class="fb" style="background:var(--navy);color:white;border-color:var(--navy)" onclick="openIM()">＋ Iniciativa</button>`:'';
   document.getElementById('pt-sem').innerHTML=semHtml(CP,false);
   document.getElementById('tab-admin').style.display=isAdm()?'':'none';
   SI=null;CF='all';
@@ -1307,14 +1293,14 @@ function renderGantt(){
   const months=projMos(CP),tm=months.length,inits=CP.initiatives||[];
   document.getElementById('ptab-gantt').innerHTML=`
   <div class="kpstrip">
-    <div class="ks"><div class="ks-l">Hitos</div><div class="ks-v">${inits.length}</div><div class="ks-s">${CP.sectors.length} sectores</div></div>
+    <div class="ks"><div class="ks-l">Iniciativas</div><div class="ks-v">${inits.length}</div><div class="ks-s">${CP.sectors.length} sectores</div></div>
     <div class="ks"><div class="ks-l">En curso</div><div class="ks-v" style="color:var(--orange)">${inits.filter(i=>i.status==='en-curso').length}</div><div class="ks-s">activas</div></div>
-    <div class="ks"><div class="ks-l">Pendientes</div><div class="ks-v">${inits.filter(i=>i.status==='pendiente').length}</div><div class="ks-s">sin iniciar</div></div>
+    <div class="ks"><div class="ks-l">Pendientes</div><div class="ks-v">${inits.filter(i=>i.status==='pendiente').length}</div></div>
     <div class="ks"><div class="ks-l">Completadas</div><div class="ks-v" style="color:var(--green)">${inits.filter(i=>i.status==='completado').length}</div></div>
-    <div class="ks"><div class="ks-l">Avance global</div><div class="ks-v" style="color:var(--navy-m)">${inits.length?Math.round(inits.reduce((a,i)=>a+recalcProgress(i),0)/inits.length):0}%</div><div class="ks-s">por tareas</div></div>
+    <div class="ks"><div class="ks-l">Avance global</div><div class="ks-v" style="color:var(--navy-m)">${inits.length?Math.round(inits.reduce((a,i)=>a+recalcProgress(i),0)/inits.length):0}%</div><div class="ks-s">por hitos</div></div>
   </div>
   <div class="sechd">
-    <div class="sectitle">Roadmap de tareas</div>
+    <div class="sectitle">Roadmap de iniciativas</div>
     <div class="frow">
       <button class="fb${CF==='all'?' act':''}" onclick="fSec('all',this)">Todos</button>
       ${CP.sectors.map(s=>{const sv=gsec(s);return`<button class="fb${CF===s?' act':''}" onclick="fSec('${s}',this)" style="${CF===s?'':'color:'+sv.color+';border-color:'+sv.color}">${sv.label}</button>`;}).join('')}
@@ -1332,7 +1318,7 @@ function buildGTable(months,tm,inits){
   }
   const tls=`left:calc(${tp*100}%);position:absolute;top:0;bottom:0;width:2px;background:var(--cyan);box-shadow:0 0 7px var(--cyan-glow);z-index:5;pointer-events:none;`;
   let html=`<div class="ghdr">
-    <div class="ghc">Hito</div><div class="ghc">Estado</div><div class="ghc">Avance</div>
+    <div class="ghc">Iniciativa</div><div class="ghc">Estado</div><div class="ghc">Avance</div>
     <div style="padding:0 7px;display:grid;grid-template-columns:repeat(${tm},1fr)">${months.map(m=>`<div class="ghmo">${m}</div>`).join('')}</div>
   </div>`;
   CP.sectors.forEach(sid=>{
@@ -1344,7 +1330,7 @@ function buildGTable(months,tm,inits){
       const s2=Math.min(init.start,tm-1),e2=Math.min(init.end,tm-1);
       const bL=(s2/tm)*100,bW=((e2-s2+1)/tm)*100;
       const rdots=init.responsibles.map(rid=>{const u=ubid(rid);return u?`<div class="rdot" style="background:${u.color}" title="${u.name}">${ini(u.name)}</div>`:''}).join('');
-      const hd=init.tareas.filter(h=>h.done).length,ht=init.tareas.length;
+      const hd=init.hitos.filter(h=>h.done).length,ht=init.hitos.length;
       html+=`<div class="grow${init.id===SI?' sel':''}" onclick="selInit('${init.id}')">
         <div class="grnm"><div class="inum" style="background:${sv.color}">${init.num}</div>
           <div style="flex:1;min-width:0"><div class="inm">${init.name}</div>
@@ -1353,7 +1339,6 @@ function buildGTable(months,tm,inits){
               ${ht?`<span style="font-size:9px;color:var(--mid)">${hd}/${ht}</span>`:''}
             </div>
           </div>
-          ${canFullEdit(init)?`<button class="bico" onclick="event.stopPropagation();openEditInit('${init.id}')" title="Editar hito" style="opacity:.6;flex-shrink:0">✏️</button>`:''}
         </div>
         <div class="grc"><span class="stb st-${init.status}">${stl(init.status)}</span></div>
         <div class="grc" style="font-size:12px;font-weight:800;color:${sv.color}">${prog}%</div>
@@ -1368,7 +1353,7 @@ function buildGTable(months,tm,inits){
       </div>`;
     });
   });
-  if(!filtered.length)html+=`<div style="padding:28px;text-align:center;color:var(--mid)">Sin tareas para este filtro.</div>`;
+  if(!filtered.length)html+=`<div style="padding:28px;text-align:center;color:var(--mid)">Sin iniciativas para este filtro.</div>`;
   document.getElementById('gtable').innerHTML=html;
 }
 function fSec(s,btn){CF=s;document.querySelectorAll('.frow .fb').forEach(b=>b.classList.remove('act'));if(btn)btn.classList.add('act');renderGantt();}
@@ -1389,25 +1374,27 @@ function renderSP(){
       ${isAdm()?`<span onclick="rmResp('${init.id}','${u.id}')" style="cursor:pointer;color:var(--mid);font-size:13px;margin-left:2px">×</span>`:''}
     </div>`;}).join('');
   const addRO=isAdm()?DB.users.filter(u=>!init.responsibles.includes(u.id)).map(u=>`<option value="${u.id}">${u.name}</option>`).join(''):'';
-  const hitH=init.tareas.length?init.tareas.map((h,idx)=>{
+  const hitH=init.hitos.length?init.hitos.map((h,idx)=>{
     const ru=h.respId?ubid(h.respId):null;
     const canTog=canToggleHito(init,h);
     return`<div class="hitem">
       <div class="hhd">
-        <div class="hchk${h.done?' done':''}" onclick="${canTog?`togH('${init.id}',${idx})`:''}" style="${canTog?'':'cursor:default;opacity:.5'}">${h.done?'✓':''}</div>
+        <div class="hchk${h.done?' done':h.blocked?' blk':''}" onclick="${canTog?`togH('${init.id}',${idx})`:''}" style="${canTog?'':'cursor:default;opacity:.5'}">${h.done?'✓':h.blocked?'✗':''}</div>
         <div class="htxt${h.done?' done':''}">${h.text}</div>
         ${canFull?`<div style="display:flex;gap:2px">
-          <button class="bico" onclick="openHM('${init.id}',${idx})" title="Editar tarea">✏️</button>
+          <button class="bico" onclick="blkH('${init.id}',${idx})" title="Bloquear">🚫</button>
+          <button class="bico" onclick="openHM('${init.id}',${idx})" title="Editar">✏️</button>
           <button class="bico" onclick="delH('${init.id}',${idx})" title="Eliminar">🗑</button>
         </div>`:''}
       </div>
       <div class="hmeta">
         ${ru?`<span class="hmb hm-resp">👤 ${ru.name}</span>`:''}
         ${h.date?`<span class="hmb hm-date">📅 ${h.date}</span>`:''}
+        ${h.blocked?`<span class="hmb hm-bloq">🚫 Bloqueado</span>`:''}
         ${h.link?`<a href="${h.link}" target="_blank" class="hmb" style="background:#E8F0FE;color:#2C5EBA;text-decoration:none">🔗 ${h.obs||'Ver doc'}</a>`:''}
         ${(h.obs&&!h.link)?`<span class="hmb" style="background:#EEF1F6;color:var(--dark)">📝 ${h.obs}</span>`:''}
       </div>
-    </div>`;}).join(''):`<div class="emptymsg">Sin tareas cargadas.</div>`;
+    </div>`;}).join(''):`<div class="emptymsg">Sin hitos cargados.</div>`;
   const cmH=init.comments.length?[...init.comments].reverse().map(c=>{const u=ubid(c.userId);
     return`<div class="citem"><div class="cmeta">
       <div style="display:flex;align-items:center;gap:5px">
@@ -1429,24 +1416,26 @@ function renderSP(){
   <div class="spbody">
     <div class="spmg">
       <div><div class="spml">Estado</div>
-        <div style="display:flex;align-items:center;gap:6px">
-        <span class="stb st-${init.status}">${stl(init.status)}</span>
-        <span style="font-size:9px;color:var(--mid)">automático</span>
-      </div>
+        ${canCollab?`<select class="stsel" onchange="chgSt('${init.id}',this.value)">
+          <option value="pendiente" ${init.status==='pendiente'?'selected':''}>Pendiente</option>
+          <option value="en-curso" ${init.status==='en-curso'?'selected':''}>En curso</option>
+          <option value="bloqueado" ${init.status==='bloqueado'?'selected':''}>Bloqueado</option>
+          <option value="completado" ${init.status==='completado'?'selected':''}>Completado</option>
+        </select>`:`<span class="stb st-${init.status}">${stl(init.status)}</span>`}
       </div>
       <div><div class="spml">Dificultad</div><div class="spmv"><span class="dif-${init.dif}">${init.dif}</span></div></div>
       <div><div class="spml">Período</div><div class="spmv" style="font-size:11px">${months[Math.min(init.start,months.length-1)]} – ${months[Math.min(init.end,months.length-1)]} ${CP.startMonth?CP.startMonth.split('-')[0]:''}</div></div>
       <div><div class="spml">Métrica</div><div class="spmv" style="font-size:10px;line-height:1.4">${init.metrica||'—'}</div></div>
     </div>
     <div class="spsec">
-      <div class="spsect">Avance — calculado automáticamente desde tareas</div>
+      <div class="spsect">Avance — calculado automáticamente desde hitos</div>
       <div style="display:flex;align-items:center;gap:10px">
         <div style="flex:1;height:9px;background:var(--border);border-radius:4px;overflow:hidden">
           <div style="height:100%;border-radius:4px;background:${sv.color};width:${prog}%;transition:width .4s"></div>
         </div>
         <span style="font-size:13px;font-weight:800;color:${sv.color};width:34px;text-align:right">${prog}%</span>
       </div>
-      <div style="font-size:10px;color:var(--mid);margin-top:4px">${init.tareas.filter(h=>h.done).length} de ${init.tareas.length} tareas completadas</div>
+      <div style="font-size:10px;color:var(--mid);margin-top:4px">${init.hitos.filter(h=>h.done).length} de ${init.hitos.length} hitos completados</div>
     </div>
     <div class="spsec">
       <div class="spsect">Responsables</div>
@@ -1456,11 +1445,11 @@ function renderSP(){
     <div class="spsec"><div class="spsect">Objetivo</div><div class="spbox or">${init.objetivo||'Sin definir.'}</div></div>
     <div class="spsec"><div class="spsect">¿Cuándo se considera cumplida?</div><div class="spbox gn">${init.done_when||'Sin definir.'}</div></div>
     <div class="spsec">
-      <div class="spsect">Tareas (${init.tareas.filter(h=>h.done).length}/${init.tareas.length} ✓)
+      <div class="spsect">Hitos / Tareas (${init.hitos.filter(h=>h.done).length}/${init.hitos.length} ✓)
         ${canFull?`<span style="font-size:10px;color:var(--mid);font-weight:400">Líder/Admin: editar · Colaborador: solo cerrar asignados</span>`:''}
       </div>
       ${hitH}
-      ${canFull?`<button class="addhito" onclick="openHM('${init.id}')">＋ Agregar tarea</button>`:''}
+      ${canFull?`<button class="addhito" onclick="openHM('${init.id}')">＋ Agregar hito o tarea</button>`:''}
     </div>
     <div class="spsec">
       <div class="spsect">Actualizaciones (${init.comments.length})</div>
@@ -1482,7 +1471,7 @@ function renderSP(){
 }
 function closePanel(){
   SI=null;document.getElementById('spanel').classList.add('hidden');
-  document.getElementById('spct').innerHTML=`<div class="selprompt"><div style="font-size:38px;margin-bottom:12px">👆</div><div style="font-size:12px;line-height:1.6">Seleccioná una hito para ver su detalle.</div></div>`;
+  document.getElementById('spct').innerHTML=`<div class="selprompt"><div style="font-size:38px;margin-bottom:12px">👆</div><div style="font-size:12px;line-height:1.6">Seleccioná una iniciativa para ver su detalle.</div></div>`;
   renderGantt();
 }
 
@@ -1508,8 +1497,8 @@ async function rmResp(id,uid2){
 function openHM(initId,editIdx){
   hitoId=initId;
   const init=CP.initiatives.find(i=>i.id===initId);
-  const h=editIdx!==undefined?init?.tareas[editIdx]:null;
-  document.getElementById('hm-title').textContent=h?'Editar hito / tarea':'Agregar tarea';
+  const h=editIdx!==undefined?init?.hitos[editIdx]:null;
+  document.getElementById('hm-title').textContent=h?'Editar hito / tarea':'Agregar hito / tarea';
   document.getElementById('nht').value=h?h.text:'';
   document.getElementById('nhd').value=h?h.date||'':'';
   document.getElementById('nhl').value=h?h.link||'':'';
@@ -1531,41 +1520,39 @@ async function saveHM(){
     date:document.getElementById('nhd').value,
     link:document.getElementById('nhl').value.trim(),
     obs:document.getElementById('nho').value.trim(),
-    done:editIdx!==''?i.tareas[parseInt(editIdx)]?.done||false:false,
-    blocked:editIdx!==''?i.tareas[parseInt(editIdx)]?.blocked||false:false
+    done:editIdx!==''?i.hitos[parseInt(editIdx)]?.done||false:false,
+    blocked:editIdx!==''?i.hitos[parseInt(editIdx)]?.blocked||false:false
   };
-  if(editIdx!=='')i.tareas[parseInt(editIdx)]=hitoData;
-  else i.tareas.push(hitoData);
+  if(editIdx!=='')i.hitos[parseInt(editIdx)]=hitoData;
+  else i.hitos.push(hitoData);
   i.progress=recalcProgress(i);
   await persistDB();closeHM();renderSP();renderGantt();
 }
 async function togH(id,idx){
   const i=CP.initiatives.find(x=>x.id===id);if(!i)return;
-  const h=i.tareas[idx];
+  const h=i.hitos[idx];
   if(!canToggleHito(i,h))return;
-  h.done=!h.done;
+  h.done=!h.done;if(h.done)h.blocked=false;
   i.progress=recalcProgress(i);
   await persistDB();renderSP();renderGantt();
 }
 async function blkH(id,idx){
   const i=CP.initiatives.find(x=>x.id===id);if(!i)return;
-  i.tareas[idx].blocked=!i.tareas[idx].blocked;
-  if(i.tareas[idx].blocked)i.tareas[idx].done=false;
+  i.hitos[idx].blocked=!i.hitos[idx].blocked;
+  if(i.hitos[idx].blocked)i.hitos[idx].done=false;
   i.progress=recalcProgress(i);
   await persistDB();renderSP();
 }
 async function delH(id,idx){
   const i=CP.initiatives.find(x=>x.id===id);
   if(!i||!confirm('¿Eliminar hito?'))return;
-  i.tareas.splice(idx,1);i.progress=recalcProgress(i);
+  i.hitos.splice(idx,1);i.progress=recalcProgress(i);
   await persistDB();renderSP();renderGantt();
 }
 
 // ══ INITIATIVE MODAL ══
 function openIM(){
   if(!CP)return;
-  document.getElementById('ov-init').dataset.editId='';
-  const mt=document.querySelector('#ov-init .mt');if(mt)mt.textContent='Nuevo hito';
   document.getElementById('imsec').innerHTML=CP.sectors.map(s=>{const sv=gsec(s);return`<option value="${s}">${sv.label}</option>`;}).join('');
   ['imn','immet','imobj','imdone'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('imdif').value='Media';
@@ -1573,62 +1560,19 @@ function openIM(){
   document.getElementById('imerr').textContent='';
   document.getElementById('ov-init').style.display='flex';
 }
-
-// ══ EDIT HITO (initiative) — Líder/Superadmin ══
-function openEditInit(initId){
-  if(!CP)return;
-  const init=CP.initiatives.find(i=>i.id===initId);
-  if(!init||!canFullEdit(init))return;
-  document.getElementById('imsec').innerHTML=CP.sectors.map(s=>{const sv=gsec(s);return`<option value="${s}" ${init.sector===s?'selected':''}>${sv.label}</option>`;}).join('');
-  document.getElementById('imn').value=init.name||'';
-  document.getElementById('immet').value=init.metrica||'';
-  document.getElementById('imobj').value=init.objetivo||'';
-  document.getElementById('imdone').value=init.done_when||'';
-  document.getElementById('imdif').value=init.dif||'Media';
-  document.getElementById('ims').value=init.start||0;
-  document.getElementById('ime').value=init.end||2;
-  document.getElementById('imerr').textContent='';
-  document.getElementById('ov-init').dataset.editId=initId;
-  // Change modal title
-  const mt=document.querySelector('#ov-init .mt');
-  if(mt)mt.textContent='Editar hito';
-  document.getElementById('ov-init').style.display='flex';
-}
-
-function closeIM(){
-  document.getElementById('ov-init').style.display='none';
-  document.getElementById('ov-init').dataset.editId='';
-  const mt=document.querySelector('#ov-init .mt');
-  if(mt)mt.textContent='Nuevo hito';
-}
+function closeIM(){document.getElementById('ov-init').style.display='none';}
 async function saveIM(){
   const name=document.getElementById('imn').value.trim();
   if(!name){document.getElementById('imerr').textContent='Ingresá un nombre.';document.getElementById('imerr').classList.add('on');return;}
-  const editId=document.getElementById('ov-init').dataset.editId||'';
-  if(editId){
-    const init=CP.initiatives.find(i=>i.id===editId);
-    if(init){
-      init.name=name;
-      init.sector=document.getElementById('imsec').value;
-      init.dif=document.getElementById('imdif').value;
-      init.metrica=document.getElementById('immet').value.trim();
-      init.objetivo=document.getElementById('imobj').value.trim();
-      init.done_when=document.getElementById('imdone').value.trim();
-      init.start=parseInt(document.getElementById('ims').value)||0;
-      init.end=parseInt(document.getElementById('ime').value)||2;
-    }
-  } else {
-    const maxN=CP.initiatives.reduce((m,i)=>Math.max(m,i.num),0);
-    CP.initiatives.push({id:uid(),num:maxN+1,sector:document.getElementById('imsec').value,name,dif:document.getElementById('imdif').value,metrica:document.getElementById('immet').value.trim(),start:parseInt(document.getElementById('ims').value)||0,end:parseInt(document.getElementById('ime').value)||2,objetivo:document.getElementById('imobj').value.trim(),done_when:document.getElementById('imdone').value.trim(),status:'pendiente',progress:0,responsibles:[],hitos:[],comments:[]});
-  }
+  const maxN=CP.initiatives.reduce((m,i)=>Math.max(m,i.num),0);
+  CP.initiatives.push({id:uid(),num:maxN+1,sector:document.getElementById('imsec').value,name,dif:document.getElementById('imdif').value,metrica:document.getElementById('immet').value.trim(),start:parseInt(document.getElementById('ims').value)||0,end:parseInt(document.getElementById('ime').value)||2,objetivo:document.getElementById('imobj').value.trim(),done_when:document.getElementById('imdone').value.trim(),status:'pendiente',progress:0,responsibles:[],hitos:[],comments:[]});
   await persistDB();closeIM();renderGantt();
-  if(SI)renderSP();
 }
 
 // ══ RESUMEN ══
 function renderResumen(){
   if(!CP)return;
-  const inits=CP.initiatives,bySt={pendiente:0,'en-curso':0,completado:0};
+  const inits=CP.initiatives,bySt={pendiente:0,'en-curso':0,bloqueado:0,completado:0};
   inits.forEach(i=>bySt[i.status]=(bySt[i.status]||0)+1);
   const docs=getProjectDocs(CP.id);
   const docsHtml=docs.length?docs.map((d,i)=>`
@@ -1643,7 +1587,7 @@ function renderResumen(){
     </div>`).join(''):`<div style="font-size:12px;color:var(--mid);padding:8px 0">Sin documentos cargados aún.</div>`;
   document.getElementById('ptab-resumen').innerHTML=`
   <div class="twocol">
-    <div class="ac"><div class="act2">Estado de tareas</div>
+    <div class="ac"><div class="act2">Estado de iniciativas</div>
       ${Object.entries({pendiente:'Pendiente','en-curso':'En curso',bloqueado:'Bloqueado',completado:'Completado'}).map(([k,l])=>`
       <div style="display:flex;align-items:center;gap:9px;margin-bottom:7px">
         <span class="stb st-${k}" style="width:88px;text-align:center">${l}</span>
@@ -1753,8 +1697,8 @@ function saveGasConfig(){
 }
 function showRoleDesc(role,targetId){
   const descs={
-    colaborador:'Solo puede dar cierre o avances en los tareas que tiene asignados.',
-    lider:'Puede editar todas las tareas y tareas de su sector.',
+    colaborador:'Solo puede dar cierre o avances en los hitos que tiene asignados.',
+    lider:'Puede editar todas las iniciativas y hitos de su sector.',
     admin:'Acceso completo a todos los proyectos y usuarios.',
     superadmin:'Acceso total al sistema.'
   };
