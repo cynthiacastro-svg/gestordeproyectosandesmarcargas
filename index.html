@@ -1775,6 +1775,8 @@ async function toggleMember(uid){
 }
 
 
+function getInvites(){try{return JSON.parse(localStorage.getItem('gp_invites')||'[]');}catch{return[];}}
+function saveInvites(arr){localStorage.setItem('gp_invites',JSON.stringify(arr));}
 function renderInvitesList(){
   const allInvites=getInvites();
   const invites=allInvites.filter(i=>!i.projectId||(CP&&i.projectId===CP.id));
