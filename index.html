@@ -1719,133 +1719,62 @@ function removeDoc(pid,idx){
 
 // ══ ADMIN ══
 function renderAdmin(){
+  if(!CP)return;
+  if(!CP.members)CP.members=[];
+  const isMember=(u)=>CP.members.find(m=>m.id===u.id);
+  const projectUsers=DB.users.filter(u=>isMember(u));
   document.getElementById('ptab-admin').innerHTML=`
   <div class="twocol">
     <div class="ac" style="grid-column:1/-1">
-      <div class="act2"><span>Usuarios del sistema (${DB.users.length})</span>
+      <div class="act2"><span>Miembros del proyecto (</span><span id="pm-count">${projectUsers.length}</span><span>)</span>
         ${isSA()?`<div style="display:flex;gap:7px">
           <button class="bp" style="width:auto;padding:5px 12px;font-size:11px" onclick="openInvite()">✉️ Invitar</button>
           <button class="bs" style="padding:5px 12px;font-size:11px" onclick="openUM()">＋ Directo</button>
         </div>`:''}
       </div>
-      ${(CP&&CP.members&&CP.members.length?DB.users.filter(u=>CP.members.find(m=>m.id===u.id)):DB.users).map(u=>`<div class="urow">
+      <div style="background:#eef2f8;border-radius:8px;padding:12px 16px;margin-bottom:10px;font-size:12px;color:#3d4a60">
+        <strong>Seleccioná quiénes participan en este proyecto:</strong><br>
+        <span style="color:#8a96ab;font-size:11px">Los cambios se guardan automáticamente al tildar/destildar.</span>
+      </div>
+      ${DB.users.map(u=>`<div class="urow" style="cursor:pointer" onclick="${isSA()?'toggleMember(\''+u.id+'\')':''}" id="urow-${u.id}">
         <div class="urav" style="background:${u.color}">${ini(u.name)}</div>
         <div class="urinfo"><div class="urnm">${u.name}</div><div class="urmt">${u.email} · ${gsec(u.area).label}</div></div>
         <span class="rb rb-${u.role}">${rll(u.role)}</span>
-        ${u.id!=='u0'&&isSA()?`<button class="bdng" onclick="delU('${u.id}')">Eliminar</button>`:''}
+        ${isSA()?`<input type="checkbox" ${isMember(u)?'checked':''} style="width:18px;height:18px;cursor:pointer;accent-color:#003481;margin-left:8px" onclick="event.stopPropagation();toggleMember('${u.id}')">`:''}
       </div>`).join('')}
     </div>
-    <div class="ac" style="grid-column:1/-1">
-      <div class="act2">📨 Invitaciones</div>
+    <div class="ac">
+      <div class="act2"><span>Invitaciones</span></div>
       ${renderInvitesList()}
     </div>
-    <div class="ac" style="grid-column:1/-1">
-      <div class="act2">⚙️ Google Apps Script (Base de datos compartida)</div>
-      <label class="fl">URL del GAS Web App</label>
-      <input class="fi" id="gas-cfg" placeholder="https://script.google.com/macros/s/..." value="${getGasUrl()}">
-      <button class="bp" style="width:auto;padding:7px 16px;font-size:12px;margin-bottom:8px" onclick="saveGasConfig()">💾 Guardar URL</button>
-      <div style="font-size:11px;color:var(--mid);line-height:1.7">
-        Con GAS configurado, <b>todos los usuarios ven los mismos datos en tiempo real</b>.<br>
-        Sin GAS → datos locales (cada browser es independiente).<br>
-        Después de guardar, hacé click en <b>🔄 Sincronizar</b> en la pantalla principal.
+    <div class="ac">
+      <div class="act2"><span>Google Apps Script (Base de datos compartida)</span></div>
+      <div style="font-size:11px;color:var(--mid);margin-bottom:8px">URL del GAS Web App</div>
+      <div style="display:flex;gap:8px">
+        <input id="gas-url-inp" value="${getGasUrl()}" placeholder="https://script.google.com/macros/s/..." style="flex:1;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;background:var(--bg)">
+        <button class="bp" style="width:auto;padding:8px 14px;font-size:12px" onclick="saveGasUrl()">Guardar</button>
+        <button class="bs" style="width:auto;padding:8px 14px;font-size:12px" onclick="syncFromGAS(true)">↺ Sync</button>
       </div>
+      <div id="sync-info" style="font-size:11px;color:var(--mid);margin-top:6px"></div>
     </div>
   </div>`;
 }
-function saveGasConfig(){
-  const url=document.getElementById('gas-cfg')?.value.trim()||'';
-  localStorage.setItem(GAS_KEY,url);
-  showSync('URL GAS guardada. Hacé click en Sincronizar.','ok');
-}
-function showRoleDesc(role,targetId){
-  const descs={
-    colaborador:'Solo puede dar cierre o avances en los tareas que tiene asignados.',
-    lider:'Puede editar todas las tareas y tareas de su sector.',
-    admin:'Acceso completo a todos los proyectos y usuarios.',
-    superadmin:'Acceso total al sistema.'
-  };
-  const el=document.getElementById(targetId);if(el)el.textContent=descs[role]||'';
-}
-
-// ══ USERS ══
-function openUM(){
-  ['uun','uuu','uup'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('uur').value='colaborador';document.getElementById('uuerr').textContent='';
-  showRoleDesc('colaborador','uu-rd');
-  document.getElementById('uusec').innerHTML=SECS.map(s=>`<option value="${s.id}">${s.label}</option>`).join('');
-  document.getElementById('ov-user').style.display='flex';
-}
-function closeUM(){document.getElementById('ov-user').style.display='none';}
-async function saveUM(){
-  const name=document.getElementById('uun').value.trim();
-  const email=document.getElementById('uuu').value.trim().toLowerCase();
-  const pass=document.getElementById('uup').value;
-  const err=document.getElementById('uuerr');
-  if(!name||!email||!pass){err.textContent='Completá todos los campos.';err.classList.add('on');return;}
-  if(pass.length<6){err.textContent='Mínimo 6 caracteres.';err.classList.add('on');return;}
-  if(!/^[^@]+@[^@]+\.[^@]+$/.test(email)){err.textContent='Email inválido.';err.classList.add('on');return;}
-  if(DB.users.find(u=>u.email===email||u.username===email)){err.textContent='Email ya registrado.';err.classList.add('on');return;}
-  const colors=['#004993','#F47B20','#2D9E6B','#7B5EA7','#E05252','#01B8B9','#6C5CE7'];
-  const newU={id:uid(),username:email,email,password:pass,name,area:document.getElementById('uusec').value,role:document.getElementById('uur').value,color:colors[DB.users.length%colors.length]};
-  DB.users.push(newU);
-  if(CP){if(!CP.members)CP.members=[];if(!CP.members.find(m=>m.id===newU.id))CP.members.push({id:newU.id,email:newU.email,role:newU.role});}
-  await persistDB();closeUM();renderAdmin();
-}
-async function delU(uid2){
-  if(!confirm('¿Eliminar este usuario?'))return;
-  DB.users=DB.users.filter(u=>u.id!==uid2);
-  DB.projects.forEach(p=>p.initiatives.forEach(i=>{i.responsibles=i.responsibles.filter(r=>r!==uid2);}));
-  await persistDB();renderAdmin();
-}
-
-// ══ INVITES ══
-function previewEmail(){
-  const n=document.getElementById('inv-n')?.value.trim()||'';
-  const a=document.getElementById('inv-a')?.value.trim()||'';
-  const el=document.getElementById('inv-email-preview');
-  if(el)el.textContent=(n&&a)?buildEmail(n,a):'—';
-}
-function openInvite(){
-  document.getElementById('inv-n').value='';document.getElementById('inv-a').value='';
-  document.getElementById('inv-email-preview').textContent='—';
-  document.getElementById('inv-err').textContent='';
-  document.getElementById('inv-sec').innerHTML=SECS.map(s=>`<option value="${s.id}">${s.label}</option>`).join('');
-  document.getElementById('inv-rol').value='colaborador';showRoleDesc('colaborador','inv-rd');
-  document.getElementById('ov-invite').style.display='flex';
-}
-function closeInvite(){document.getElementById('ov-invite').style.display='none';}
-async function createInvite(){
-  const nombre=document.getElementById('inv-n').value.trim();
-  const apellido=document.getElementById('inv-a').value.trim();
-  const sector=document.getElementById('inv-sec').value;
-  const rol=document.getElementById('inv-rol').value;
-  const err=document.getElementById('inv-err');
-  if(!nombre||!apellido){err.textContent='Completá nombre y apellido.';err.classList.add('on');return;}
-  const email=buildEmail(nombre,apellido);
-  if(DB.users.find(u=>u.email===email||u.username===email)){err.textContent='Ya existe usuario con ese email.';err.classList.add('on');return;}
-  const token='inv_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-  const expiry=Date.now()+7*24*60*60*1000;
-  const baseUrl=window.location.href.split('?')[0];
-  const link=baseUrl+'?activate='+token;
-  const invite={token,email,fullName:nombre+' '+apellido,nombre,apellido,sector,rol,expiry,status:'pending',createdBy:CU.id,createdAt:nows(),projectId:CP?CP.id:null};
-  const invites=getInvites();invites.push(invite);saveInvites(invites);
-  // Save to GAS
-  await gasPost({action:'saveInvite',invite});
-  // Send email via GAS
-  const sv=gsec(sector);
-  const rolLabel={colaborador:'Colaborador',lider:'Líder de sector',admin:'Administrador'}[rol]||rol;
-  gasPost({action:'sendInviteEmail',to_email:email,to_name:nombre+' '+apellido,sector:sv.label,rol:rolLabel,link});
-  closeInvite();
-  document.getElementById('inv-link-display').textContent=link;
-  _lastLink=link;
-  document.getElementById('ov-inv-result').style.display='flex';
+async function toggleMember(uid){
+  if(!CP)return;
+  if(!CP.members)CP.members=[];
+  const user=DB.users.find(u=>u.id===uid);
+  if(!user)return;
+  const idx=CP.members.findIndex(m=>m.id===uid);
+  if(idx>=0){
+    CP.members.splice(idx,1);
+  } else {
+    CP.members.push({id:user.id,email:user.email,role:user.role});
+  }
+  await persistDB();
   renderAdmin();
 }
-function copyInviteLink(){
-  if(_lastLink){navigator.clipboard.writeText(_lastLink).then(()=>alert('✅ Link copiado.')).catch(()=>prompt('Copiá este link:',_lastLink));}
-}
-function getInvites(){try{return JSON.parse(localStorage.getItem('gp_invites')||'[]');}catch{return[];}}
-function saveInvites(arr){localStorage.setItem('gp_invites',JSON.stringify(arr));}
+
+
 function renderInvitesList(){
   const allInvites=getInvites();
   const invites=allInvites.filter(i=>!i.projectId||(CP&&i.projectId===CP.id));
