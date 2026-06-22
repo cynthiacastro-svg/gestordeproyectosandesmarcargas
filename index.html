@@ -1513,7 +1513,7 @@ async function rmResp(id,uid2){
 function openHM(initId,editIdx){
   hitoId=initId;
   const init=CP.initiatives.find(i=>i.id===initId);
-  const h=editIdx!==undefined?init?.tareas[editIdx]:null;
+  const h=editIdx!==undefined?init?.hitos[editIdx]:null;
   document.getElementById('hm-title').textContent=h?'Editar hito / tarea':'Agregar tarea';
   document.getElementById('nht').value=h?h.text:'';
   document.getElementById('nhd').value=h?h.date||'':'';
