@@ -1942,19 +1942,23 @@ function loadKpiFrame(){
 }
 
 // ══ INIT ══
+// DB version — increment when SEED data changes significantly
+const DB_VERSION = '2026-06-v4';  // v4 = 4 projects including Drivin
+
 async function init(){
   // 1. Check activate token in URL
   if(await checkActivateParam())return;
-  // 2. Clear old localStorage keys from previous versions
+  // 2. Version check — if stored version differs, clear localStorage and reload SEED
+  const storedVersion = localStorage.getItem('andesmar_gp_version');
+  if(storedVersion !== DB_VERSION){
+    // New version detected — clear local DB so SEED loads fresh
+    localStorage.removeItem('andesmar_gp_db');
+    localStorage.setItem('andesmar_gp_version', DB_VERSION);
+    console.log('DB version updated to', DB_VERSION, '— reloading SEED');
+  }
+  // 3. Also clear old keys
   ['andgp_v4','andesmar_gp_db_old'].forEach(k=>localStorage.removeItem(k));
-  // If stored DB has no projects (empty/corrupt), clear it so SEED loads
-  try{
-    const stored=JSON.parse(localStorage.getItem('andesmar_gp_db')||'{}');
-    if(!stored.projects||stored.projects.length===0){
-      localStorage.removeItem('andesmar_gp_db');
-    }
-  }catch{localStorage.removeItem('andesmar_gp_db');}
-  // 3. Load DB
+  // 4. Load DB
   await syncFromGAS();
   // 3. Restore session
   const savedCU=sessionStorage.getItem('gp_cu');
