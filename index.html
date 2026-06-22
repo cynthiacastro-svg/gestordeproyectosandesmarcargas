@@ -2004,6 +2004,11 @@ async function init(){
   if(!DB||!DB.projects||DB.projects.length===0){
     DB=JSON.parse(JSON.stringify(SEED));
   }
+  // Remove duplicate/stale Drivin projects (keep only id='p4')
+  DB.projects=DB.projects.filter(p=>{
+    const isDrivin=p.name&&(p.name.toUpperCase().includes('DRIV')||p.name.toUpperCase().includes('DRIVIN'));
+    return !isDrivin||(p.id==='p4');
+  });
   // Merge any missing SEED projects
   SEED.projects.forEach(sp=>{
     if(!DB.projects.find(p=>p.id===sp.id))DB.projects.push(sp);
