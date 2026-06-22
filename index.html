@@ -344,8 +344,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 <!-- MODAL: NUEVA INICIATIVA -->
 <div class="ov" id="ov-init" style="display:none">
   <div class="modal modal-lg">
-    <div class="mt">Nuevo hito</div>
-    <div class="ms">Completá el detalle del hito.</div>
+    <div class="mt">Nueva iniciativa</div>
+    <div class="ms">Completá el detalle de la iniciativa.</div>
     <div class="two-col">
       <div style="grid-column:1/-1"><label class="fl">Nombre *</label><input class="fi" id="imn" placeholder="ej. Estandarización de etiquetas"></div>
       <div><label class="fl">Sector</label><select class="fs" id="imsec"></select></div>
@@ -364,7 +364,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 <!-- MODAL: NUEVO HITO -->
 <div class="ov" id="ov-hito" style="display:none">
   <div class="modal" style="width:460px">
-    <div class="mt" id="hm-title">Agregar tarea</div>
+    <div class="mt" id="hm-title">Agregar hito / tarea</div>
     <div class="ms" style="margin-bottom:14px">Tarea, responsable, fecha y documento de referencia.</div>
     <label class="fl">Descripción *</label>
     <input class="fi" id="nht" placeholder="ej. Definir proceso con Sistemas">
@@ -400,7 +400,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
           <option value="lider">Líder de sector</option>
           <option value="admin">Administrador</option>
         </select>
-        <div class="role-desc" id="inv-rd">Solo puede dar cierre o avances en sus tareas asignados.</div>
+        <div class="role-desc" id="inv-rd">Solo puede dar cierre o avances en sus hitos asignados.</div>
       </div>
     </div>
     <div class="ferr" id="inv-err"></div>
@@ -439,7 +439,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
       <option value="admin">Administrador</option>
       <option value="superadmin">Superadmin</option>
     </select>
-    <div class="role-desc" id="uu-rd">Solo puede dar cierre o avances en sus tareas asignados.</div>
+    <div class="role-desc" id="uu-rd">Solo puede dar cierre o avances en sus hitos asignados.</div>
     <div class="ferr" id="uuerr"></div>
     <div class="btn-row"><button class="bs" onclick="closeUM()">Cancelar</button><button class="bp" onclick="saveUM()">Crear usuario</button></div>
   </div>
@@ -532,16 +532,20 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
     </div>
     <div class="spanel hidden" id="spanel">
       <div id="spct" style="height:100%;display:flex;flex-direction:column">
-        <div class="selprompt"><div style="font-size:38px;margin-bottom:12px">👆</div><div style="font-size:12px;line-height:1.6">Seleccioná una hito para ver su detalle, tareas y comentarios.</div></div>
+        <div class="selprompt"><div style="font-size:38px;margin-bottom:12px">👆</div><div style="font-size:12px;line-height:1.6">Seleccioná una iniciativa para ver su detalle, hitos y comentarios.</div></div>
       </div>
     </div>
   </div>
 </div>
+
 <script>
+const GAS_URL='https://script.google.com/macros/s/AKfycbxNe-A4NR8laaxnSxrgJ8_dxKTp6ST4M_-E2GN1WK9tntxSzpACWTlRXxE2xGFSujxn/exec';
+const DB_VERSION='2026-v6';
+const EMAILS_ENABLED=false;
+const getGasUrl=()=>GAS_URL;
+
 // ══ CONFIG ══
-const GAS_KEY='andesmar_gas_url';
-const GAS_URL_DEFAULT='https://script.google.com/macros/s/AKfycbxNe-A4NR8laaxnSxrgJ8_dxKTp6ST4M_-E2GN1WK9tntxSzpACWTlRXxE2xGFSujxn/exec';
-const getGasUrl=()=>localStorage.getItem(GAS_KEY)||GAS_URL_DEFAULT;
+
 
 // ══ SECTORS ══
 const SECS=[
@@ -564,7 +568,6 @@ const SEED={
     {id:'u2',username:'javierdomingo@andesmar.com.ar',password:'javier123',name:'Javier Domingo',area:'operaciones',role:'lider',email:'javierdomingo@andesmar.com.ar',color:'#F47B20'},
     {id:'u3',username:'fedeesposito@andesmar.com.ar',password:'fede123',name:'Fede Esposito',area:'gestion',role:'superadmin',email:'fedeesposito@andesmar.com.ar',color:'#2D9E6B'},
     {id:'u4',username:'rodrigopujal@andesmar.com.ar',password:'rodrigo123',name:'Rodrigo Pujal',area:'transporte',role:'colaborador',email:'rodrigopujal@andesmar.com.ar',color:'#7B5EA7'},
-    {id:'u5',username:'pauladonaire@andesmar.com.ar',password:'pau1207',name:'Paula Donaire',area:'sistemas',role:'colaborador',email:'pauladonaire@andesmar.com.ar',color:'#01B8B9'},
   ],
   projects:[{
     id:'p1',
@@ -678,7 +681,7 @@ const SEED={
       {id:'l6',num:6,sector:'gestion',name:'Contrato Last-Mile firmado (lado Andesmar) — pendiente firma LION',dif:'Alta',metrica:'Contrato firmado ambas partes',start:2,end:3,
        objetivo:'Firma del contrato Last-Mile. Andesmar ya firmó. LION tiene objeciones de finanzas sobre métodos de pago.',
        done_when:'Firma de LION recibida. Sin firma no hay base legal para operar.',
-       status:'pendiente',progress:50,responsibles:['u1'],hitos:[
+       status:'bloqueado',progress:50,responsibles:['u1'],hitos:[
          {text:'Andesmar firmó el contrato (01/06/2026)',respId:'u1',date:'2026-06-01',done:true,blocked:false},
          {text:'Comunicar posición final de cláusulas a LION (jurisdicción + compensación directa)',respId:'u1',date:'2026-06-20',done:false,blocked:false},
          {text:'Gestionar firma de LION — seguimiento a Carol en finanzas',respId:'u1',date:'2026-07-01',done:false,blocked:true},
@@ -744,7 +747,7 @@ const SEED={
       {id:'l15',num:15,sector:'operaciones',name:'Zendesk / Tablero operativo Customer',dif:'Alta',metrica:'Tablero operativo activo',start:3,end:4,
        objetivo:'Implementar tablero operativo en Zendesk para el equipo Customer. Bloqueado esperando contactos IT de Tomasi.',
        done_when:'Tablero operativo activo y equipo Customer capacitado.',
-       status:'pendiente',progress:0,responsibles:['u0'],hitos:[
+       status:'bloqueado',progress:0,responsibles:['u0'],hitos:[
          {text:'Obtener contactos IT de Tomasi para Zendesk',respId:'u0',date:'',done:false,blocked:true},
          {text:'Configurar tablero Zendesk operativo',respId:'u0',date:'',done:false,blocked:false},
          {text:'Capacitar equipo Customer en SLA y penalidades',respId:'u0',date:'2026-07-05',done:false,blocked:false},
@@ -755,7 +758,7 @@ const SEED={
       {id:'l16',num:16,sector:'sistemas',name:'⚠ CRÍTICO: Tracking events incompletos — penalidades activas',dif:'Alta',metrica:'Lista completa enviada a LION',start:3,end:3,
        objetivo:'LION ya recibió penalidades de su cliente por eventos de tracking faltantes. Enviar lista completa (Código + Estado + descripción en inglés) con urgencia máxima.',
        done_when:'Lista completa de tracking events enviada y confirmada por LION. 7 nodos obligatorios configurados en sistema.',
-       status:'pendiente',progress:0,responsibles:['u1','u0'],hitos:[
+       status:'bloqueado',progress:0,responsibles:['u1','u0'],hitos:[
          {text:'Compilar lista completa de tracking events (Código + Estado + descripción en inglés)',respId:'u0',date:'2026-06-19',done:false,blocked:false},
          {text:'Coordinar con Fabian Olivares para validación técnica',respId:'u1',date:'2026-06-19',done:false,blocked:false},
          {text:'Enviar lista completa a LION urgente',respId:'u1',date:'2026-06-19',done:false,blocked:false},
@@ -794,10 +797,10 @@ const SEED={
        done_when:'Ejecutivo designado, presentado a LION y con agenda de seguimiento.',
        status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'l23',num:23,sector:'gestion',name:'🚀 GO-LIVE — Operación completa LION 360',dif:'Alta',metrica:'1ª semana operativa sin incidentes críticos',start:4,end:4,
-       objetivo:'Inicio de operación productiva completa. Todos los tareas previos deben estar completados.',
+       objetivo:'Inicio de operación productiva completa. Todos los hitos previos deben estar completados.',
        done_when:'Go-live el 07/07/2026. Primera semana operativa sin incidentes críticos.',
        status:'pendiente',progress:0,responsibles:['u1','u2','u0'],hitos:[
-         {text:'Todos los tareas de integración completados',respId:'u1',date:'2026-07-06',done:false,blocked:false},
+         {text:'Todos los hitos de integración completados',respId:'u1',date:'2026-07-06',done:false,blocked:false},
          {text:'QA end-to-end aprobado',respId:'u1',date:'2026-07-06',done:false,blocked:false},
          {text:'Contrato firmado por LION',respId:'u1',date:'2026-07-06',done:false,blocked:false},
          {text:'Monitoreo API 24/7 activo (uptime ≥99.9%)',respId:'u1',date:'2026-07-07',done:false,blocked:false},
@@ -906,7 +909,7 @@ const SEED={
        ]},
     ]
   },
-  {id:'p4',name:'Implementación Drivin — Primera y Última Milla',desc:'Implementación de la plataforma Drivin para gestión de Primera y Última Milla en todos los CNDs de Andesmar Cargas. Incluye capacitación, configuración operativa, optimización de ruteo, liquidación y documentación de flota.',site:'Todos los CNDs (Buenos Aires, Mendoza, Córdoba, San Juan, San Luis, Neuquén, Tucumán, Rosario, Bahía Blanca)',startMonth:'2025-11',endMonth:'2026-08',status:'activo',sectors:['operaciones','sistemas','gestion'],kpis:{efectividad:0,efectividadTarget:100,ultimaMilla:0,ultimaMillaTarget:100},initiatives:[{id:'drv1',num:1,sector:'operaciones',name:'Iniciativas Globales (Todos los CNDs)',dif:'Media',metrica:'Tareas completadas / Total tareas — Todos',start:0,end:3,objetivo:'Implementar Drivin en Todos con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'en-curso',progress:80,responsibles:['u2'],hitos:[{text:'Dashboard Última Milla',respId:'u2',date:'2026-05-30',link:'',obs:'Medición de los ppales KPI',done:true,blocked:false},{text:'Capacitaciones + evaluación online para conductores',respId:'u2',date:'2026-01-31',link:'',obs:'',done:true,blocked:false},{text:'Capacitaciones + evaluación online para depósitos',respId:'u2',date:'2026-01-31',link:'',obs:'',done:true,blocked:false},{text:'Tablero Monitoreo',respId:'u2',date:'2026-04-30',link:'',obs:'Seguimiento de rutas en tiempo real',done:true,blocked:false},{text:'Notificaciones personalizadas por mail',respId:'u2',date:'2026-06-10',link:'',obs:'Objetivo: mejorar la efectividad de entrega',done:true,blocked:false},{text:'Encuestas de Satisfacción (NPS)',respId:'u2',date:'',link:'',obs:'Medir el servicio de cara al cliente final',done:true,blocked:false},{text:'Alta cliente final en Driv In',respId:'u2',date:'',link:'',obs:'Para mejorar la georreferenciación',done:false,blocked:false},{text:'Gestión de activos',respId:'u2',date:'',link:'',obs:'Para control de pallets',done:false,blocked:false},{text:'Tablero para gestión de NO georreferenciados',respId:'u2',date:'2026-04-30',link:'',obs:'Facilita la edición y validación de direcciones incorrectas',done:true,blocked:false},{text:'Optimización de ruteo por polígonos/zonas',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false}],comments:[]},{id:'drv2',num:2,sector:'operaciones',name:'CND Buenos Aires',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Buenos Aires',start:0,end:3,objetivo:'Implementar Drivin en CND Buenos Aires con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'en-curso',progress:42,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'2025-11-15',link:'',obs:'',done:true,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'2025-11-30',link:'',obs:'',done:true,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'Errores en optimizacion, esperando configuracion de driv.in',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'La base liquida bien, buenos aires liquida los km base, pero tienen el excedente de penalidad de efectividad por fuera.',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'2025-11-15',link:'',obs:'',done:true,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de retiros especiales (grandes sellers)',respId:'u2',date:'',link:'',obs:'Cargar los retiros fijos en grandes clientes (TRF, Dabra, Club, EP, etc)',done:false,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'2025-11-30',link:'',obs:'',done:true,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'Tanto utilitarias cortas, largas y balansines/chasis',done:true,blocked:false}],comments:[]},{id:'drv3',num:3,sector:'operaciones',name:'CND Mendoza',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Mendoza',start:1,end:4,objetivo:'Implementar Drivin en CND Mendoza con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'en-curso',progress:58,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'2025-12-15',link:'',obs:'',done:true,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'2025-12-31',link:'',obs:'',done:true,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'2025-12-15',link:'',obs:'',done:true,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'Errores en optimizacion, esperando configuracion de driv.in',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'La base liquida bien, todavia no liquidamos ninguno completo, ya que de los clientes exclusivos se hace por fuera, lo mismo que adicionales.',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'2025-12-15',link:'',obs:'',done:true,blocked:false},{text:'Ventana Horaria x Zona',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false}],comments:[]},{id:'drv4',num:4,sector:'operaciones',name:'CND Cordoba',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Cordoba',start:2,end:5,objetivo:'Implementar Drivin en CND Cordoba con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'en-curso',progress:50,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'La base liquida bien, todavia no liquidamos ninguno completo, ya que de las lejanias se pagan kg x entrega, el sistema no calcula bien. Estamos esperando mejroa de driv.in para lejanias.',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Ventana Horaria x Zona',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]},{id:'drv5',num:5,sector:'operaciones',name:'CND San Juan',dif:'Media',metrica:'Tareas completadas / Total tareas — CND San Juan',start:3,end:6,objetivo:'Implementar Drivin en CND San Juan con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'en-curso',progress:55,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]},{id:'drv6',num:6,sector:'operaciones',name:'CND San Luis',dif:'Media',metrica:'Tareas completadas / Total tareas — CND San Luis',start:4,end:7,objetivo:'Implementar Drivin en CND San Luis con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'en-curso',progress:55,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]},{id:'drv7',num:7,sector:'operaciones',name:'CND Neuquen',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Neuquen',start:5,end:8,objetivo:'Implementar Drivin en CND Neuquen con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'pendiente',progress:0,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]},{id:'drv8',num:8,sector:'operaciones',name:'CND Tucuman',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Tucuman',start:6,end:9,objetivo:'Implementar Drivin en CND Tucuman con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'pendiente',progress:0,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Encuestas de Satisfacción (NPS)',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]},{id:'drv9',num:9,sector:'operaciones',name:'CND Rosario',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Rosario',start:7,end:10,objetivo:'Implementar Drivin en CND Rosario con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'pendiente',progress:0,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Encuestas de Satisfacción (NPS)',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]},{id:'drv10',num:10,sector:'operaciones',name:'CND Bahía Blanca',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Bahía Blanca',start:8,end:11,objetivo:'Implementar Drivin en CND Bahía Blanca con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'pendiente',progress:0,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Encuestas de Satisfacción (NPS)',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]}]}
+  {id:'p4',name:'Implementación Drivin — Primera y Última Milla',desc:'Implementación de la plataforma Drivin para gestión de Primera y Última Milla en todos los CNDs de Andesmar Cargas.',site:'Todos los CNDs',startMonth:'2025-11',endMonth:'2026-08',status:'activo',sectors:['operaciones'],kpis:{},initiatives:[{id:'drv1',num:1,sector:'operaciones',name:'Globales (Todos los CNDs)',dif:'Media',metrica:'Tareas completadas / Total — Todos',start:0,end:3,objetivo:'Implementar Drivin en Todos con todas las configuraciones operativas.',done_when:'Todas las tareas completadas.',status:'en-curso',progress:80,responsibles:['u0'],hitos:[{text:'Dashboard Última Milla',respId:'u0',date:'2026-05-30',link:'',obs:'Medición de los ppales KPI',done:true},{text:'Capacitaciones + evaluación online para conductores',respId:'u0',date:'2026-01-31',link:'',obs:'',done:true},{text:'Capacitaciones + evaluación online para depósitos',respId:'u0',date:'2026-01-31',link:'',obs:'',done:true},{text:'Tablero Monitoreo',respId:'u0',date:'2026-04-30',link:'',obs:'Seguimiento de rutas en tiempo real',done:true},{text:'Notificaciones personalizadas por mail',respId:'u0',date:'2026-06-10',link:'',obs:'Objetivo: mejorar la efectividad de entrega',done:true},{text:'Encuestas de Satisfacción (NPS)',respId:'u0',date:'',link:'',obs:'Medir el servicio de cara al cliente final',done:true},{text:'Alta cliente final en Driv In',respId:'u0',date:'',link:'',obs:'Para mejorar la georreferenciación',done:false},{text:'Gestión de activos',respId:'u0',date:'',link:'',obs:'Para control de pallets',done:false},{text:'Tablero para gestión de NO georreferenciados',respId:'u0',date:'2026-04-30',link:'',obs:'Facilita la edición y validación de direcciones incorrectas',done:true},{text:'Optimización de ruteo por polígonos/zonas',respId:'u0',date:'',link:'',obs:'',done:true}],comments:[]},{id:'drv2',num:2,sector:'operaciones',name:'CND Buenos Aires',dif:'Media',metrica:'Tareas completadas / Total — CND Buenos Aires',start:0,end:3,objetivo:'Implementar Drivin en CND Buenos Aires con todas las configuraciones operativas.',done_when:'Todas las tareas completadas.',status:'en-curso',progress:42,responsibles:['u0'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u0',date:'2025-11-15',link:'',obs:'',done:true},{text:'Implementacion en CND',respId:'u0',date:'2025-11-30',link:'',obs:'',done:true},{text:'Eliminacion de HDR papel',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Optimizacion con uso de la herramienta',respId:'u0',date:'',link:'',obs:'Errores en optimizacion, esperando configuracion de driv.in',done:false},{text:'Liquidar con la plataforma',respId:'u0',date:'',link:'',obs:'La base liquida bien, buenos aires liquida los km base, pero tienen el excedente de penalidad de efectividad por fuera.',done:false},{text:'Capacitacion a Conductores',respId:'u0',date:'2025-11-15',link:'',obs:'',done:true},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Control de Documentación',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Carga de retiros especiales (grandes sellers)',respId:'u0',date:'',link:'',obs:'Cargar los retiros fijos en grandes clientes (TRF, Dabra, Club, EP, etc)',done:false},{text:'Carga de documentación de flota',respId:'u0',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false},{text:'Gestión de Cobro Contra Entrega',respId:'u0',date:'2025-11-30',link:'',obs:'',done:true},{text:'Carga de Capacidades de Vehículos',respId:'u0',date:'',link:'',obs:'Tanto utilitarias cortas, largas y balansines/chasis',done:true}],comments:[]},{id:'drv3',num:3,sector:'operaciones',name:'CND Mendoza',dif:'Media',metrica:'Tareas completadas / Total — CND Mendoza',start:1,end:4,objetivo:'Implementar Drivin en CND Mendoza con todas las configuraciones operativas.',done_when:'Todas las tareas completadas.',status:'en-curso',progress:58,responsibles:['u0'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u0',date:'2025-12-15',link:'',obs:'',done:true},{text:'Implementacion en CND',respId:'u0',date:'2025-12-31',link:'',obs:'',done:true},{text:'Eliminacion de HDR papel',respId:'u0',date:'2025-12-15',link:'',obs:'',done:true},{text:'Optimizacion con uso de la herramienta',respId:'u0',date:'',link:'',obs:'Errores en optimizacion, esperando configuracion de driv.in',done:false},{text:'Liquidar con la plataforma',respId:'u0',date:'',link:'',obs:'La base liquida bien, todavia no liquidamos ninguno completo, ya que de los clientes exclusivos se hace por fuera, lo mismo que adicionales.',done:false},{text:'Capacitacion a Conductores',respId:'u0',date:'2025-12-15',link:'',obs:'',done:true},{text:'Ventana Horaria x Zona',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Carga de documentación de flota',respId:'u0',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false},{text:'Control de Documentación',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Gestión de Cobro Contra Entrega',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Carga de Capacidades de Vehículos',respId:'u0',date:'',link:'',obs:'',done:true}],comments:[]},{id:'drv4',num:4,sector:'operaciones',name:'CND Cordoba',dif:'Media',metrica:'Tareas completadas / Total — CND Cordoba',start:2,end:5,objetivo:'Implementar Drivin en CND Cordoba con todas las configuraciones operativas.',done_when:'Todas las tareas completadas.',status:'en-curso',progress:50,responsibles:['u0'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Implementacion en CND',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Eliminacion de HDR papel',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Optimizacion con uso de la herramienta',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Liquidar con la plataforma',respId:'u0',date:'',link:'',obs:'La base liquida bien, todavia no liquidamos ninguno completo, ya que de las lejanias se pagan kg x entrega, el sistema no calcula bien. Estamos esperando mejroa de driv.in para lejanias.',done:false},{text:'Capacitacion a Conductores',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Ventana Horaria x Zona',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Control de Documentación',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Gestión de Cobro Contra Entrega',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Carga de Capacidades de Vehículos',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Carga de documentación de flota',respId:'u0',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false}],comments:[]},{id:'drv5',num:5,sector:'operaciones',name:'CND San Juan',dif:'Media',metrica:'Tareas completadas / Total — CND San Juan',start:3,end:6,objetivo:'Implementar Drivin en CND San Juan con todas las configuraciones operativas.',done_when:'Todas las tareas completadas.',status:'en-curso',progress:55,responsibles:['u0'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Implementacion en CND',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Eliminacion de HDR papel',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Optimizacion con uso de la herramienta',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Liquidar con la plataforma',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Capacitacion a Conductores',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Control de Documentación',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Gestión de Cobro Contra Entrega',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Carga de Capacidades de Vehículos',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Carga de documentación de flota',respId:'u0',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false}],comments:[]},{id:'drv6',num:6,sector:'operaciones',name:'CND San Luis',dif:'Media',metrica:'Tareas completadas / Total — CND San Luis',start:4,end:7,objetivo:'Implementar Drivin en CND San Luis con todas las configuraciones operativas.',done_when:'Todas las tareas completadas.',status:'en-curso',progress:55,responsibles:['u0'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Implementacion en CND',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Eliminacion de HDR papel',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Optimizacion con uso de la herramienta',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Liquidar con la plataforma',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Capacitacion a Conductores',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Control de Documentación',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Gestión de Cobro Contra Entrega',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Carga de Capacidades de Vehículos',respId:'u0',date:'',link:'',obs:'',done:true},{text:'Carga de documentación de flota',respId:'u0',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false}],comments:[]},{id:'drv7',num:7,sector:'operaciones',name:'CND Neuquen',dif:'Media',metrica:'Tareas completadas / Total — CND Neuquen',start:5,end:8,objetivo:'Implementar Drivin en CND Neuquen con todas las configuraciones operativas.',done_when:'Todas las tareas completadas.',status:'pendiente',progress:0,responsibles:['u0'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Implementacion en CND',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Eliminacion de HDR papel',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Optimizacion con uso de la herramienta',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Liquidar con la plataforma',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Capacitacion a Conductores',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Control de Documentación',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Gestión de Cobro Contra Entrega',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Carga de Capacidades de Vehículos',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Carga de documentación de flota',respId:'u0',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false}],comments:[]},{id:'drv8',num:8,sector:'operaciones',name:'CND Tucuman',dif:'Media',metrica:'Tareas completadas / Total — CND Tucuman',start:6,end:9,objetivo:'Implementar Drivin en CND Tucuman con todas las configuraciones operativas.',done_when:'Todas las tareas completadas.',status:'pendiente',progress:0,responsibles:['u0'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Implementacion en CND',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Eliminacion de HDR papel',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Optimizacion con uso de la herramienta',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Liquidar con la plataforma',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Capacitacion a Conductores',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Control de Documentación',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Gestión de Cobro Contra Entrega',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Encuestas de Satisfacción (NPS)',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Carga de Capacidades de Vehículos',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Carga de documentación de flota',respId:'u0',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false}],comments:[]},{id:'drv9',num:9,sector:'operaciones',name:'CND Rosario',dif:'Media',metrica:'Tareas completadas / Total — CND Rosario',start:7,end:9,objetivo:'Implementar Drivin en CND Rosario con todas las configuraciones operativas.',done_when:'Todas las tareas completadas.',status:'pendiente',progress:0,responsibles:['u0'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Implementacion en CND',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Eliminacion de HDR papel',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Optimizacion con uso de la herramienta',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Liquidar con la plataforma',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Capacitacion a Conductores',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Control de Documentación',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Gestión de Cobro Contra Entrega',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Encuestas de Satisfacción (NPS)',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Carga de Capacidades de Vehículos',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Carga de documentación de flota',respId:'u0',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false}],comments:[]},{id:'drv10',num:10,sector:'operaciones',name:'CND Bahía Blanca',dif:'Media',metrica:'Tareas completadas / Total — CND Bahía Blanca',start:8,end:9,objetivo:'Implementar Drivin en CND Bahía Blanca con todas las configuraciones operativas.',done_when:'Todas las tareas completadas.',status:'pendiente',progress:0,responsibles:['u0'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Implementacion en CND',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Eliminacion de HDR papel',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Optimizacion con uso de la herramienta',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Liquidar con la plataforma',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Capacitacion a Conductores',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Control de Documentación',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Gestión de Cobro Contra Entrega',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Encuestas de Satisfacción (NPS)',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Carga de Capacidades de Vehículos',respId:'u0',date:'',link:'',obs:'',done:false},{text:'Carga de documentación de flota',respId:'u0',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false}],comments:[]}]}
   ]
 };
 
@@ -959,12 +962,16 @@ function applyAutoStatus(proj){
 }
 
 function projMos(p){
-  if(!p?.startMonth||!p?.endMonth)return['Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  const[sy,sm]=p.startMonth.split('-').map(Number);
-  const[ey,em]=p.endMonth.split('-').map(Number);
-  const ms=[];let y=sy,m=sm;
-  while(y<ey||(y===ey&&m<=em)){ms.push(MOS[m-1]);m++;if(m>12){m=1;y++;}}
-  return ms.length?ms:['Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  try{
+    if(!p?.startMonth||!p?.endMonth)return['Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    const[sy,sm]=p.startMonth.split('-').map(Number);
+    const[ey,em]=p.endMonth.split('-').map(Number);
+    if(!sy||!sm||!ey||!em)return['Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    const ms=[];let y=sy,m=sm;
+    let guard=0;
+    while((y<ey||(y===ey&&m<=em))&&guard++<36){ms.push(MOS[m-1]||'?');m++;if(m>12){m=1;y++;}}
+    return ms.length?ms:['Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  }catch(e){return['Jun','Jul','Ago','Sep','Oct','Nov','Dic'];}
 }
 
 // ══ SYNC BAR ══
@@ -978,6 +985,10 @@ function showSync(msg,state){
 
 // ══ GAS ══
 async function gasPost(data){
+  if(!EMAILS_ENABLED&&(data.action==='sendEmail'||data.action==='sendInviteEmail')){
+    console.log('[EMAIL BLOQUEADO - activar EMAILS_ENABLED]',data.action);
+    return {ok:true,blocked:true};
+  }
   const url=getGasUrl();if(!url)return null;
   try{
     await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
@@ -1003,7 +1014,12 @@ async function syncFromGAS(manual){
   try{
     const r=await fetch(url+'?action=getDB');
     const res=await r.json();
-    if(res?.ok&&res?.db){DB=res.db;if(DB?.projects)DB.projects.forEach(p=>applyAutoStatus(p));saveLocal(DB);showSync('Sincronizado ✓','ok');}
+    if(res?.ok&&res?.db){
+      DB=res.db;
+      // Ensure all SEED projects exist in DB (merge missing ones)
+      SEED.projects.forEach(sp=>{if(!DB.projects.find(p=>p.id===sp.id))DB.projects.push(sp);});
+      if(DB?.projects)DB.projects.forEach(p=>applyAutoStatus(p));
+      saveLocal(DB);showSync('Sincronizado ✓','ok');}
     else{DB=loadLocal()||JSON.parse(JSON.stringify(SEED));showSync('Sin datos en GAS — usando locales','ok');}
   }catch{
     const loc2=loadLocal();
@@ -1028,7 +1044,10 @@ async function doLogin(){
   const u=document.getElementById('liu').value.trim().toLowerCase();
   const p=document.getElementById('lip').value;
   if(!DB)await syncFromGAS();
+  if(DB&&DB.projects&&DB.projects.length<SEED.projects.length){persistDB();}
   const f=DB.users.find(x=>(x.username===u||x.email===u)&&x.password===p);
+  // Ensure role is always set (fallback to SEED data)
+  if(f&&!f.role){const seedU=SEED.users.find(s=>s.email===f.email);if(seedU)f.role=seedU.role;}
   if(!f){document.getElementById('lierr').classList.add('on');return;}
   document.getElementById('lierr').classList.remove('on');
   CU=f;
@@ -1040,7 +1059,7 @@ async function doLogin(){
   document.getElementById('hdrnm').textContent=f.name;
   document.getElementById('hdrrl').textContent=gsec(f.area).label+' · '+rll(f.role);
   goScreen('home');
-  setTimeout(checkAndNotify,1200);
+  // checkAndNotify desactivado — activar con EMAILS_ENABLED=true
 }
 document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('liu').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('lip').focus();});
@@ -1071,6 +1090,7 @@ function calcSem(proj){
   if(!proj.startMonth||!proj.endMonth)return{c:'gray',l:'Sin período',d:'Período no definido',pct:0};
   const[sy,sm]=proj.startMonth.split('-').map(Number);
   const[ey,em]=proj.endMonth.split('-').map(Number);
+  if(!sy||!ey)return{c:'gray',l:'Sin período',d:'Período no definido',pct:0};
   const start=new Date(sy,sm-1,1),end=new Date(ey,em,0,23,59,59),now=new Date();
   const inits=proj.initiatives||[];
   const avgP=inits.length?Math.round(inits.reduce((a,i)=>a+recalcProgress(i),0)/inits.length):0;
@@ -1147,7 +1167,7 @@ function updateNotifBadge(n){const b=document.getElementById('notif-count');if(!
 function toggleNotif(){const p=document.getElementById('notif-panel');p.style.display=p.style.display==='none'?'block':'none';}
 
 // ══ NOTIFICATIONS ══
-function checkAndNotify(){
+function checkAndNotify(){ if(!EMAILS_ENABLED)return;
   if(!CU)return;
   const today=new Date();today.setHours(0,0,0,0);
   const in3=new Date(today);in3.setDate(today.getDate()+3);
@@ -1192,8 +1212,7 @@ function checkAndNotify(){
 // ══ HOME ══
 function visibleProjects(){
   if(!DB?.projects)return[];
-  if(isSA()||isAdm())return DB.projects;
-  return DB.projects.filter(p=>p.sectors.includes(CU?.area));
+  return DB?.projects||[];
 }
 function renderHome(){
   const allP=visibleProjects();
@@ -1207,9 +1226,9 @@ function renderHome(){
   document.getElementById('hero-acts').innerHTML=isSA()
     ?`<button class="bhp" onclick="openPM()">＋ Nuevo proyecto</button><button class="bhs" onclick="goScreen('kpis')">📊 KPIs</button>`
     :`<button class="bhp" onclick="goScreen('kpis')">📊 Ver KPIs</button>`;
-  document.getElementById('btn-np').style.display=isSA()?'flex':'none';
+  document.getElementById('btn-np').style.display=(isSA()||isAdm())?'flex':'none';
   renderAlertStrip();
-  document.getElementById('pgrid').innerHTML=allP.length?allP.map(p=>{
+  document.getElementById('pgrid').innerHTML=allP.length?allP.filter(p=>p&&p.id).map(p=>{
     const ms=projMos(p),ii=p.initiatives||[];
     const done=ii.filter(i=>i.status==='completado').length;
     const pct=ii.length?Math.round(done/ii.length*100):0;
@@ -1223,7 +1242,7 @@ function renderHome(){
       <div class="pc-body">
         <div class="pc-hd"><div class="pc-nm">${p.name}</div><span class="pc-st ${scl}">${stx}</span></div>
         <div class="pc-desc">${p.desc||''}</div>
-        <div class="pc-meta"><span>📍 ${p.site||'—'}</span><span>📅 ${ms[0]}–${ms[ms.length-1]} ${p.startMonth?p.startMonth.split('-')[0]:''}</span><span>📋 ${ii.length} tareas</span></div>
+        <div class="pc-meta"><span>📍 ${p.site||'—'}</span><span>📅 ${ms&&ms.length?ms[0]+'–'+ms[ms.length-1]+' '+(p.startMonth?p.startMonth.split('-')[0]:''):'Sin fecha'}</span><span>📋 ${ii.length} tareas</span></div>
         <div class="pc-secs">${chips}</div>
         <div class="pc-pb"><div class="pc-pf" style="width:${pct}%;background:${pc}"></div></div>
         <div class="pc-pl">${done}/${ii.length} completadas · ${pct}%</div>
@@ -1238,6 +1257,11 @@ function renderHome(){
 }
 
 // ══ PROJECT MODAL ══
+async function deleteProject(pid){
+  if(!confirm('¿Eliminar este proyecto? Esta acción no se puede deshacer.'))return;
+  DB.projects=DB.projects.filter(p=>p.id!==pid);
+  await persistDB();renderHome();
+}
 function openPM(editId){
   _ss.clear();
   const p=editId?DB.projects.find(x=>x.id===editId):null;
@@ -1515,7 +1539,7 @@ async function rmResp(id,uid2){
 function openHM(initId,editIdx){
   hitoId=initId;
   const init=CP.initiatives.find(i=>i.id===initId);
-  const h=editIdx!==undefined?init?.hitos[editIdx]:null;
+  const h=editIdx!==undefined?init?.tareas[editIdx]:null;
   document.getElementById('hm-title').textContent=h?'Editar hito / tarea':'Agregar tarea';
   document.getElementById('nht').value=h?h.text:'';
   document.getElementById('nhd').value=h?h.date||'':'';
@@ -1720,67 +1744,147 @@ function removeDoc(pid,idx){
 
 // ══ ADMIN ══
 function renderAdmin(){
-  if(!CP)return;
-  if(!CP.members)CP.members=[];
-  const isMember=(u)=>CP.members.find(m=>m.id===u.id);
-  const projectUsers=DB.users.filter(u=>isMember(u));
   document.getElementById('ptab-admin').innerHTML=`
   <div class="twocol">
     <div class="ac" style="grid-column:1/-1">
-      <div class="act2"><span>Miembros del proyecto (</span><span id="pm-count">${projectUsers.length}</span><span>)</span>
+      <div class="act2"><span>Usuarios del sistema (${DB.users.length})</span>
         ${isSA()?`<div style="display:flex;gap:7px">
           <button class="bp" style="width:auto;padding:5px 12px;font-size:11px" onclick="openInvite()">✉️ Invitar</button>
           <button class="bs" style="padding:5px 12px;font-size:11px" onclick="openUM()">＋ Directo</button>
         </div>`:''}
       </div>
-      <div style="background:#eef2f8;border-radius:8px;padding:12px 16px;margin-bottom:10px;font-size:12px;color:#3d4a60">
-        <strong>Seleccioná quiénes participan en este proyecto:</strong><br>
-        <span style="color:#8a96ab;font-size:11px">Los cambios se guardan automáticamente al tildar/destildar.</span>
-      </div>
-      ${DB.users.map(u=>`<div class="urow" style="cursor:pointer" onclick="${isSA()?'toggleMember(\''+u.id+'\')':''}" id="urow-${u.id}">
+      ${DB.users.map(u=>`<div class="urow">
         <div class="urav" style="background:${u.color}">${ini(u.name)}</div>
         <div class="urinfo"><div class="urnm">${u.name}</div><div class="urmt">${u.email} · ${gsec(u.area).label}</div></div>
         <span class="rb rb-${u.role}">${rll(u.role)}</span>
-        ${isSA()?`<input type="checkbox" ${isMember(u)?'checked':''} style="width:18px;height:18px;cursor:pointer;accent-color:#003481;margin-left:8px" onclick="event.stopPropagation();toggleMember('${u.id}')">`:''}
+        ${isAdm()&&u.id!=='u0'?`<button class="bs" style="padding:3px 8px;font-size:10px" onclick="editUser('${u.id}')">✏️</button>`:''} ${isSA()&&u.id!=='u0'?`<button class="bdng" onclick="delU('${u.id}')">✕</button>`:''}
       </div>`).join('')}
     </div>
-    <div class="ac">
-      <div class="act2"><span>Invitaciones</span></div>
+    <div class="ac" style="grid-column:1/-1">
+      <div class="act2">📨 Invitaciones</div>
       ${renderInvitesList()}
     </div>
-    <div class="ac">
-      <div class="act2"><span>Google Apps Script (Base de datos compartida)</span></div>
-      <div style="font-size:11px;color:var(--mid);margin-bottom:8px">URL del GAS Web App</div>
-      <div style="display:flex;gap:8px">
-        <input id="gas-url-inp" value="${getGasUrl()}" placeholder="https://script.google.com/macros/s/..." style="flex:1;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;background:var(--bg)">
-        <button class="bp" style="width:auto;padding:8px 14px;font-size:12px" onclick="saveGasUrl()">Guardar</button>
-        <button class="bs" style="width:auto;padding:8px 14px;font-size:12px" onclick="syncFromGAS(true)">↺ Sync</button>
+    <div class="ac" style="grid-column:1/-1">
+      <div class="act2">⚙️ Configuración del sistema</div>
+      <div style="background:#EEF2F8;border-radius:7px;padding:10px 12px;margin-bottom:8px;font-size:12px">
+        ✅ GAS activo y configurado en el código.
       </div>
-      <div id="sync-info" style="font-size:11px;color:var(--mid);margin-top:6px"></div>
+      <div style="font-size:11px;color:var(--mid);line-height:1.7;margin-bottom:8px">
+        📧 Emails: <b style="color:${EMAILS_ENABLED?'#2D9E6B':'#F47B20'}">${EMAILS_ENABLED?'ACTIVOS ✅':'DESACTIVADOS ⏸'}</b>
+        — ${EMAILS_ENABLED?'Las notificaciones automáticas están activas.':'Pendiente de activación por administración.'}
+      </div>
     </div>
   </div>`;
 }
-async function toggleMember(uid){
-  if(!CP)return;
-  if(!CP.members)CP.members=[];
-  const user=DB.users.find(u=>u.id===uid);
-  if(!user)return;
-  const idx=CP.members.findIndex(m=>m.id===uid);
-  if(idx>=0){
-    CP.members.splice(idx,1);
-  } else {
-    CP.members.push({id:user.id,email:user.email,role:user.role});
-  }
-  await persistDB();
-  renderAdmin();
+function saveGasConfig(){
+  const url=document.getElementById('gas-cfg')?.value.trim()||'';
+  localStorage.setItem(GAS_KEY,url);
+  showSync('URL GAS guardada. Hacé click en Sincronizar.','ok');
+}
+function showRoleDesc(role,targetId){
+  const descs={
+    colaborador:'Solo puede dar cierre o avances en los tareas que tiene asignados.',
+    lider:'Puede editar todas las tareas y tareas de su sector.',
+    admin:'Acceso completo a todos los proyectos y usuarios.',
+    superadmin:'Acceso total al sistema.'
+  };
+  const el=document.getElementById(targetId);if(el)el.textContent=descs[role]||'';
 }
 
+// ══ USERS ══
+let _editUserId=null;
+function editUser(id){openUM(id);}
+function openUM(editId){
+  _editUserId=editId||null;
+  const u=editId?DB.users.find(x=>x.id===editId):null;
+  document.getElementById('uun').value=u?u.name:'';
+  document.getElementById('uuu').value=u?u.email:'';
+  document.getElementById('uup').value='';
+  document.getElementById('uup').placeholder=u?'Dejar vacío = no cambia':'mín. 6 caracteres';
+  const mt=document.querySelector('#ov-user .mt');if(mt)mt.textContent=u?'Editar usuario':'Nuevo usuario';
+  document.getElementById('uur').value='colaborador';document.getElementById('uuerr').textContent='';
+  showRoleDesc('colaborador','uu-rd');
+  document.getElementById('uusec').innerHTML=SECS.map(s=>`<option value="${s.id}">${s.label}</option>`).join('');
+  document.getElementById('ov-user').style.display='flex';
+}
+function closeUM(){document.getElementById('ov-user').style.display='none';}
+async function saveUM(){
+  const name=document.getElementById('uun').value.trim();
+  const email=document.getElementById('uuu').value.trim().toLowerCase();
+  const pass=document.getElementById('uup').value;
+  const role=document.getElementById('uur').value;
+  const area=document.getElementById('uusec').value;
+  const err=document.getElementById('uuerr');
+  if(!name||!email){err.textContent='Nombre y email obligatorios.';err.classList.add('on');return;}
+  if(!/^[^@]+@[^@]+\.[^@]+$/.test(email)){err.textContent='Email inválido.';err.classList.add('on');return;}
+  if(_editUserId){
+    const u=DB.users.find(x=>x.id===_editUserId);
+    if(u){u.name=name;u.email=email;u.username=email;u.role=role;u.area=area;if(pass.length>=6)u.password=pass;}
+  }else{
+    if(!pass||pass.length<6){err.textContent='Contraseña mínimo 6 caracteres.';err.classList.add('on');return;}
+    if(DB.users.find(u=>u.email===email||u.username===email)){err.textContent='Email ya registrado.';err.classList.add('on');return;}
+    const colors=['#004993','#F47B20','#2D9E6B','#7B5EA7','#E05252','#01B8B9','#6C5CE7'];
+    DB.users.push({id:uid(),username:email,email,password:pass,name,area,role,color:colors[DB.users.length%colors.length]});
+  }
+  await persistDB();closeUM();renderAdmin();
+}
+async function delU(uid2){
+  if(!confirm('¿Eliminar este usuario?'))return;
+  DB.users=DB.users.filter(u=>u.id!==uid2);
+  DB.projects.forEach(p=>p.initiatives.forEach(i=>{i.responsibles=i.responsibles.filter(r=>r!==uid2);}));
+  await persistDB();renderAdmin();
+}
 
+// ══ INVITES ══
+function previewEmail(){
+  const n=document.getElementById('inv-n')?.value.trim()||'';
+  const a=document.getElementById('inv-a')?.value.trim()||'';
+  const el=document.getElementById('inv-email-preview');
+  if(el)el.textContent=(n&&a)?buildEmail(n,a):'—';
+}
+function openInvite(){
+  document.getElementById('inv-n').value='';document.getElementById('inv-a').value='';
+  document.getElementById('inv-email-preview').textContent='—';
+  document.getElementById('inv-err').textContent='';
+  document.getElementById('inv-sec').innerHTML=SECS.map(s=>`<option value="${s.id}">${s.label}</option>`).join('');
+  document.getElementById('inv-rol').value='colaborador';showRoleDesc('colaborador','inv-rd');
+  document.getElementById('ov-invite').style.display='flex';
+}
+function closeInvite(){document.getElementById('ov-invite').style.display='none';}
+async function createInvite(){
+  const nombre=document.getElementById('inv-n').value.trim();
+  const apellido=document.getElementById('inv-a').value.trim();
+  const sector=document.getElementById('inv-sec').value;
+  const rol=document.getElementById('inv-rol').value;
+  const err=document.getElementById('inv-err');
+  if(!nombre||!apellido){err.textContent='Completá nombre y apellido.';err.classList.add('on');return;}
+  const email=buildEmail(nombre,apellido);
+  if(DB.users.find(u=>u.email===email||u.username===email)){err.textContent='Ya existe usuario con ese email.';err.classList.add('on');return;}
+  const token='inv_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+  const expiry=Date.now()+7*24*60*60*1000;
+  const baseUrl=window.location.href.split('?')[0];
+  const link=baseUrl+'?activate='+token;
+  const invite={token,email,fullName:nombre+' '+apellido,nombre,apellido,sector,rol,expiry,status:'pending',createdBy:CU.id,createdAt:nows()};
+  const invites=getInvites();invites.push(invite);saveInvites(invites);
+  // Save to GAS
+  await gasPost({action:'saveInvite',invite});
+  // Send email via GAS
+  const sv=gsec(sector);
+  const rolLabel={colaborador:'Colaborador',lider:'Líder de sector',admin:'Administrador'}[rol]||rol;
+  gasPost({action:'sendInviteEmail',to_email:email,to_name:nombre+' '+apellido,sector:sv.label,rol:rolLabel,link});
+  closeInvite();
+  document.getElementById('inv-link-display').textContent=link;
+  _lastLink=link;
+  document.getElementById('ov-inv-result').style.display='flex';
+  renderAdmin();
+}
+function copyInviteLink(){
+  if(_lastLink){navigator.clipboard.writeText(_lastLink).then(()=>alert('✅ Link copiado.')).catch(()=>prompt('Copiá este link:',_lastLink));}
+}
 function getInvites(){try{return JSON.parse(localStorage.getItem('gp_invites')||'[]');}catch{return[];}}
 function saveInvites(arr){localStorage.setItem('gp_invites',JSON.stringify(arr));}
 function renderInvitesList(){
-  const allInvites=getInvites();
-  const invites=allInvites.filter(i=>!i.projectId||(CP&&i.projectId===CP.id));
+  const invites=getInvites();
   if(!invites.length)return'<div style="font-size:11px;color:var(--mid);padding:6px 0">Sin invitaciones enviadas.</div>';
   const baseUrl=window.location.href.split('?')[0];
   return invites.map(inv=>{
@@ -1879,7 +1983,7 @@ function loadKpiFrame(){
 
 // ══ INIT ══
 // DB version — increment when SEED data changes significantly
-const DB_VERSION = '2026-06-v5';  // v4 = 4 projects including Drivin
+  // v4 = 4 projects including Drivin
 
 async function init(){
   // 1. Check activate token in URL
@@ -1889,13 +1993,22 @@ async function init(){
   if(storedVersion !== DB_VERSION){
     // New version detected — clear local DB so SEED loads fresh
     localStorage.removeItem('andesmar_gp_db');
-    localStorage.setItem('andesmar_gp_version', DB_VERSION);
+    localStorage.setItem('andesmar_gp_version','2026-v5');
     console.log('DB version updated to', DB_VERSION, '— reloading SEED');
   }
   // 3. Also clear old keys
   ['andgp_v4','andesmar_gp_db_old'].forEach(k=>localStorage.removeItem(k));
   // 4. Load DB
   await syncFromGAS();
+  // Ensure DB is valid — fallback to SEED if null or empty
+  if(!DB||!DB.projects||DB.projects.length===0){
+    DB=JSON.parse(JSON.stringify(SEED));
+  }
+  // Merge any missing SEED projects
+  SEED.projects.forEach(sp=>{
+    if(!DB.projects.find(p=>p.id===sp.id))DB.projects.push(sp);
+  });
+  DB.projects.forEach(p=>applyAutoStatus(p));
   // 3. Restore session
   const savedCU=sessionStorage.getItem('gp_cu');
   if(savedCU){
@@ -1913,7 +2026,7 @@ async function init(){
         document.getElementById('hdrnm').textContent=CU.name;
         document.getElementById('hdrrl').textContent=gsec(CU.area).label+' · '+rll(CU.role);
         goScreen('home');
-        setTimeout(checkAndNotify,1200);
+        // checkAndNotify desactivado — activar con EMAILS_ENABLED=true
         return;
       }
     }catch{sessionStorage.removeItem('gp_cu');CU=null;}
@@ -1921,6 +2034,7 @@ async function init(){
 }
 
 document.addEventListener('DOMContentLoaded',init);
+
 </script>
 </body>
 </html>
