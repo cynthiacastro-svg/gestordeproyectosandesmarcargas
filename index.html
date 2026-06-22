@@ -10,7 +10,7 @@
   --navy:#003481;--navy-d:#1E2733;--navy-m:#004993;
   --cyan:#01feff;--cyan-glow:rgba(1,254,255,.3);
   --bg:#EBF0F8;--card:#fff;--border:#CDD5E4;
-  --mid:#8A96AB;--dark:#3D4A60;--text:#1E2733;h
+  --mid:#8A96AB;--dark:#3D4A60;--text:#1E2733;
   --green:#2D9E6B;--red:#E05252;--orange:#F47B20;--purple:#6C5CE7;
   --font:'Inter',system-ui,sans-serif;
 }
@@ -577,63 +577,63 @@ const SEED={
       {id:'i1',num:1,sector:'sistemas',name:'Uptime Sistema / Tiempo de respuesta',dif:'Media',metrica:'Uptime sistema (%) · Incidentes/semana',start:0,end:2,
        objetivo:'Monitorear disponibilidad del sistema, disponibilizando el indicador para Operaciones, de manera de poder desambiguar la performance y garantizar el tiempo de respuesta ante lecturas.',
        done_when:'Cuando el uptime esté en indicadores de seguimiento por encima del target y el tiempo de respuesta entre lecturas por debajo del target.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i2',num:2,sector:'sistemas',name:'Optimizar recepción: Trazabilidad y Canalización asistida',dif:'Alta',metrica:'Productividad inbound (paq/HH)',start:0,end:5,
        objetivo:'Sistematizar recepción e-commerce con trazabilidad y clasificación asistida. Definir el proceso de ingreso y clasificación con 2do conteo y sistematizarlo, considerando los estados de la guía en cada paso.',
        done_when:'Cuando el proceso de recepción y canalización tenga trazabilidad integral, cada toque deje huella sistémica medible, y la operación sea asistida para el operario.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i3',num:3,sector:'sistemas',name:'Distribución AMBA: Clasificación por ruta asistida (sistémica)',dif:'Alta',metrica:'Productividad distribución',start:2,end:6,
        objetivo:'Sistematizar clasificación por ruta AMBA con escaneos al sistema. Sistematizar los pasos que hoy se realizan con lecturas manuales en la operación de distribución.',
        done_when:'Cuando la clasificación por ruta sea asistida por sistema, con todos los toques registrados, y productividad y accuracy medidos.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i4',num:4,sector:'operaciones',name:'Handshake estandarizado',dif:'Alta',metrica:'% transferencias registradas',start:0,end:3,
        objetivo:'Registrar transferencias de custodia entre áreas eliminando traspaso informal. Diseñar proceso y sistema para estandarizar los traspasos de carga entre Recepción–Interior y Recepción–AMBA.',
        done_when:'Cuando el traspaso interno sea sistémico, con lecturas formales e indicadores de accuracy.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'i5',num:5,sector:'sistemas',name:'Herramienta Tracking',dif:'Media',metrica:'% guías con tracking en tiempo real',start:1,end:4,
        objetivo:'Seguimiento de estado y ubicación de guías/bultos en tiempo real dentro de la nave.',
        done_when:'Cuando se pueda rastrear a nivel guía cada paso del paquete: quién, cuándo y ubicación inferida.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i6',num:6,sector:'sistemas',name:'Trazabilidad de bultos en sistemas',dif:'Alta',metrica:'% bultos individualizados',start:2,end:6,
        objetivo:'Individualizar y rastrear cada bulto físico en todo el flujo. Hoy si se escanea 1 de 2 bultos, el sistema da ambos como recibidos.',
        done_when:'Cuando la trazabilidad de bultos sea equivalente a la de guías a nivel sistema.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i7',num:7,sector:'sistemas',name:'Estandarización etiquetas',dif:'Alta',metrica:'% etiquetas en estándar',start:0,end:2,
        objetivo:'Estandarizar formato y calidad de etiquetas para lectura sistémica. Diseñar 1 etiqueta ANDESMAR CARGAS que permita una operación estándar y minimice errores. Hoy hay +12 etiquetas distintas, 6 tipos de cliente.',
        done_when:'Cuando la etiqueta estándar esté implementada para todos los clientes de e-commerce.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i8',num:8,sector:'operaciones',name:'Rol Problem Solver',dif:'Media',metrica:'Casos resueltos / tiempo medio de resolución',start:0,end:3,
        objetivo:'Gestionar excepciones y descongestionar la línea operativa. Hoy los flujos no felices (faltantes, diferencias declarado/recibido, daños) se resuelven con Excel y trabajo manual.',
        done_when:'Cuando haya un responsable por turno dedicado a resolver casos fuera del proceso estándar sistematizado.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'i9',num:9,sector:'sistemas',name:'Diseño de casos a soportar (flujos no felices)',dif:'Alta',metrica:'% casos tipificados y soportados',start:1,end:5,
        objetivo:'Tipificar y protocolizar casos no felices (faltantes, daños, rechazos). Analizar, decidir, diseñar y sistematizar los casos que hoy no son soportados por el sistema.',
        done_when:'Cuando esté sólido el proceso conjunto Sistemas–Operaciones y se soporten los casos de excepción en sistema.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'i10',num:10,sector:'gestion',name:'Piloto dinámica seguimiento Objetivos Q3 2026',dif:'Media',metrica:'KPIs medidos / cadencia de revisión',start:0,end:2,
        objetivo:'Validar metodología de medición KPIs y cadencia de revisión. Arrancar la mesa semanal multidisciplinaria (Ops + Sistemas + Procesos + Gerencia).',
        done_when:'Cuando la dinámica semanal lleve al menos 1 trimestre, con KPIs definidos, acciones generadas y causas de variación entendidas.',
-       status:'pendiente',progress:0,responsibles:['u3'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u3'],hitos:[],comments:[]},
       {id:'i11',num:11,sector:'gestion',name:'Implementación proceso Objetivos 2027',dif:'Media',metrica:'% áreas con objetivos definidos',start:3,end:6,
        objetivo:'Escalar gestión por objetivos/KPIs para el ciclo 2027 a nivel de objetivos estratégicos y por área.',
        done_when:'Cuando los KPIs de la mesa semanal estén alineados como prioridad con los objetivos estratégicos 2027.',
-       status:'pendiente',progress:0,responsibles:['u3'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u3'],hitos:[],comments:[]},
       {id:'i12',num:12,sector:'operaciones',name:'Definición Requerimiento Flujos y Layout',dif:'Media',metrica:'m² por proceso requerido',start:0,end:2,
        objetivo:'Definir flujos operativos y layout del CD para escalamiento. Calcular requerimiento de m² cruzando flujo de pallets × franja horaria × factor de ocupación.',
        done_when:'Cuando se tenga el requerimiento de m² asociado al nivel de actividad actual, validado con Gerencia General.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'i13',num:13,sector:'operaciones',name:'Adecuación Layout actual: demarcaciones y flujos',dif:'Media',metrica:'Reducción recorrido / m² optimizados',start:2,end:5,
        objetivo:'Optimizar layout actual con reordenamiento y demarcaciones. Separar e-commerce de línea blanca. Diseñar flujos lineales: Recepción → almacenamiento → despacho, sin cruces.',
        done_when:'Cuando se diseñe el layout con el requerimiento como input y se adecue la operación a las zonas definidas.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'i14',num:14,sector:'operaciones',name:'Minimización toques distribución AMBA',dif:'Media',metrica:'Lead time / toques por paquete',start:1,end:5,
        objetivo:'Reducir manipulaciones de paquetes en distribución AMBA. Hoy: 5+2 toques/paquete. Fusionar escaneos duplicados (control recepción + clasificación zonas; clasificación por ruta + control carga vehículo).',
        done_when:'Cuando se reduzcan los toques por paquete en distribución AMBA a ≤3, sin perder la tasa de siniestro 0.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'i15',num:15,sector:'operaciones',name:'Medir productividad Bs As por procesos',dif:'Media',metrica:'Paq/HH inbound / clasificación / outbound',start:0,end:3,
        objetivo:'Medir productividad actual por proceso de e-commerce. Tener visibilidad permite controlar y monitorear los procesos actuales. Hoy no existe indicador de productividad por proceso para el flujo e-commerce.',
        done_when:'Cuando se alcance un trimestre de medición de productividad por proceso (inbound, clasificación, separación por ruta), validada y confiable.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
     ]},{
     id:'p2',
     name:'LION 360 × Andesmar — Onboarding Last-Mile',
@@ -648,35 +648,35 @@ const SEED={
       {id:'l1',num:1,sector:'sistemas',name:'NDA firmado',dif:'Baja',metrica:'Firmado / No firmado',start:0,end:0,
        objetivo:'Firma del acuerdo de confidencialidad con LION 360.',
        done_when:'NDA firmado por ambas partes.',
-       status:'completado',progress:100,responsibles:['u1'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1'],hitos:[],comments:[
          {userId:'u1',text:'NDA firmado el 27/03/2026.',type:'avance',date:'27/03/2026 00:00'}
        ]},
       {id:'l2',num:2,sector:'gestion',name:'Propuesta comercial y tarifas acordadas',dif:'Media',metrica:'Propuesta aprobada',start:0,end:1,
        objetivo:'Acordar propuesta comercial y tarifas con LION 360.',
        done_when:'Propuesta firmada y tarifas aceptadas por ambas partes.',
-       status:'completado',progress:100,responsibles:['u1','u3'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1','u3'],hitos:[],comments:[
          {userId:'u1',text:'Propuesta comercial finalizada y acordada el 22/04/2026.',type:'avance',date:'22/04/2026 00:00'}
        ]},
       {id:'l3',num:3,sector:'gestion',name:'Datos bancarios y legajo enviados a LION',dif:'Baja',metrica:'Documentación enviada',start:0,end:0,
        objetivo:'Enviar datos bancarios y legajo completo de Andesmar a LION.',
        done_when:'Confirmación de recepción por parte de LION.',
-       status:'completado',progress:100,responsibles:['u1'],tareas:[],comments:[]},
+       status:'completado',progress:100,responsibles:['u1'],hitos:[],comments:[]},
       {id:'l4',num:4,sector:'sistemas',name:'Cuenta API test creada — sistema China (LELL7655)',dif:'Media',metrica:'Cuenta activa y funcional',start:1,end:2,
        objetivo:'Crear cuenta de prueba en el sistema de LION China (LELL7655) para iniciar integración.',
        done_when:'Cuenta operativa y primer llamado API exitoso.',
-       status:'completado',progress:100,responsibles:['u1'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1'],hitos:[],comments:[
          {userId:'u1',text:'Cuenta API test LELL7655 creada y operativa el 13/05/2026.',type:'avance',date:'13/05/2026 00:00'}
        ]},
       {id:'l5',num:5,sector:'gestion',name:'Kick Off interno realizado',dif:'Baja',metrica:'Reunión realizada',start:2,end:2,
        objetivo:'Kick off interno con todos los equipos involucrados (IT, Ops, Customer, Comercial).',
        done_when:'Reunión realizada con acta y responsables definidos.',
-       status:'completado',progress:100,responsibles:['u1'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1'],hitos:[],comments:[
          {userId:'u1',text:'Kick off interno realizado el 02/06/2026.',type:'avance',date:'02/06/2026 00:00'}
        ]},
       {id:'l6',num:6,sector:'gestion',name:'Contrato Last-Mile firmado (lado Andesmar) — pendiente firma LION',dif:'Alta',metrica:'Contrato firmado ambas partes',start:2,end:3,
        objetivo:'Firma del contrato Last-Mile. Andesmar ya firmó. LION tiene objeciones de finanzas sobre métodos de pago.',
        done_when:'Firma de LION recibida. Sin firma no hay base legal para operar.',
-       status:'pendiente',progress:50,responsibles:['u1'],tareas:[
+       status:'pendiente',progress:50,responsibles:['u1'],hitos:[
          {text:'Andesmar firmó el contrato (01/06/2026)',respId:'u1',date:'2026-06-01',done:true,blocked:false},
          {text:'Comunicar posición final de cláusulas a LION (jurisdicción + compensación directa)',respId:'u1',date:'2026-06-20',done:false,blocked:false},
          {text:'Gestionar firma de LION — seguimiento a Carol en finanzas',respId:'u1',date:'2026-07-01',done:false,blocked:true},
@@ -686,38 +686,38 @@ const SEED={
       {id:'l7',num:7,sector:'gestion',name:'SLA aprobado internamente (días corridos)',dif:'Media',metrica:'SLA aprobado',start:1,end:2,
        objetivo:'Aprobar internamente el SLA en días corridos (incluye fines de semana y feriados). Alto impacto en Patagonia y NOA.',
        done_when:'SLA aprobado por Agustín, Cynthia y Paula.',
-       status:'completado',progress:100,responsibles:['u1','u3'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1','u3'],hitos:[],comments:[
          {userId:'u0',text:'SLA aprobado. Recordar: P90/P98.5% calculan días calendario. Alto impacto Patagonia y NOA.',type:'decision',date:'30/05/2026 00:00'}
        ]},
       {id:'l8',num:8,sector:'sistemas',name:'Integración API sistema China',dif:'Alta',metrica:'API operativa',start:2,end:2,
        objetivo:'Completar integración con el sistema de LION China.',
        done_when:'Integración funcional y probada exitosamente.',
-       status:'completado',progress:100,responsibles:['u1'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1'],hitos:[],comments:[
          {userId:'u1',text:'Integración API sistema China completada el 11/06/2026.',type:'avance',date:'11/06/2026 00:00'}
        ]},
       {id:'l9',num:9,sector:'sistemas',name:'Endpoint estados históricos probado',dif:'Media',metrica:'Endpoint funcional',start:2,end:3,
        objetivo:'Probar y validar el endpoint de estados históricos.',
        done_when:'Endpoint respondiendo correctamente con datos de prueba.',
-       status:'completado',progress:100,responsibles:['u0'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u0'],hitos:[],comments:[
          {userId:'u0',text:'Endpoint estados históricos probado y validado el 18/06/2026.',type:'avance',date:'18/06/2026 00:00'}
        ]},
       {id:'l10',num:10,sector:'sistemas',name:'Herramienta devolución masiva probada',dif:'Media',metrica:'Herramienta funcional',start:2,end:3,
        objetivo:'Probar herramienta de devolución masiva de paquetes.',
        done_when:'Herramienta operativa con resultados validados.',
-       status:'completado',progress:100,responsibles:['u0'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u0'],hitos:[],comments:[
          {userId:'u0',text:'Herramienta devolución masiva probada el 18/06/2026.',type:'avance',date:'18/06/2026 00:00'}
        ]},
       {id:'l11',num:11,sector:'gestion',name:'Tarifas 5-30 kg cotizadas y enviadas a LION',dif:'Baja',metrica:'Tarifas enviadas y confirmadas',start:2,end:3,
        objetivo:'Cotizar y enviar a LION las tarifas para paquetes de 5 a 30 kg.',
        done_when:'Tarifas enviadas y recibidas por LION.',
-       status:'completado',progress:100,responsibles:['u1'],tareas:[],comments:[
+       status:'completado',progress:100,responsibles:['u1'],hitos:[],comments:[
          {userId:'u1',text:'Tarifas 5-30 kg enviadas a LION el 18/06/2026.',type:'avance',date:'18/06/2026 00:00'}
        ]},
       // ── EN PROCESO ──
       {id:'l12',num:12,sector:'sistemas',name:'Integración API sistema Argentina (nueva cuenta)',dif:'Alta',metrica:'API AR operativa',start:3,end:3,
        objetivo:'Activar integración API con entidad AR de LION. Requiere legajo impositivo de la entidad Argentina de LION antes de crear cuenta.',
        done_when:'API Argentina activa, autenticada y respondiendo en ambiente productivo.',
-       status:'en-curso',progress:40,responsibles:['u1'],tareas:[
+       status:'en-curso',progress:40,responsibles:['u1'],hitos:[
          {text:'Gestionar legajo impositivo entidad AR de LION',respId:'u1',date:'2026-06-20',done:false,blocked:false},
          {text:'Activar cuenta con Gramajo/Zumer',respId:'u1',date:'2026-06-22',done:false,blocked:false},
          {text:'Prueba de conectividad sistema AR',respId:'u1',date:'2026-06-22',done:false,blocked:false},
@@ -725,7 +725,7 @@ const SEED={
       {id:'l13',num:13,sector:'operaciones',name:'Config. agrupación de venta + tiempos TMS',dif:'Media',metrica:'TMS configurado',start:3,end:3,
        objetivo:'Configurar agrupación de venta y tiempos en TMS para operación LION.',
        done_when:'TMS configurado con parámetros de LION validados por Operaciones.',
-       status:'en-curso',progress:30,responsibles:['u1','u0'],tareas:[
+       status:'en-curso',progress:30,responsibles:['u1','u0'],hitos:[
          {text:'Configurar agrupación de venta en TMS (19/06)',respId:'u0',date:'2026-06-19',done:false,blocked:false},
          {text:'Configurar tiempos de tránsito por zona',respId:'u0',date:'2026-06-22',done:false,blocked:false},
          {text:'Cargar SLA internos por zona en TMS',respId:'u0',date:'2026-07-01',done:false,blocked:false},
@@ -733,7 +733,7 @@ const SEED={
       {id:'l14',num:14,sector:'gestion',name:'Dashboard KPI LION (SLA por zona, tasa entrega, P90)',dif:'Media',metrica:'Dashboard operativo',start:3,end:3,
        objetivo:'Construir dashboard de KPIs para seguimiento del cliente LION: SLA por zona, tasa de entrega, P90.',
        done_when:'Dashboard presentado y aprobado por Luciana. Cierre 24/06.',
-       status:'en-curso',progress:50,responsibles:['u0'],tareas:[
+       status:'en-curso',progress:50,responsibles:['u0'],hitos:[
          {text:'Definir métricas y estructura del dashboard con Luciana',respId:'u0',date:'2026-06-20',done:true,blocked:false},
          {text:'Construir dashboard KPI en herramienta definida',respId:'u0',date:'2026-06-23',done:false,blocked:false},
          {text:'Validación y aprobación con equipo Customer',respId:'u0',date:'2026-06-24',done:false,blocked:false},
@@ -742,7 +742,7 @@ const SEED={
       {id:'l15',num:15,sector:'operaciones',name:'Zendesk / Tablero operativo Customer',dif:'Alta',metrica:'Tablero operativo activo',start:3,end:4,
        objetivo:'Implementar tablero operativo en Zendesk para el equipo Customer. Bloqueado esperando contactos IT de Tomasi.',
        done_when:'Tablero operativo activo y equipo Customer capacitado.',
-       status:'pendiente',progress:0,responsibles:['u0'],tareas:[
+       status:'pendiente',progress:0,responsibles:['u0'],hitos:[
          {text:'Obtener contactos IT de Tomasi para Zendesk',respId:'u0',date:'',done:false,blocked:true},
          {text:'Configurar tablero Zendesk operativo',respId:'u0',date:'',done:false,blocked:false},
          {text:'Capacitar equipo Customer en SLA y penalidades',respId:'u0',date:'2026-07-05',done:false,blocked:false},
@@ -753,7 +753,7 @@ const SEED={
       {id:'l16',num:16,sector:'sistemas',name:'⚠ CRÍTICO: Tracking events incompletos — penalidades activas',dif:'Alta',metrica:'Lista completa enviada a LION',start:3,end:3,
        objetivo:'LION ya recibió penalidades de su cliente por eventos de tracking faltantes. Enviar lista completa (Código + Estado + descripción en inglés) con urgencia máxima.',
        done_when:'Lista completa de tracking events enviada y confirmada por LION. 7 nodos obligatorios configurados en sistema.',
-       status:'pendiente',progress:0,responsibles:['u1','u0'],tareas:[
+       status:'pendiente',progress:0,responsibles:['u1','u0'],hitos:[
          {text:'Compilar lista completa de tracking events (Código + Estado + descripción en inglés)',respId:'u0',date:'2026-06-19',done:false,blocked:false},
          {text:'Coordinar con Fabian Olivares para validación técnica',respId:'u1',date:'2026-06-19',done:false,blocked:false},
          {text:'Enviar lista completa a LION urgente',respId:'u1',date:'2026-06-19',done:false,blocked:false},
@@ -765,7 +765,7 @@ const SEED={
       {id:'l17',num:17,sector:'operaciones',name:'Pruebas QA end-to-end (20 paquetes reales)',dif:'Alta',metrica:'20/20 paquetes validados',start:3,end:4,
        objetivo:'Prueba operativa con 20 paquetes reales. Coordinar entrega con LION antes del 25/06.',
        done_when:'20 paquetes procesados exitosamente de punta a punta (recepción → entrega → tracking completo).',
-       status:'pendiente',progress:0,responsibles:['u1','u2'],tareas:[
+       status:'pendiente',progress:0,responsibles:['u1','u2'],hitos:[
          {text:'Coordinar entrega 20 paquetes de prueba con LION (antes 25/06)',respId:'u1',date:'2026-06-25',done:false,blocked:false},
          {text:'Ejecutar prueba QA end-to-end',respId:'u2',date:'2026-07-06',done:false,blocked:false},
          {text:'Validar tracking de los 20 paquetes completo',respId:'u0',date:'2026-07-06',done:false,blocked:false},
@@ -774,27 +774,27 @@ const SEED={
       {id:'l18',num:18,sector:'sistemas',name:'Geocodificación: integrar motor Google Maps / HERE',dif:'Media',metrica:'Motor geocodificación activo',start:3,end:4,
        objetivo:'Integrar motor de geocodificación para corrección de direcciones en distribución.',
        done_when:'Motor activo, con validación de direcciones operativa antes del go-live.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'l19',num:19,sector:'sistemas',name:'Alerta automática 96hs sin movimiento en TMS',dif:'Media',metrica:'Alerta configurada y activa',start:3,end:4,
        objetivo:'Configurar alerta automática en TMS cuando un paquete no registra movimiento en 96 horas (pre-siniestro).',
        done_when:'Alerta activa y testeada antes del go-live. Siniestro automático a los 5 días sin movimiento.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'l20',num:20,sector:'operaciones',name:'Template Excel validación retiro Bs As (bulto a bulto)',dif:'Baja',metrica:'Template operativo',start:3,end:4,
        objetivo:'Crear template de validación bulto a bulto para retiro en Buenos Aires.',
        done_when:'Template en uso por equipo Operaciones desde Semana 1 post go-live.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'l21',num:21,sector:'operaciones',name:'Definir umbrales de escala de volumen',dif:'Media',metrica:'Umbrales aprobados por Gerencia',start:3,end:4,
        objetivo:'Definir los umbrales operativos de escalamiento: 1K → 3K → 5K → 10K paquetes/día. Requiere aprobación de Gerencia.',
        done_when:'Umbrales definidos y aprobados antes del go-live.',
-       status:'pendiente',progress:0,responsibles:['u2'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u2'],hitos:[],comments:[]},
       {id:'l22',num:22,sector:'gestion',name:'Designar ejecutivo de cuenta dedicado LION',dif:'Media',metrica:'Ejecutivo designado',start:3,end:4,
        objetivo:'Designar ejecutivo de cuenta dedicado para LION antes del go-live.',
        done_when:'Ejecutivo designado, presentado a LION y con agenda de seguimiento.',
-       status:'pendiente',progress:0,responsibles:['u1'],tareas:[],comments:[]},
+       status:'pendiente',progress:0,responsibles:['u1'],hitos:[],comments:[]},
       {id:'l23',num:23,sector:'gestion',name:'🚀 GO-LIVE — Operación completa LION 360',dif:'Alta',metrica:'1ª semana operativa sin incidentes críticos',start:4,end:4,
        objetivo:'Inicio de operación productiva completa. Todos los tareas previos deben estar completados.',
        done_when:'Go-live el 07/07/2026. Primera semana operativa sin incidentes críticos.',
-       status:'pendiente',progress:0,responsibles:['u1','u2','u0'],tareas:[
+       status:'pendiente',progress:0,responsibles:['u1','u2','u0'],hitos:[
          {text:'Todos los tareas de integración completados',respId:'u1',date:'2026-07-06',done:false,blocked:false},
          {text:'QA end-to-end aprobado',respId:'u1',date:'2026-07-06',done:false,blocked:false},
          {text:'Contrato firmado por LION',respId:'u1',date:'2026-07-06',done:false,blocked:false},
@@ -817,7 +817,7 @@ const SEED={
       {id:'m1',num:1,sector:'operaciones',name:'Layout operativo nuevo depósito Independencia',dif:'Alta',metrica:'Layout aprobado / Costo operativo definido',start:0,end:1,
        objetivo:'Diseñar el nuevo layout operativo del depósito para mejorar tiempos de procesamiento y minimizar costos operativos.',
        done_when:'Layout definitivo aprobado con metros por operación definidos y costos validados por Gerencia.',
-       status:'en-curso',progress:40,responsibles:['u2'],tareas:[
+       status:'en-curso',progress:40,responsibles:['u2'],hitos:[
          {text:'Presentación definitiva de layout operativo (Matías D)',respId:'u2',date:'2026-06-23',done:false,blocked:false},
          {text:'Presentación de layout a escala con metros por operación (Matías B)',respId:'u2',date:'2026-06-30',done:false,blocked:false},
          {text:'Definir costos operativos actuales vs. en mudanza',respId:'u2',date:'2026-07-07',done:false,blocked:false},
@@ -827,7 +827,7 @@ const SEED={
       {id:'m2',num:2,sector:'operaciones',name:'Layout oficinas nuevo depósito',dif:'Media',metrica:'Layout oficinas aprobado / Inversión definida',start:0,end:2,
        objetivo:'Definir espacio necesario e inversión para oficinas en el nuevo depósito. Evaluar utilización de oficinas actuales.',
        done_when:'Layout de oficinas aprobado con requerimientos de obras validados y metros de sala de racks confirmados.',
-       status:'en-curso',progress:10,responsibles:['u2'],tareas:[
+       status:'en-curso',progress:10,responsibles:['u2'],hitos:[
          {text:'Reunión con Depto. de Obras (Guido Badaloni/Julio) para requerimientos de inicio de obra (Diego y Federico)',respId:'u2',date:'2026-06-18',done:true,blocked:false},
          {text:'Solicitar metros cuadrados sala de rack a Sistemas (Agustín)',respId:'u1',date:'2026-06-17',done:false,blocked:false},
          {text:'Presentar requerimientos de obras para evaluación de layout',respId:'u2',date:'2026-06-30',done:false,blocked:false},
@@ -837,7 +837,7 @@ const SEED={
       {id:'m3',num:3,sector:'operaciones',name:'Traslado cliente OCA (Independencia → Rodríguez Peña)',dif:'Media',metrica:'OCA operando en nuevo depósito',start:0,end:2,
        objetivo:'Proponer y coordinar el traslado de OCA desde el depósito actual (Independencia) al depósito Rodríguez Peña.',
        done_when:'OCA confirmado en nuevo depósito con operación activa.',
-       status:'en-curso',progress:20,responsibles:['u2'],tareas:[
+       status:'en-curso',progress:20,responsibles:['u2'],hitos:[
          {text:'Reunión con cliente OCA para evaluar traslado a Rodríguez Peña (Fabián Sena)',respId:'u2',date:'',done:false,blocked:false},
          {text:'Confirmar condiciones comerciales del traslado',respId:'u2',date:'',done:false,blocked:false},
          {text:'Ejecutar traslado OCA',respId:'u2',date:'',done:false,blocked:false},
@@ -847,7 +847,7 @@ const SEED={
       {id:'m4',num:4,sector:'operaciones',name:'Traslado cliente Musimundo (On City → nuevo depósito)',dif:'Media',metrica:'Musimundo operando en nuevo depósito / Rentabilidad validada',start:0,end:2,
        objetivo:'Trasladar cliente Musimundo On City al nuevo depósito. Analizar universo On City completo: costos, rentabilidad y potenciales servicios futuros.',
        done_when:'Musimundo operando en nuevo depósito con análisis de rentabilidad aprobado.',
-       status:'en-curso',progress:30,responsibles:['u2'],tareas:[
+       status:'en-curso',progress:30,responsibles:['u2'],hitos:[
          {text:'Analizar costos de operación para presentar en reunión (Diego)',respId:'u2',date:'2026-06-23',done:false,blocked:false},
          {text:'Averiguar costos de traslado — último traslado (Diego)',respId:'u2',date:'2026-06-23',done:false,blocked:false},
          {text:'Presentación de ingresos y costos del cliente Musimundo',respId:'u2',date:'2026-06-30',done:false,blocked:false},
@@ -857,7 +857,7 @@ const SEED={
       {id:'m5',num:5,sector:'operaciones',name:'Cliente Purina/Nestlé — permanece en depósito actual',dif:'Baja',metrica:'Decisión documentada y operación confirmada',start:0,end:1,
        objetivo:'Purina/Nestlé permanece en el depósito actual (División Frío). Decisión tomada en última reunión.',
        done_when:'Decisión documentada, cliente notificado y operación confirmada en depósito actual.',
-       status:'completado',progress:100,responsibles:['u2'],tareas:[
+       status:'completado',progress:100,responsibles:['u2'],hitos:[
          {text:'Decisión tomada: Purina/Nestlé permanece en depósito actual con oficinas en División Frío',respId:'u2',date:'2026-06-18',done:true,blocked:false},
        ],comments:[
          {userId:'u0',text:'Decisión tomada en reunión. Cliente NO se mueve por el momento. Oficinas quedan en División Frío.',type:'decision',date:'23/06/2026 00:00'}
@@ -865,7 +865,7 @@ const SEED={
       {id:'m6',num:6,sector:'operaciones',name:'Cliente La Española — reubicación para optimizar operativa',dif:'Media',metrica:'La Española reubicada / Operativa Mendoza optimizada',start:0,end:2,
        objetivo:'Mover a La Española del depósito actual a otro para optimizar la operativa de Mendoza.',
        done_when:'La Española operando en nueva ubicación con impacto positivo en operativa Mendoza.',
-       status:'en-curso',progress:10,responsibles:['u2'],tareas:[
+       status:'en-curso',progress:10,responsibles:['u2'],hitos:[
          {text:'Definir depósito destino para La Española',respId:'u2',date:'',done:false,blocked:false},
          {text:'Presentar propuesta de reubicación',respId:'u2',date:'',done:false,blocked:false},
          {text:'Ejecutar reubicación La Española',respId:'u2',date:'',done:false,blocked:false},
@@ -875,7 +875,7 @@ const SEED={
       {id:'m7',num:7,sector:'gestion',name:'Mendoza Vineyards — sinergia fulfillment E2E bodegas',dif:'Alta',metrica:'Propuesta comercial definida / Acuerdo alcanzado',start:0,end:3,
        objetivo:'Desarrollar sinergia entre Andesmar y Mendoza Vineyards para proveer servicios de embotellamiento y fulfillment E2E a bodegas.',
        done_when:'Propuesta comercial E2E aprobada y acuerdo operativo en marcha.',
-       status:'pendiente',progress:0,responsibles:['u3'],tareas:[
+       status:'pendiente',progress:0,responsibles:['u3'],hitos:[
          {text:'Definir objetivo y alcance del proyecto Vineyards',respId:'u3',date:'',done:false,blocked:false},
          {text:'Analizar modelo de negocio y márgenes fulfillment E2E bodegas',respId:'u3',date:'',done:false,blocked:false},
          {text:'Presentar propuesta comercial a Mendoza Vineyards',respId:'u3',date:'',done:false,blocked:false},
@@ -885,7 +885,7 @@ const SEED={
       {id:'m8',num:8,sector:'gestion',name:'Coca Cola — cotización servicios almacenamiento Independencia',dif:'Media',metrica:'Propuesta enviada / Cliente confirmado',start:0,end:2,
        objetivo:'Prestar servicios de almacenamiento en el nuevo depósito de Independencia a Coca Cola.',
        done_when:'Cotización enviada y respuesta del cliente recibida.',
-       status:'en-curso',progress:40,responsibles:['u3'],tareas:[
+       status:'en-curso',progress:40,responsibles:['u3'],hitos:[
          {text:'Finalizar cotización de servicios de almacenamiento (Mauricio Vera / Fabián Sena)',respId:'u3',date:'2026-06-30',done:false,blocked:false},
          {text:'Enviar propuesta comercial a Coca Cola',respId:'u3',date:'2026-07-07',done:false,blocked:false},
          {text:'Informar respuesta del cliente',respId:'u3',date:'',done:false,blocked:false},
@@ -895,7 +895,7 @@ const SEED={
       {id:'m9',num:9,sector:'operaciones',name:'Análisis de márgenes operativos y presupuesto mudanza',dif:'Media',metrica:'Presupuesto aprobado / Desviaciones <5%',start:0,end:2,
        objetivo:'Analizar márgenes operativos y desviaciones presupuestarias del proceso de mudanza. Incluir indicadores de reuniones semanales.',
        done_when:'Cuadro de costos completo con clientes Andesmar, Musimundo, OCA, Purina y Vineyards aprobado.',
-       status:'en-curso',progress:20,responsibles:['u2'],tareas:[
+       status:'en-curso',progress:20,responsibles:['u2'],hitos:[
          {text:'Completar tabla de costos por cliente (Andesmar, Musimundo, OCA, Purina, Vineyards)',respId:'u2',date:'2026-06-30',done:false,blocked:false},
          {text:'Calcular diferencia presupuestaria vs. costo real',respId:'u2',date:'2026-07-07',done:false,blocked:false},
          {text:'Presentar análisis en reunión semanal de gestión',respId:'u3',date:'2026-07-07',done:false,blocked:false},
@@ -903,7 +903,8 @@ const SEED={
          {userId:'u0',text:'Tabla de costos vacía actualmente. Requiere carga de datos reales por cliente para calcular márgenes y desviaciones.',type:'general',date:'23/06/2026 00:00'}
        ]},
     ]
-  }
+  },
+  {id:'p4',name:'Implementación Drivin — Primera y Última Milla',desc:'Implementación de la plataforma Drivin para gestión de Primera y Última Milla en todos los CNDs de Andesmar Cargas. Incluye capacitación, configuración operativa, optimización de ruteo, liquidación y documentación de flota.',site:'Todos los CNDs (Buenos Aires, Mendoza, Córdoba, San Juan, San Luis, Neuquén, Tucumán, Rosario, Bahía Blanca)',startMonth:'2025-11',endMonth:'2026-08',status:'activo',sectors:['operaciones','sistemas','gestion'],kpis:{efectividad:0,efectividadTarget:100,ultimaMilla:0,ultimaMillaTarget:100},initiatives:[{id:'drv1',num:1,sector:'operaciones',name:'Iniciativas Globales (Todos los CNDs)',dif:'Media',metrica:'Tareas completadas / Total tareas — Todos',start:0,end:3,objetivo:'Implementar Drivin en Todos con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'en-curso',progress:80,responsibles:['u2'],hitos:[{text:'Dashboard Última Milla',respId:'u2',date:'2026-05-30',link:'',obs:'Medición de los ppales KPI',done:true,blocked:false},{text:'Capacitaciones + evaluación online para conductores',respId:'u2',date:'2026-01-31',link:'',obs:'',done:true,blocked:false},{text:'Capacitaciones + evaluación online para depósitos',respId:'u2',date:'2026-01-31',link:'',obs:'',done:true,blocked:false},{text:'Tablero Monitoreo',respId:'u2',date:'2026-04-30',link:'',obs:'Seguimiento de rutas en tiempo real',done:true,blocked:false},{text:'Notificaciones personalizadas por mail',respId:'u2',date:'2026-06-10',link:'',obs:'Objetivo: mejorar la efectividad de entrega',done:true,blocked:false},{text:'Encuestas de Satisfacción (NPS)',respId:'u2',date:'',link:'',obs:'Medir el servicio de cara al cliente final',done:true,blocked:false},{text:'Alta cliente final en Driv In',respId:'u2',date:'',link:'',obs:'Para mejorar la georreferenciación',done:false,blocked:false},{text:'Gestión de activos',respId:'u2',date:'',link:'',obs:'Para control de pallets',done:false,blocked:false},{text:'Tablero para gestión de NO georreferenciados',respId:'u2',date:'2026-04-30',link:'',obs:'Facilita la edición y validación de direcciones incorrectas',done:true,blocked:false},{text:'Optimización de ruteo por polígonos/zonas',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false}],comments:[]},{id:'drv2',num:2,sector:'operaciones',name:'CND Buenos Aires',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Buenos Aires',start:0,end:3,objetivo:'Implementar Drivin en CND Buenos Aires con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'en-curso',progress:42,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'2025-11-15',link:'',obs:'',done:true,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'2025-11-30',link:'',obs:'',done:true,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'Errores en optimizacion, esperando configuracion de driv.in',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'La base liquida bien, buenos aires liquida los km base, pero tienen el excedente de penalidad de efectividad por fuera.',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'2025-11-15',link:'',obs:'',done:true,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de retiros especiales (grandes sellers)',respId:'u2',date:'',link:'',obs:'Cargar los retiros fijos en grandes clientes (TRF, Dabra, Club, EP, etc)',done:false,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'2025-11-30',link:'',obs:'',done:true,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'Tanto utilitarias cortas, largas y balansines/chasis',done:true,blocked:false}],comments:[]},{id:'drv3',num:3,sector:'operaciones',name:'CND Mendoza',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Mendoza',start:1,end:4,objetivo:'Implementar Drivin en CND Mendoza con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'en-curso',progress:58,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'2025-12-15',link:'',obs:'',done:true,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'2025-12-31',link:'',obs:'',done:true,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'2025-12-15',link:'',obs:'',done:true,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'Errores en optimizacion, esperando configuracion de driv.in',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'La base liquida bien, todavia no liquidamos ninguno completo, ya que de los clientes exclusivos se hace por fuera, lo mismo que adicionales.',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'2025-12-15',link:'',obs:'',done:true,blocked:false},{text:'Ventana Horaria x Zona',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false}],comments:[]},{id:'drv4',num:4,sector:'operaciones',name:'CND Cordoba',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Cordoba',start:2,end:5,objetivo:'Implementar Drivin en CND Cordoba con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'en-curso',progress:50,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'La base liquida bien, todavia no liquidamos ninguno completo, ya que de las lejanias se pagan kg x entrega, el sistema no calcula bien. Estamos esperando mejroa de driv.in para lejanias.',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Ventana Horaria x Zona',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]},{id:'drv5',num:5,sector:'operaciones',name:'CND San Juan',dif:'Media',metrica:'Tareas completadas / Total tareas — CND San Juan',start:3,end:6,objetivo:'Implementar Drivin en CND San Juan con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'en-curso',progress:55,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]},{id:'drv6',num:6,sector:'operaciones',name:'CND San Luis',dif:'Media',metrica:'Tareas completadas / Total tareas — CND San Luis',start:4,end:7,objetivo:'Implementar Drivin en CND San Luis con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'en-curso',progress:55,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:true,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]},{id:'drv7',num:7,sector:'operaciones',name:'CND Neuquen',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Neuquen',start:5,end:8,objetivo:'Implementar Drivin en CND Neuquen con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'pendiente',progress:0,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]},{id:'drv8',num:8,sector:'operaciones',name:'CND Tucuman',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Tucuman',start:6,end:9,objetivo:'Implementar Drivin en CND Tucuman con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'pendiente',progress:0,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Encuestas de Satisfacción (NPS)',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]},{id:'drv9',num:9,sector:'operaciones',name:'CND Rosario',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Rosario',start:7,end:10,objetivo:'Implementar Drivin en CND Rosario con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'pendiente',progress:0,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Encuestas de Satisfacción (NPS)',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]},{id:'drv10',num:10,sector:'operaciones',name:'CND Bahía Blanca',dif:'Media',metrica:'Tareas completadas / Total tareas — CND Bahía Blanca',start:8,end:11,objetivo:'Implementar Drivin en CND Bahía Blanca con todas las configuraciones operativas completas.',done_when:'Todas las tareas del depósito en estado Completado.',status:'pendiente',progress:0,responsibles:['u2'],hitos:[{text:'Capacitacion sobre plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Implementacion en CND',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Eliminacion de HDR papel',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Optimizacion con uso de la herramienta',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Liquidar con la plataforma',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Capacitacion a Conductores',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Configuración de Ventanas Horarias - APK WAREHOUSE',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Control de Documentación',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Gestión de Cobro Contra Entrega',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Encuestas de Satisfacción (NPS)',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de Capacidades de Vehículos',respId:'u2',date:'',link:'',obs:'',done:false,blocked:false},{text:'Carga de documentación de flota',respId:'u2',date:'',link:'',obs:'Contrato, seguro, tarjeta verde, monotributo, etc',done:false,blocked:false}],comments:[]}]}
   ]
 };
 
@@ -990,8 +991,10 @@ async function syncFromGAS(manual){
   const url=getGasUrl();
   if(!url){
     const loc=loadLocal();
-    DB=loc||JSON.parse(JSON.stringify(SEED));
-    if(manual)showSync('Sin GAS configurado — datos locales','ok');
+    // Use local if it has projects, otherwise always use SEED
+    DB=(loc&&loc.projects&&loc.projects.length>0)?loc:JSON.parse(JSON.stringify(SEED));
+    if(DB?.projects)DB.projects.forEach(p=>applyAutoStatus(p));
+    if(manual)showSync('Datos cargados desde SEED','ok');
     return;
   }
   showSync('Sincronizando con Google Sheets...');
@@ -1001,7 +1004,9 @@ async function syncFromGAS(manual){
     if(res?.ok&&res?.db){DB=res.db;if(DB?.projects)DB.projects.forEach(p=>applyAutoStatus(p));saveLocal(DB);showSync('Sincronizado ✓','ok');}
     else{DB=loadLocal()||JSON.parse(JSON.stringify(SEED));showSync('Sin datos en GAS — usando locales','ok');}
   }catch{
-    DB=loadLocal()||JSON.parse(JSON.stringify(SEED));
+    const loc2=loadLocal();
+    DB=(loc2&&loc2.projects&&loc2.projects.length>0)?loc2:JSON.parse(JSON.stringify(SEED));
+    if(DB?.projects)DB.projects.forEach(p=>applyAutoStatus(p));
     showSync(manual?'Error de conexión — usando datos locales':'Sin conexión','ok');
   }
 }
@@ -1508,7 +1513,7 @@ async function rmResp(id,uid2){
 function openHM(initId,editIdx){
   hitoId=initId;
   const init=CP.initiatives.find(i=>i.id===initId);
-  const h=editIdx!==undefined?init?.hitos[editIdx]:null;
+  const h=editIdx!==undefined?init?.tareas[editIdx]:null;
   document.getElementById('hm-title').textContent=h?'Editar hito / tarea':'Agregar tarea';
   document.getElementById('nht').value=h?h.text:'';
   document.getElementById('nhd').value=h?h.date||'':'';
@@ -1937,10 +1942,23 @@ function loadKpiFrame(){
 }
 
 // ══ INIT ══
+// DB version — increment when SEED data changes significantly
+const DB_VERSION = '2026-06-v4';  // v4 = 4 projects including Drivin
+
 async function init(){
   // 1. Check activate token in URL
   if(await checkActivateParam())return;
-  // 2. Load DB
+  // 2. Version check — if stored version differs, clear localStorage and reload SEED
+  const storedVersion = localStorage.getItem('andesmar_gp_version');
+  if(storedVersion !== DB_VERSION){
+    // New version detected — clear local DB so SEED loads fresh
+    localStorage.removeItem('andesmar_gp_db');
+    localStorage.setItem('andesmar_gp_version', DB_VERSION);
+    console.log('DB version updated to', DB_VERSION, '— reloading SEED');
+  }
+  // 3. Also clear old keys
+  ['andgp_v4','andesmar_gp_db_old'].forEach(k=>localStorage.removeItem(k));
+  // 4. Load DB
   await syncFromGAS();
   // 3. Restore session
   const savedCU=sessionStorage.getItem('gp_cu');
