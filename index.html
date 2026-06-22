@@ -540,7 +540,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 <script>
 // ══ CONFIG ══
 const GAS_KEY='andesmar_gas_url';
-const getGasUrl=()=>localStorage.getItem(GAS_KEY)||'';
+const GAS_URL_DEFAULT='https://script.google.com/macros/s/AKfycbxNe-A4NR8laaxnSxrgJ8_dxKTp6ST4M_-E2GN1WK9tntxSzpACWTlRXxE2xGFSujxn/exec';
+const getGasUrl=()=>localStorage.getItem(GAS_KEY)||GAS_URL_DEFAULT;
 
 // ══ SECTORS ══
 const SECS=[
