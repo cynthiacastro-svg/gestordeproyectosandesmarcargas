@@ -539,7 +539,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 
 <script>
 const GAS_URL='https://script.google.com/macros/s/AKfycbxNe-A4NR8laaxnSxrgJ8_dxKTp6ST4M_-E2GN1WK9tntxSzpACWTlRXxE2xGFSujxn/exec';
-const DB_VERSION='2026-v8';
+const DB_VERSION='2026-v9';
 const EMAILS_ENABLED=false;
 const getGasUrl=()=>GAS_URL;
 
@@ -1003,32 +1003,37 @@ async function gasPostResp(data){
 async function syncFromGAS(manual){
   const url=getGasUrl();
   if(manual)showSync('Sincronizando...');
-  let gasOk=false;
+  // ALWAYS try GAS first — this ensures all users see the same data
   if(url){
     try{
-      const r=await fetch(url+'?action=getDB');
+      const r=await fetch(url+'?action=getDB',{method:'GET'});
       const res=await r.json();
       if(res?.ok&&res?.db&&res.db.projects?.length>0){
         DB=res.db;
-        gasOk=true;
+        // Clean stale data
+        DB.projects=DB.projects.filter(p=>p&&p.id&&(p.id==='p4'||!(p.name||'').toUpperCase().includes('DRIV')||(p.id==='p4')));
+        // Merge missing SEED projects
+        SEED.projects.forEach(sp=>{if(!DB.projects.find(p=>p.id===sp.id))DB.projects.push(sp);});
+        // Ensure SEED users exist
+        if(!DB.users)DB.users=[];
+        SEED.users.forEach(su=>{if(!DB.users.find(u=>u.id===su.id||u.email===su.email))DB.users.push(su);});
+        DB.projects.forEach(p=>applyAutoStatus(p));
+        saveLocal(DB);
+        if(manual)showSync('Sincronizado ✓','ok');
+        return;
       }
-    }catch(e){console.warn('GAS fetch error:',e);}
+    }catch(e){console.warn('GAS error:',e);}
   }
-  if(!gasOk){
-    // Fallback to localStorage or SEED
-    const loc=loadLocal();
-    DB=(loc&&loc.projects&&loc.projects.length>0)?loc:JSON.parse(JSON.stringify(SEED));
-  }
-  // Always: clean duplicates + merge missing SEED projects
-  if(!DB||!DB.projects)DB=JSON.parse(JSON.stringify(SEED));
-  DB.projects=DB.projects.filter(p=>p&&p.id&&(p.id==='p4'||!p.name?.toUpperCase().includes('DRIV')||p.id==='p4'));
+  // Fallback: localStorage or SEED
+  const loc=loadLocal();
+  DB=(loc&&loc.projects&&loc.projects.length>0)?loc:JSON.parse(JSON.stringify(SEED));
+  DB.projects=DB.projects.filter(p=>p&&p.id&&(p.id==='p4'||!(p.name||'').toUpperCase().includes('DRIV')||(p.id==='p4')));
   SEED.projects.forEach(sp=>{if(!DB.projects.find(p=>p.id===sp.id))DB.projects.push(sp);});
-  // Ensure all SEED users exist (never lose users from SEED)
   if(!DB.users)DB.users=[];
-  SEED.users.forEach(su=>{if(!DB.users.find(u=>u.id===su.id))DB.users.push(su);});
+  SEED.users.forEach(su=>{if(!DB.users.find(u=>u.id===su.id||u.email===su.email))DB.users.push(su);});
   DB.projects.forEach(p=>applyAutoStatus(p));
   saveLocal(DB);
-  if(manual)showSync(gasOk?'Sincronizado con GAS ✓':'Datos locales cargados','ok');
+  if(manual)showSync('Datos locales cargados','ok');
 }
 async function persistDB(){
   // Always recalculate progress before saving
