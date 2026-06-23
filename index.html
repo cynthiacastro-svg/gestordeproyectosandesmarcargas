@@ -539,7 +539,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 
 <script>
 const GAS_URL='https://script.google.com/macros/s/AKfycbxNe-A4NR8laaxnSxrgJ8_dxKTp6ST4M_-E2GN1WK9tntxSzpACWTlRXxE2xGFSujxn/exec';
-const DB_VERSION='2026-v18';
+const DB_VERSION='2026-v19';
 const EMAILS_ENABLED=false;
 const getGasUrl=()=>GAS_URL;
 
@@ -2052,27 +2052,30 @@ async function activateAccount(){
   if(p1!==p2){err.textContent='Las contraseñas no coinciden.';err.classList.add('on');return;}
   const colors=['#004993','#F47B20','#2D9E6B','#7B5EA7','#E05252','#01B8B9','#6C5CE7'];
   const newUser={id:uid(),username:inv.email,email:inv.email,password:p1,name:inv.fullName,area:inv.sector,role:inv.rol,color:colors[DB.users.length%colors.length]};
-  // Add to DB
+  // Add to DB in memory
   DB.users.push(newUser);
   // Mark invite active
   if(DB.invites){const di=DB.invites.find(i=>i.token===inv.token);if(di)di.status='active';}
-  const invites=getInvites();const li=invites.find(i=>i.token===inv.token);if(li)li.status='active';saveInvites(invites);
-  // Save to GAS — retry up to 3 times
-  let saved=false;
-  for(let attempt=0;attempt<3;attempt++){
-    try{
-      const r=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'saveDB',db:DB})});
-      saved=true;break;
-    }catch(e){await new Promise(r=>setTimeout(r,1000));}
-  }
-  // Also save to localStorage so login works immediately even if GAS failed
+  // Save to localStorage immediately
   saveLocal(DB);
+  // Try to save to GAS (best effort)
+  try{
+    await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'saveDB',db:DB})});
+  }catch(e){console.warn('GAS save failed, user saved locally');}
+  // Clean URL
   window.history.replaceState({},'',window.location.pathname);
+  // LOGIN DIRECTLY — no reload, user is already in DB memory
   document.getElementById('screen-activate').style.display='none';
-  document.getElementById('ov-login').style.display='flex';
-  document.getElementById('liu').value=inv.email;
-  document.getElementById('lip').focus();
-  alert('✅ ¡Cuenta activada! Ingresá con tu email y la contraseña que creaste.');
+  CU=newUser;
+  sessionStorage.setItem('gp_cu',JSON.stringify(CU));
+  document.getElementById('ov-login').style.display='none';
+  document.getElementById('apphdr').style.display='flex';
+  const av=document.getElementById('hdrav');
+  av.textContent=ini(CU.name);av.style.background=CU.color;av.style.color='white';
+  document.getElementById('hdrnm').textContent=CU.name;
+  document.getElementById('hdrrl').textContent=gsec(CU.area).label+' · '+rll(CU.role);
+  goScreen('home');
+  alert('✅ ¡Bienvenido/a '+CU.name+'! Tu cuenta está activa.');
 }
 async function gasPostResp(data){
   const url=getGasUrl();if(!url)return null;
