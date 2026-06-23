@@ -539,7 +539,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 
 <script>
 const GAS_URL='https://script.google.com/macros/s/AKfycbxNe-A4NR8laaxnSxrgJ8_dxKTp6ST4M_-E2GN1WK9tntxSzpACWTlRXxE2xGFSujxn/exec';
-const DB_VERSION='2026-v16';
+const DB_VERSION='2026-v17';
 const EMAILS_ENABLED=false;
 const getGasUrl=()=>GAS_URL;
 
@@ -1941,25 +1941,20 @@ async function createInvite(){
   if(!nombre||!apellido){err.textContent='Completá nombre y apellido.';err.classList.add('on');return;}
   const email=buildEmail(nombre,apellido);
   if(DB.users.find(u=>u.email===email)){err.textContent='Ya existe usuario con ese email.';err.classList.add('on');return;}
-  // Check for duplicate pending invite
-  if(DB.invites&&DB.invites.find(i=>i.email===email&&i.status==='pending')){
-    err.textContent='Ya hay una invitación pendiente para ese email.';err.classList.add('on');return;
-  }
   const token='inv_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
   const expiry=Date.now()+7*24*60*60*1000;
-  const baseUrl=window.location.href.split('?')[0];
-  const link=baseUrl+'?activate='+token;
   const invite={token,email,fullName:nombre+' '+apellido,nombre,apellido,sector,rol,expiry,status:'pending',createdBy:CU.id,createdAt:nows()};
-  // Save ONLY to DB — this gets synced to GAS via persistDB
+  // Encode invite data IN the URL — no server needed
+  const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(invite))));
+  const baseUrl=window.location.href.split('?')[0];
+  const link=baseUrl+'?activate='+token+'&d='+encoded;
+  // Also save to DB for listing purposes
   if(!DB.invites)DB.invites=[];
+  // Remove duplicates for same email
+  DB.invites=DB.invites.filter(i=>i.email!==email);
   DB.invites.push(invite);
-  // Also save to localStorage as backup
-  const invites=getInvites();
-  invites.push(invite);
-  saveInvites(invites);
-  // Persist to GAS
   await persistDB();
-  // Send email (fire and forget)
+  // Send email
   const sv=gsec(sector);
   const rolLabel={colaborador:'Colaborador',lider:'Líder',admin:'Admin'}[rol]||rol;
   gasPost({action:'sendInviteEmail',to_email:email,to_name:nombre+' '+apellido,sector:sv.label,rol:rolLabel,link});
@@ -1999,14 +1994,21 @@ async function checkActivateParam(){
   const token=params.get('activate');
   if(!token)return false;
   let inv=null;
-  // DB is loaded — check DB.invites first (source of truth)
-  if(DB?.invites)inv=DB.invites.find(i=>i.token===token);
-  // Fallback: localStorage
+  // PRIMARY: decode invite from URL parameter (works without any server)
+  const encoded=params.get('d');
+  if(encoded){
+    try{
+      inv=JSON.parse(decodeURIComponent(escape(atob(encoded))));
+      console.log('Invite decoded from URL ✓');
+    }catch(e){console.warn('URL decode failed:',e);}
+  }
+  // FALLBACK: check DB.invites
+  if(!inv&&DB?.invites)inv=DB.invites.find(i=>i.token===token);
+  // FALLBACK: check localStorage
   if(!inv)inv=getInvites().find(i=>i.token===token);
-  console.log('Invite search result:',inv?'FOUND':'NOT FOUND','token:',token);
-  if(!inv){alert('Link de activación inválido o no encontrado.');return false;}
+  if(!inv){alert('Link de activación inválido. Solicitá uno nuevo al administrador.');return false;}
   if(inv.status==='active'){alert('Esta cuenta ya fue activada. Ingresá con tu email y contraseña.');return false;}
-  if(Date.now()>inv.expiry){alert('Link expirado (7 días). Solicitá uno nuevo al administrador.');return false;}
+  if(Date.now()>inv.expiry){alert('Link expirado (7 días). Solicitá uno nuevo.');return false;}
   const scr=document.getElementById('screen-activate');
   document.getElementById('ov-login').style.display='none';
   scr.style.display='flex';
