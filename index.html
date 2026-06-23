@@ -539,7 +539,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 
 <script>
 const GAS_URL='https://script.google.com/macros/s/AKfycbxNe-A4NR8laaxnSxrgJ8_dxKTp6ST4M_-E2GN1WK9tntxSzpACWTlRXxE2xGFSujxn/exec';
-const DB_VERSION='2026-v17';
+const DB_VERSION='2026-v18';
 const EMAILS_ENABLED=false;
 const getGasUrl=()=>GAS_URL;
 
@@ -1018,12 +1018,21 @@ async function syncFromGAS(manual){
         DB.projects=DB.projects.filter(p=>p&&p.id&&(p.id==='p4'||!(p.name||'').toUpperCase().includes('DRIV')||(p.id==='p4')));
         // Merge missing SEED projects
         SEED.projects.forEach(sp=>{if(!DB.projects.find(p=>p.id===sp.id))DB.projects.push(sp);});
-        // Remove old hardcoded users that were deleted (u2, u3, u4 from old SEED)
+        // Remove old hardcoded users
         const OLD_IDS=['u2','u3','u4','u5'];
         if(DB.users)DB.users=DB.users.filter(u=>!OLD_IDS.includes(u.id));
-        // Ensure current SEED users exist
         if(!DB.users)DB.users=[];
+        // Ensure SEED users exist
         SEED.users.forEach(su=>{if(!DB.users.find(u=>u.id===su.id||u.email===su.email))DB.users.push(su);});
+        // Merge any locally activated users not yet in GAS
+        const localDB=loadLocal();
+        if(localDB&&localDB.users){
+          localDB.users.forEach(lu=>{
+            if(!DB.users.find(u=>u.id===lu.id||u.email===lu.email)){
+              DB.users.push(lu);
+            }
+          });
+        }
         DB.projects.forEach(p=>applyAutoStatus(p));
         saveLocal(DB);
         if(manual)showSync('Sincronizado ✓','ok');
@@ -2043,14 +2052,26 @@ async function activateAccount(){
   if(p1!==p2){err.textContent='Las contraseñas no coinciden.';err.classList.add('on');return;}
   const colors=['#004993','#F47B20','#2D9E6B','#7B5EA7','#E05252','#01B8B9','#6C5CE7'];
   const newUser={id:uid(),username:inv.email,email:inv.email,password:p1,name:inv.fullName,area:inv.sector,role:inv.rol,color:colors[DB.users.length%colors.length]};
+  // Add to DB
   DB.users.push(newUser);
-  await persistDB();
-  await gasPost({action:'activateInvite',token:inv.token,user:newUser});
+  // Mark invite active
+  if(DB.invites){const di=DB.invites.find(i=>i.token===inv.token);if(di)di.status='active';}
   const invites=getInvites();const li=invites.find(i=>i.token===inv.token);if(li)li.status='active';saveInvites(invites);
+  // Save to GAS — retry up to 3 times
+  let saved=false;
+  for(let attempt=0;attempt<3;attempt++){
+    try{
+      const r=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'saveDB',db:DB})});
+      saved=true;break;
+    }catch(e){await new Promise(r=>setTimeout(r,1000));}
+  }
+  // Also save to localStorage so login works immediately even if GAS failed
+  saveLocal(DB);
   window.history.replaceState({},'',window.location.pathname);
   document.getElementById('screen-activate').style.display='none';
   document.getElementById('ov-login').style.display='flex';
   document.getElementById('liu').value=inv.email;
+  document.getElementById('lip').focus();
   alert('✅ ¡Cuenta activada! Ingresá con tu email y la contraseña que creaste.');
 }
 async function gasPostResp(data){
