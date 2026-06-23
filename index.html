@@ -539,7 +539,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 
 <script>
 const GAS_URL='https://script.google.com/macros/s/AKfycbxNe-A4NR8laaxnSxrgJ8_dxKTp6ST4M_-E2GN1WK9tntxSzpACWTlRXxE2xGFSujxn/exec';
-const DB_VERSION='2026-v14';
+const DB_VERSION='2026-v15';
 const EMAILS_ENABLED=false;
 const getGasUrl=()=>GAS_URL;
 
@@ -1997,21 +1997,12 @@ async function checkActivateParam(){
   const token=params.get('activate');
   if(!token)return false;
   let inv=null;
-  // 1. Check localStorage
-  inv=getInvites().find(i=>i.token===token);
-  // 2. Check DB.invites (in memory)
-  if(!inv&&DB?.invites)inv=DB.invites.find(i=>i.token===token);
-  // 3. Fetch fresh from GAS DB
-  if(!inv){
-    try{
-      const r=await fetch(getGasUrl()+'?action=getDB',{method:'GET'});
-      const res=await r.json();
-      if(res?.ok&&res?.db){
-        if(res.db.invites)inv=res.db.invites.find(i=>i.token===token);
-      }
-    }catch(e){console.warn('GAS DB fetch:',e);}
-  }
-  // 4. Try GAS invite endpoint directly
+  // DB is already loaded when this runs — check all sources
+  // 1. DB.invites (loaded from GAS)
+  if(DB?.invites)inv=DB.invites.find(i=>i.token===token);
+  // 2. localStorage
+  if(!inv)inv=getInvites().find(i=>i.token===token);
+  // 3. GAS invite endpoint directly
   if(!inv){
     try{
       const gasRes=await gasPostResp({action:'getInvite',token});
@@ -2092,44 +2083,32 @@ function loadKpiFrame(){
   // v4 = 4 projects including Drivin
 
 async function init(){
-  // 1. Check activate token in URL
-  if(await checkActivateParam())return;
-  // 2. Version check — if stored version differs, clear localStorage and reload SEED
-  const storedVersion = localStorage.getItem('andesmar_gp_version');
-  if(storedVersion !== DB_VERSION){
-    // New version detected — clear local DB so SEED loads fresh
+  // 1. Version check
+  const storedV=localStorage.getItem('andesmar_gp_version');
+  if(storedV!==DB_VERSION){
     localStorage.removeItem('andesmar_gp_db');
-    localStorage.setItem('andesmar_gp_version','2026-v5');
-    console.log('DB version updated to', DB_VERSION, '— reloading SEED');
+    localStorage.setItem('andesmar_gp_version',DB_VERSION);
+    console.log('DB version updated to',DB_VERSION,'— reloading SEED');
   }
-  // 3. Also clear old keys
   ['andgp_v4','andesmar_gp_db_old'].forEach(k=>localStorage.removeItem(k));
-  // 4. Load DB
+
+  // 2. Load DB from GAS FIRST (so invites are available)
   await syncFromGAS();
-  // Ensure DB is valid — fallback to SEED if null or empty
-  if(!DB||!DB.projects||DB.projects.length===0){
-    DB=JSON.parse(JSON.stringify(SEED));
+
+  // 3. NOW check activate token — DB is loaded so invites can be found
+  const params=new URLSearchParams(window.location.search);
+  if(params.get('activate')){
+    if(await checkActivateParam())return;
   }
-  // Remove duplicate/stale Drivin projects (keep only id='p4')
-  DB.projects=DB.projects.filter(p=>{
-    const isDrivin=p.name&&(p.name.toUpperCase().includes('DRIV')||p.name.toUpperCase().includes('DRIVIN'));
-    return !isDrivin||(p.id==='p4');
-  });
-  // Merge any missing SEED projects
-  SEED.projects.forEach(sp=>{
-    if(!DB.projects.find(p=>p.id===sp.id))DB.projects.push(sp);
-  });
-  DB.projects.forEach(p=>applyAutoStatus(p));
-  // 3. Restore session
+
+  // 4. Restore session
   const savedCU=sessionStorage.getItem('gp_cu');
   if(savedCU){
     try{
-      CU=JSON.parse(savedCU);
-      // Verify user still exists in DB
-      const dbUser=DB.users.find(u=>u.id===CU.id||u.email===CU.email);
-      if(!dbUser){sessionStorage.removeItem('gp_cu');CU=null;}
-      else{
-        CU=dbUser; // refresh from DB
+      const sc=JSON.parse(savedCU);
+      const dbUser=DB.users.find(u=>u.id===sc.id||u.email===sc.email);
+      if(dbUser){
+        CU=dbUser;
         document.getElementById('ov-login').style.display='none';
         document.getElementById('apphdr').style.display='flex';
         const av=document.getElementById('hdrav');
@@ -2137,10 +2116,9 @@ async function init(){
         document.getElementById('hdrnm').textContent=CU.name;
         document.getElementById('hdrrl').textContent=gsec(CU.area).label+' · '+rll(CU.role);
         goScreen('home');
-        // checkAndNotify desactivado — activar con EMAILS_ENABLED=true
         return;
       }
-    }catch{sessionStorage.removeItem('gp_cu');CU=null;}
+    }catch{sessionStorage.removeItem('gp_cu');}
   }
 }
 
