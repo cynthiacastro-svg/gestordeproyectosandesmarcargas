@@ -539,7 +539,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 
 <script>
 const GAS_URL='https://script.google.com/macros/s/AKfycbxNe-A4NR8laaxnSxrgJ8_dxKTp6ST4M_-E2GN1WK9tntxSzpACWTlRXxE2xGFSujxn/exec';
-const DB_VERSION='2026-v10';
+const DB_VERSION='2026-v11';
 const EMAILS_ENABLED=false;
 const getGasUrl=()=>GAS_URL;
 
@@ -1011,7 +1011,10 @@ async function syncFromGAS(manual){
         DB.projects=DB.projects.filter(p=>p&&p.id&&(p.id==='p4'||!(p.name||'').toUpperCase().includes('DRIV')||(p.id==='p4')));
         // Merge missing SEED projects
         SEED.projects.forEach(sp=>{if(!DB.projects.find(p=>p.id===sp.id))DB.projects.push(sp);});
-        // Ensure SEED users exist
+        // Remove old hardcoded users that were deleted (u2, u3, u4 from old SEED)
+        const OLD_IDS=['u2','u3','u4','u5'];
+        if(DB.users)DB.users=DB.users.filter(u=>!OLD_IDS.includes(u.id));
+        // Ensure current SEED users exist
         if(!DB.users)DB.users=[];
         SEED.users.forEach(su=>{if(!DB.users.find(u=>u.id===su.id||u.email===su.email))DB.users.push(su);});
         DB.projects.forEach(p=>applyAutoStatus(p));
@@ -1026,6 +1029,8 @@ async function syncFromGAS(manual){
   DB=(loc&&loc.projects&&loc.projects.length>0)?loc:JSON.parse(JSON.stringify(SEED));
   DB.projects=DB.projects.filter(p=>p&&p.id&&(p.id==='p4'||!(p.name||'').toUpperCase().includes('DRIV')||(p.id==='p4')));
   SEED.projects.forEach(sp=>{if(!DB.projects.find(p=>p.id===sp.id))DB.projects.push(sp);});
+  const OLD_IDS2=['u2','u3','u4','u5'];
+  if(DB.users)DB.users=DB.users.filter(u=>!OLD_IDS2.includes(u.id));
   if(!DB.users)DB.users=[];
   SEED.users.forEach(su=>{if(!DB.users.find(u=>u.id===su.id||u.email===su.email))DB.users.push(su);});
   DB.projects.forEach(p=>applyAutoStatus(p));
