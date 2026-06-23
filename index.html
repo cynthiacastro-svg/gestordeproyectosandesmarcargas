@@ -539,7 +539,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 
 <script>
 const GAS_URL='https://script.google.com/macros/s/AKfycbxNe-A4NR8laaxnSxrgJ8_dxKTp6ST4M_-E2GN1WK9tntxSzpACWTlRXxE2xGFSujxn/exec';
-const DB_VERSION='2026-v13';
+const DB_VERSION='2026-v14';
 const EMAILS_ENABLED=false;
 const getGasUrl=()=>GAS_URL;
 
@@ -1946,12 +1946,20 @@ async function createInvite(){
   const baseUrl=window.location.href.split('?')[0];
   const link=baseUrl+'?activate='+token;
   const invite={token,email,fullName:nombre+' '+apellido,nombre,apellido,sector,rol,expiry,status:'pending',createdBy:CU.id,createdAt:nows()};
+  // Save to ALL storage locations
   const invites=getInvites();invites.push(invite);saveInvites(invites);
-  // Save to GAS
-  await gasPost({action:'saveInvite',invite});
-  // Send email via GAS
+  // Save in DB (syncs to GAS)
+  if(!DB.invites)DB.invites=[];
+  DB.invites.push(invite);
+  // Save project member slot (pending)
+  if(CP&&!CP.members)CP.members=[];
+  if(CP)CP.members.push({userId:null,email,role:rol,status:'pending',token});
+  await persistDB();
+  // Also send to GAS invite endpoint
+  await gasPostResp({action:'saveInvite',invite});
+  // Send email
   const sv=gsec(sector);
-  const rolLabel={colaborador:'Colaborador',lider:'Líder de sector',admin:'Administrador'}[rol]||rol;
+  const rolLabel={colaborador:'Colaborador',lider:'Líder de sector',admin:'Admin'}[rol]||rol;
   gasPost({action:'sendInviteEmail',to_email:email,to_name:nombre+' '+apellido,sector:sv.label,rol:rolLabel,link});
   closeInvite();
   document.getElementById('inv-link-display').textContent=link;
@@ -1989,26 +1997,26 @@ async function checkActivateParam(){
   const token=params.get('activate');
   if(!token)return false;
   let inv=null;
-  // Try localStorage first (faster, no CORS issues)
+  // 1. Check localStorage
   inv=getInvites().find(i=>i.token===token);
-  // Also check DB invites
+  // 2. Check DB.invites (in memory)
   if(!inv&&DB?.invites)inv=DB.invites.find(i=>i.token===token);
-  // If not found locally, try GAS
+  // 3. Fetch fresh from GAS DB
+  if(!inv){
+    try{
+      const r=await fetch(getGasUrl()+'?action=getDB',{method:'GET'});
+      const res=await r.json();
+      if(res?.ok&&res?.db){
+        if(res.db.invites)inv=res.db.invites.find(i=>i.token===token);
+      }
+    }catch(e){console.warn('GAS DB fetch:',e);}
+  }
+  // 4. Try GAS invite endpoint directly
   if(!inv){
     try{
       const gasRes=await gasPostResp({action:'getInvite',token});
       if(gasRes?.ok&&gasRes?.invite)inv=gasRes.invite;
-    }catch(e){console.warn('GAS invite fetch error:',e);}
-  }
-  // If still not found, try loading from GAS DB directly
-  if(!inv){
-    try{
-      const r=await fetch(getGasUrl()+'?action=getDB');
-      const res=await r.json();
-      if(res?.ok&&res?.db?.invites){
-        inv=res.db.invites.find(i=>i.token===token);
-      }
-    }catch(e){}
+    }catch(e){console.warn('GAS invite:',e);}
   }
   if(!inv){alert('Link de activación inválido o no encontrado.');return false;}
   if(inv.status==='active'){alert('Esta cuenta ya fue activada. Ingresá con tu email y contraseña.');return false;}
