@@ -1001,32 +1001,17 @@ async function gasPostResp(data){
   catch{return null;}
 }
 async function syncFromGAS(manual){
-  const url=getGasUrl();
-  if(!url){
-    const loc=loadLocal();
-    // Use local if it has projects, otherwise always use SEED
-    DB=(loc&&loc.projects&&loc.projects.length>0)?loc:JSON.parse(JSON.stringify(SEED));
-    if(DB?.projects)DB.projects.forEach(p=>applyAutoStatus(p));
-    if(manual)showSync('Datos cargados desde SEED','ok');
-    return;
-  }
-  showSync('Sincronizando con Google Sheets...');
-  try{
-    const r=await fetch(url+'?action=getDB');
-    const res=await r.json();
-    if(res?.ok&&res?.db){
-      DB=res.db;
-      // Ensure all SEED projects exist in DB (merge missing ones)
-      SEED.projects.forEach(sp=>{if(!DB.projects.find(p=>p.id===sp.id))DB.projects.push(sp);});
-      if(DB?.projects)DB.projects.forEach(p=>applyAutoStatus(p));
-      saveLocal(DB);showSync('Sincronizado ✓','ok');}
-    else{DB=loadLocal()||JSON.parse(JSON.stringify(SEED));showSync('Sin datos en GAS — usando locales','ok');}
-  }catch{
-    const loc2=loadLocal();
-    DB=(loc2&&loc2.projects&&loc2.projects.length>0)?loc2:JSON.parse(JSON.stringify(SEED));
-    if(DB?.projects)DB.projects.forEach(p=>applyAutoStatus(p));
-    showSync(manual?'Error de conexión — usando datos locales':'Sin conexión','ok');
-  }
+  // Always load from localStorage (or SEED if empty/new version)
+  // We do NOT pull from GAS on startup to avoid stale data issues
+  const loc=loadLocal();
+  DB=(loc&&loc.projects&&loc.projects.length>0)?loc:JSON.parse(JSON.stringify(SEED));
+  // Clean duplicate Drivin projects
+  DB.projects=DB.projects.filter(p=>p.id==='p4'||!p.name.toUpperCase().includes('DRIV'));
+  // Merge missing SEED projects
+  SEED.projects.forEach(sp=>{if(!DB.projects.find(p=>p.id===sp.id))DB.projects.push(sp);});
+  DB.projects.forEach(p=>applyAutoStatus(p));
+  saveLocal(DB);
+  if(manual)showSync('Datos cargados ✓','ok');
 }
 async function persistDB(){
   // Always recalculate progress before saving
@@ -1250,6 +1235,7 @@ function renderHome(){
         <div class="pc-acts">
           <button class="pca pr" onclick="openProject('${p.id}')">📊 Abrir tablero</button>
           ${isSA()?`<button class="pca" onclick="openPM('${p.id}')">✏️ Editar</button>`:''}
+          ${isSA()?`<button class="pca" style="color:var(--red);border-color:#F5BCBC;background:#FFF0F0" onclick="deleteProject('\${p.id}')">\xf0\x9f\x97\x91 Eliminar</button>`:''}
         </div>
       </div>
     </div>`;
@@ -1539,7 +1525,8 @@ async function rmResp(id,uid2){
 function openHM(initId,editIdx){
   hitoId=initId;
   const init=CP.initiatives.find(i=>i.id===initId);
-  const h=editIdx!==undefined?init?.tareas[editIdx]:null;
+  if(!init)return;
+  const h=(editIdx!==undefined&&editIdx!==null&&init.hitos[editIdx])?init.hitos[editIdx]:null;
   document.getElementById('hm-title').textContent=h?'Editar hito / tarea':'Agregar tarea';
   document.getElementById('nht').value=h?h.text:'';
   document.getElementById('nhd').value=h?h.date||'':'';
@@ -1547,7 +1534,7 @@ function openHM(initId,editIdx){
   document.getElementById('nho').value=h?h.obs||'':'';
   document.getElementById('nherr').textContent='';
   document.getElementById('ov-hito').dataset.editIdx=editIdx!==undefined?editIdx:'';
-  document.getElementById('nhr').innerHTML=DB.users.map(u=>`<option value="${u.id}" ${h&&h.respId===u.id?'selected':''}>${u.name}</option>`).join('');
+  document.getElementById('nhr').innerHTML=(DB.users||[]).map(u=>`<option value="${u.id}" ${h&&h.respId===u.id?'selected':''}>${u.name}</option>`).join('');
   document.getElementById('ov-hito').style.display='flex';
 }
 function closeHM(){document.getElementById('ov-hito').style.display='none';}
@@ -2042,4 +2029,5 @@ document.addEventListener('DOMContentLoaded',init);
 
 </script>
 </body>
-</html>
+</html
+          ${isSA()?`<button class="pca" style="color:var(--red);border-color:#F5BCBC;background:#FFF0F0" onclick="deleteProject('${p.id}')">🗑 Eliminar</button>`:''}>
