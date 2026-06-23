@@ -539,7 +539,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:13
 
 <script>
 const GAS_URL='https://script.google.com/macros/s/AKfycbxNe-A4NR8laaxnSxrgJ8_dxKTp6ST4M_-E2GN1WK9tntxSzpACWTlRXxE2xGFSujxn/exec';
-const DB_VERSION='2026-v15';
+const DB_VERSION='2026-v16';
 const EMAILS_ENABLED=false;
 const getGasUrl=()=>GAS_URL;
 
@@ -1940,26 +1940,28 @@ async function createInvite(){
   const err=document.getElementById('inv-err');
   if(!nombre||!apellido){err.textContent='Completá nombre y apellido.';err.classList.add('on');return;}
   const email=buildEmail(nombre,apellido);
-  if(DB.users.find(u=>u.email===email||u.username===email)){err.textContent='Ya existe usuario con ese email.';err.classList.add('on');return;}
+  if(DB.users.find(u=>u.email===email)){err.textContent='Ya existe usuario con ese email.';err.classList.add('on');return;}
+  // Check for duplicate pending invite
+  if(DB.invites&&DB.invites.find(i=>i.email===email&&i.status==='pending')){
+    err.textContent='Ya hay una invitación pendiente para ese email.';err.classList.add('on');return;
+  }
   const token='inv_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
   const expiry=Date.now()+7*24*60*60*1000;
   const baseUrl=window.location.href.split('?')[0];
   const link=baseUrl+'?activate='+token;
   const invite={token,email,fullName:nombre+' '+apellido,nombre,apellido,sector,rol,expiry,status:'pending',createdBy:CU.id,createdAt:nows()};
-  // Save to ALL storage locations
-  const invites=getInvites();invites.push(invite);saveInvites(invites);
-  // Save in DB (syncs to GAS)
+  // Save ONLY to DB — this gets synced to GAS via persistDB
   if(!DB.invites)DB.invites=[];
   DB.invites.push(invite);
-  // Save project member slot (pending)
-  if(CP&&!CP.members)CP.members=[];
-  if(CP)CP.members.push({userId:null,email,role:rol,status:'pending',token});
+  // Also save to localStorage as backup
+  const invites=getInvites();
+  invites.push(invite);
+  saveInvites(invites);
+  // Persist to GAS
   await persistDB();
-  // Also send to GAS invite endpoint
-  await gasPostResp({action:'saveInvite',invite});
-  // Send email
+  // Send email (fire and forget)
   const sv=gsec(sector);
-  const rolLabel={colaborador:'Colaborador',lider:'Líder de sector',admin:'Admin'}[rol]||rol;
+  const rolLabel={colaborador:'Colaborador',lider:'Líder',admin:'Admin'}[rol]||rol;
   gasPost({action:'sendInviteEmail',to_email:email,to_name:nombre+' '+apellido,sector:sv.label,rol:rolLabel,link});
   closeInvite();
   document.getElementById('inv-link-display').textContent=link;
@@ -1997,18 +1999,11 @@ async function checkActivateParam(){
   const token=params.get('activate');
   if(!token)return false;
   let inv=null;
-  // DB is already loaded when this runs — check all sources
-  // 1. DB.invites (loaded from GAS)
+  // DB is loaded — check DB.invites first (source of truth)
   if(DB?.invites)inv=DB.invites.find(i=>i.token===token);
-  // 2. localStorage
+  // Fallback: localStorage
   if(!inv)inv=getInvites().find(i=>i.token===token);
-  // 3. GAS invite endpoint directly
-  if(!inv){
-    try{
-      const gasRes=await gasPostResp({action:'getInvite',token});
-      if(gasRes?.ok&&gasRes?.invite)inv=gasRes.invite;
-    }catch(e){console.warn('GAS invite:',e);}
-  }
+  console.log('Invite search result:',inv?'FOUND':'NOT FOUND','token:',token);
   if(!inv){alert('Link de activación inválido o no encontrado.');return false;}
   if(inv.status==='active'){alert('Esta cuenta ya fue activada. Ingresá con tu email y contraseña.');return false;}
   if(Date.now()>inv.expiry){alert('Link expirado (7 días). Solicitá uno nuevo al administrador.');return false;}
